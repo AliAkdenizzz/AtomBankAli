@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+
+<head>
+    <script src="config.js"></script>
+
+    <meta charset="UTF-8"/>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <title>Atom Bank Admin Dashboard</title>
+
+    
+
+    <!-- Fonts -->
+
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+    <!-- Auth Guard - Must be first! -->
+    <script src="./authGuard.js"></script>
+
+    <!-- Tailwind CSS (CDN for standalone usage) -->
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    
+
+    <!-- Tailwind Configuration -->
+
+    <script id="tailwind-config">
+
+        tailwind.config = {
+
+            darkMode: "class",
+
+            theme: {
+
+                extend: {
+
+                    colors: {
+
+                        "primary": "#2bee79",
+
+                        "primary-dark": "#23bd60",
+
+                        "background-light": "#f6f8f7",
+
+                        "background-dark": "#102217",
+
+                        "surface-dark": "#1a2c22", 
+
+                        "surface-highlight": "#234832"
+
+                    },
+
+                    fontFamily: {
+
+                        "display": ["Spline Sans", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"]
+
+                    },
+
+                    borderRadius: {
+
+                        "DEFAULT": "1rem", 
+
+                        "lg": "1.5rem", 
+
+                        "xl": "2rem", 
+
+                        "2xl": "2.5rem", 
+
+                        "full": "9999px"
+
+                    },
+
+                    boxShadow: {
+
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+
+                        'glow': '0 4px 20px 0px rgba(43, 238, 121, 0.25)'
+
+                    }
+
+                },
+
+            },
+
+        }
+
+    </script>
+
+
+
+    <!-- Custom CSS -->
+
+    <style>
+
+        /* Icon Settings */
+
+        .material-symbols-outlined {
+
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+
+            transition: all 0.2s ease;
+
+        }
+
+        .icon-fill {
+
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+
+        }
+
+
+
+        /* Background Gradient Animation */
+
+        .aurora-bg {
+
+            background: radial-gradient(circle at 50% 0%, rgba(43, 238, 121, 0.08) 0%, rgba(255, 255, 255, 0) 50%),
+
+                        radial-gradient(circle at 85% 30%, rgba(43, 238, 121, 0.03) 0%, rgba(255, 255, 255, 0) 40%);
+
+            background-attachment: fixed;
+
+        }
+
+
+
+        /* Scrollbar Hide Utility */
+
+        .scrollbar-hide::-webkit-scrollbar {
+
+            display: none;
+
+        }
+
+        .scrollbar-hide {
+
+            -ms-overflow-style: none;
+
+            scrollbar-width: none;
+
+        }
+
+
+
+        /* Mobile Sidebar Transitions */
+
+        #sidebar {
+
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        }
+
+        
+
+        .glass-effect {
+
+            background: rgba(255, 255, 255, 0.7);
+
+            backdrop-filter: blur(10px);
+
+            -webkit-backdrop-filter: blur(10px);
+
+        }
+
+    </style>
+
+    
+
+</head>
+
+
+
+<body class="bg-background-light font-display text-slate-900 overflow-hidden h-screen flex flex-col">
+
+
+
+    <div class="flex flex-1 h-full w-full aurora-bg relative">
+
+        
+
+        <!-- Mobile Sidebar Overlay (Hidden by default) -->
+
+        <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/20 z-10 hidden lg:hidden backdrop-blur-sm transition-opacity opacity-0" onclick="toggleSidebar()"></div>
+
+
+
+        <!-- Sidebar -->
+
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-72 h-full border-r border-gray-200 bg-white/80 backdrop-blur-md lg:bg-white/50 p-6 flex flex-col justify-between shrink-0 z-20 -translate-x-full lg:translate-x-0 shadow-2xl lg:shadow-none">
+
+            <div class="flex flex-col gap-8">
+
+                <!-- Logo -->
+
+                <div class="flex items-center gap-3 px-2">
+
+                    <div class="bg-primary aspect-square rounded-full size-10 flex items-center justify-center text-white font-bold text-xl shadow-glow">
+
+                        <span class="material-symbols-outlined icon-fill">admin_panel_settings</span>
+
+                    </div>
+
+                    <h1 class="text-xl font-bold tracking-tight text-slate-900">Atom Admin</h1>
+
+                    <!-- Close button for mobile -->
+
+                    <button class="ml-auto lg:hidden text-gray-500 hover:text-slate-900" onclick="toggleSidebar()">
+
+                        <span class="material-symbols-outlined">close</span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Navigation -->
+
+                <nav class="flex flex-col gap-2">
+
+                    <a class="flex items-center gap-4 px-4 py-3 rounded-full bg-slate-900 text-white transition-all shadow-lg shadow-slate-900/10 group cursor-pointer" href="#">
+
+                        <span class="material-symbols-outlined icon-fill group-hover:scale-110 transition-transform">dashboard</span>
+
+                        <span class="font-medium text-sm">Overview</span>
+
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+
+            <!-- Admin Profile -->
+
+            <div class="flex flex-col gap-6">
+
+                <div class="flex items-center gap-3 px-2 p-3 rounded-xl hover:bg-white transition-all border border-transparent hover:border-gray-200 cursor-pointer shadow-sm hover:shadow-md">
+
+                    <div class="size-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 overflow-hidden">
+
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff" alt="Admin" class="w-full h-full object-cover">
+
+                    </div>
+
+                    <div class="flex flex-col">
+
+                        <span class="text-sm font-bold text-slate-900">Admin User</span>
+
+                        <span class="text-xs text-gray-500">Super Admin</span>
+
+                    </div>
+
+                    <button id="adminLogoutBtn" class="ml-auto text-gray-400 hover:text-red-500 transition-colors">
+
+                        <span class="material-symbols-outlined text-[20px]">logout</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- Main Content -->
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative w-full">
+
+            
+
+            <!-- Mobile Header -->
+
+            <div class="lg:hidden flex items-center justify-between p-4 border-b border-gray-200 glass-effect z-10">
+
+                <div class="flex items-center gap-2">
+
+                    <span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+
+                    <span class="font-bold">Atom Admin</span>
+
+                </div>
+
+                <button class="text-gray-500 hover:text-slate-900 p-2" onclick="toggleSidebar()">
+
+                    <span class="material-symbols-outlined">menu</span>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Scrollable Area -->
+
+            <div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-10 scrollbar-hide">
+
+                <div class="max-w-7xl mx-auto flex flex-col gap-8 pb-10">
+
+                    
+
+                    <!-- Header Section -->
+
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 animate-[fadeIn_0.5s_ease-out]">
+
+                        <div>
+
+                            <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Dashboard Overview</h2>
+
+                            <p class="text-gray-500 text-sm mt-1">Welcome back, here is what's happening today at Atom Bank.</p>
+
+                        </div>
+
+                        <div class="flex gap-3">
+
+                            <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-600 hover:bg-gray-50 shadow-sm transition-all hover:shadow-md">
+
+                                <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+
+                                <span id="current-date">Nov 2025</span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- User Management Section -->
+
+                    <div class="grid grid-cols-1 gap-6">
+
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-soft overflow-hidden flex flex-col">
+
+                            <!-- Table Header -->
+
+                            <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+                                <div class="flex items-center gap-2">
+
+                                    <div class="bg-blue-50 p-2 rounded-lg text-blue-600">
+
+                                        <span class="material-symbols-outlined">group</span>
+
+                                    </div>
+
+                                    <h3 class="font-bold text-lg text-slate-900">User Management</h3>
+
+                                    <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full font-bold">1,248 Users</span>
+
+                                </div>
+
+                                <div class="relative w-full sm:w-72 group">
+
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
+
+                                        <span class="material-symbols-outlined text-[20px]">search</span>
+
+                                    </span>
+
+                                    <input id="userSearchInput" onkeyup="filterUsers()" class="w-full bg-gray-50 border-gray-200 rounded-xl py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="Find user by name or email..." type="text"/>
+
+                                </div>
+
+                            </div>
+
+                            
+
+                            <!-- Table -->
+
+                            <div class="overflow-x-auto">
+
+                                <table class="w-full text-left text-sm text-gray-600" id="usersTable">
+
+                                    <thead class="bg-gray-50/50 text-gray-500 font-medium border-b border-gray-100">
+
+                                        <tr>
+
+                                            <th class="px-6 py-4">User</th>
+
+                                            <th class="px-6 py-4">Role</th>
+
+                                            <th class="px-6 py-4">Status</th>
+
+                                            <th class="px-6 py-4">Joined</th>
+
+                                            <th class="px-6 py-4 text-right">Actions</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody id="adminUsersTableBody" class="divide-y divide-gray-100">
+
+                                        <!-- Rows will be populated by JavaScript -->
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            <div id="view-all-container" class="p-4 border-t border-gray-100 flex justify-center">
+
+                                <button id="view-all-users-btn" onclick="toggleAllUsers()" class="text-sm font-medium text-primary-dark hover:text-primary transition-colors flex items-center gap-1">
+
+                                    <span>View All Users</span> 
+
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Transactions Section -->
+
+                    <div class="grid grid-cols-1 gap-6">
+
+                        <div class="bg-white rounded-2xl border border-gray-200 shadow-soft overflow-hidden flex flex-col">
+
+                            <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+                                <div class="flex items-center gap-2">
+
+                                    <div class="bg-purple-50 p-2 rounded-lg text-purple-600">
+
+                                        <span class="material-symbols-outlined">public</span>
+
+                                    </div>
+
+                                    <h3 class="font-bold text-lg text-slate-900">Global Transactions</h3>
+
+                                </div>
+
+                                <div class="flex gap-2">
+
+                                    <div class="relative">
+
+                                        <select id="transactionTypeFilter" class="appearance-none bg-gray-50 border border-gray-200 text-gray-700 text-sm rounded-xl py-2 pl-3 pr-8 focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer outline-none hover:bg-gray-100 transition-colors">
+
+                                            <option value="">All Types</option>
+
+                                            <option value="transfer-in">Transfer In</option>
+
+                                            <option value="transfer-out">Transfer Out</option>
+
+                                            <option value="transfer-ext">External Transfer</option>
+
+                                            <option value="bill-payment">Bill Payment</option>
+
+                                            <option value="deposit">Deposit</option>
+
+                                            <option value="withdraw">Withdrawal</option>
+
+                                            <option value="exchange-in">Currency Exchange In</option>
+
+                                            <option value="exchange-out">Currency Exchange Out</option>
+
+                                            <option value="goal-contrib">Savings Goal</option>
+
+                                        </select>
+
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+
+                                            <span class="material-symbols-outlined text-sm">expand_more</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            
+
+                            <div class="overflow-x-auto">
+
+                                <table class="w-full text-left text-sm text-gray-600">
+
+                                    <thead class="bg-gray-50/50 text-gray-500 font-medium border-b border-gray-100">
+
+                                        <tr>
+
+                                            <th class="px-6 py-4">Transaction ID</th>
+
+                                            <th class="px-6 py-4">Initiated By</th>
+
+                                            <th class="px-6 py-4">Type</th>
+
+                                            <th class="px-6 py-4">Date</th>
+
+                                            <th class="px-6 py-4">Amount</th>
+
+                                            <th class="px-6 py-4 text-right">Status</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody id="adminTransactionsTableBody" class="divide-y divide-gray-100">
+
+                                        <!-- Rows will be populated by JavaScript -->
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Data Fetcher Utility -->
+    <script src="./dataFetcher.js"></script>
+
+    <!-- Main JS -->
+    <!-- Translations -->
+    <script src="./translations.js"></script>
+    <script src="./main.js"></script>
+
+    <!-- Admin Scripts -->
+    <script src="./AdminDataFetcher.js"></script>
+    <script src="./AdminpageData.js"></script>
+
+</body>
+
+</html>
+

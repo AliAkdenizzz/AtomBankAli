@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script src="config.js"></script>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Atom Bank - Fund Transfer</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme System CSS (must load before dashboard.css) -->
+    <link rel="stylesheet" href="./theme.css">
+    <!-- Dashboard CSS for Sidebar -->
+    <link rel="stylesheet" href="./dashboard.css">
+    <!-- Page specific CSS -->
+    <link rel="stylesheet" href="./fundtransfer.css">
+    <!-- Toggle styles from currencyexchange -->
+    <link rel="stylesheet" href="./currencyexchange.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "atom-bg": "#e5e8f0",
+                        "atom-text-black": "#020617",
+                        "atom-text-grey": "#a1a3af",
+                        "atom-text-dark-grey": "#4b5563",
+                        "atom-primary": "#6366f1", /* Indigo */
+                        "atom-secondary": "#22c55e", /* Green */
+                        "atom-blue": "#38bdf8",
+                        "atom-circle-1": "#ffd8f0", /* Pinkish */
+                        "atom-circle-2": "#c7bfff", /* Lavender */
+                    },
+                    fontFamily: {
+                        "sans": ["Poppins", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"]
+                    },
+                    boxShadow: {
+                        "soft": "0 18px 40px rgba(148, 163, 184, 0.35)",
+                        "glow": "0 10px 30px rgba(79, 70, 229, 0.5)",
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<script src="./authGuard.js"></script>
+</head>
+<body class="light">
+
+    <div class="bg-circle-1"></div>
+    <div class="bg-circle-2"></div>
+
+    <div class="container">
+        
+        <!-- Sidebar from Dashboard -->
+        <nav class="sidebar" id="sidebar">
+          <!-- close btn for responsive sidebar -->
+          <button id="btn_close">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path
+                d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+            </svg>
+          </button>
+
+          <div class="logo">
+            <img src="./images/logo.png" alt="Atom Bank Logo">
+            <span>Atom Bank</span>
+          </div>
+
+          <!-- Sidebar menu -->
+          <div class="nav_links">
+            <a href="./dashboard.html" class="nav_link" aria-label="overview">
+              <span class="material-symbols-outlined">grid_view</span>
+              <div class="nav_link_text" data-i18n="overview">Overview</div>
+            </a>
+
+            <a href="./accounthistory.html" class="nav_link" aria-label="account-history">
+              <span class="material-symbols-outlined">history</span>
+              <div class="nav_link_text" data-i18n="accounts">Account History</div>
+            </a>
+
+            <a href="./fundtransfer.html" class="nav_link active" aria-label="fund-transfer">
+              <span class="material-symbols-outlined icon-fill">swap_horiz</span>
+              <div class="nav_link_text" data-i18n="fundTransfer">Fund Transfer</div>
+            </a>
+
+            <a href="./billpayments.html" class="nav_link" aria-label="bill-payment">
+              <span class="material-symbols-outlined">receipt_long</span>
+              <div class="nav_link_text" data-i18n="billPayment">Bill Payment</div>
+            </a>
+
+            <a href="./currencyexchange.html" class="nav_link" aria-label="currency-exchange">
+              <span class="material-symbols-outlined">currency_exchange</span>
+              <div class="nav_link_text" data-i18n="currencyExchange">Currency Exchange</div>
+            </a>
+
+            <a href="./smartassistant.html" class="nav_link" aria-label="smart-assistant">
+              <span class="material-symbols-outlined">smart_toy</span>
+              <div class="nav_link_text" data-i18n="smartAssistantSupport">Smart Assistant Support</div>
+            </a>
+            
+            <!-- LOGOUT BUTTON -->
+            <a href="#" class="nav_link" id="navLogout" style="margin-top: 20px;">
+              <span class="material-symbols-outlined">logout</span>
+              <div class="nav_link_text">Log Out</div>
+            </a>
+          </div>
+
+          <!-- life cover / small promo alanı aynı kalabilir -->
+          <div class="life_cover_offer">
+            <img src="./images/women.svg" alt="" />
+          <div class="life_cover_text">
+            <p class="title" data-i18n="welcomeToAtomBank">Welcome to Atom Bank</p>
+            <p class="desc" data-i18n="manageBalance">Manage your balance, transfers and cards in one aurora-style dashboard.</p>
+          </div>
+          <a href="#" aria-label="open-account" data-i18n="openNewAccount">Open new account</a>
+          </div>
+
+          <!-- profile card -->
+          <div class="profile" id="profileCard">
+            <div class="img_with_name">
+              <img src="./images/profile.jpg" id="sidebarProfileImg" alt="User">
+              <div class="profile_text">
+                <p class="name" id="profileName">User</p>
+              </div>
+            </div>
+            <!-- Sağdaki oka logout davranışı vereceğiz -->
+            <svg
+              id="logoutIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              style="cursor: pointer;"
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path class="icon" d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
+            </svg>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <section class="main_content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <button id="menu_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z" />
+                    </svg>
+                </button>
+                <div class="topbar_icons">
+                </div>
+            </div>
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+
+            <div class="flex-1 overflow-y-auto p-6 md:p-10 scrollbar-hide">
+                <div class="max-w-3xl mx-auto flex flex-col gap-8">
+                    
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-4xl font-light text-atom-text-black" data-i18n="fundTransfer">Fund Transfer</h2>
+                            <p class="text-sm text-atom-text-dark-grey mt-1" data-i18n="sendMoneyDesc">Send money securely to any bank account.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <button class="p-3 bg-white rounded-xl shadow-soft hover:scale-105 transition-transform">
+                                <span class="material-symbols-outlined text-atom-text-dark-grey">notifications</span>
+                            </button>
+                            <button class="p-3 bg-white rounded-xl shadow-soft hover:scale-105 transition-transform">
+                                <span class="material-symbols-outlined text-atom-text-dark-grey">settings</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Card -->
+                    <div class="bg-white rounded-[30px] p-8 md:p-10 w-full shadow-soft relative overflow-visible z-10">
+                        
+                        <!-- Decoration -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-atom-circle-2/30 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+
+                        <!-- Source Account -->
+                        <div class="flex flex-col gap-4 mb-10 relative z-10">
+                            <label class="text-xs font-bold text-atom-text-grey uppercase tracking-wider ml-1" data-i18n="sourceAccount">Source Account</label>
+                            
+                            <div class="relative group">
+                                <select class="w-full bg-atom-bg border-none rounded-2xl py-4 pl-5 pr-12 text-atom-text-black font-medium focus:ring-2 focus:ring-atom-primary/50 cursor-pointer transition-shadow">
+                                </select>
+                                <span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-atom-text-grey">expand_more</span>
+                            </div>
+
+                            <!-- Balance Info -->
+                            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                                <div>
+                                    <div class="text-[10px] text-atom-text-grey uppercase font-bold tracking-wider mb-1" data-i18n="availableBalance">Available Balance</div>
+                                    <div class="text-xl font-bold text-atom-text-black" id="availBalance">0.00 TRY</div>
+                                </div>
+                                <div class="h-px w-full sm:w-px sm:h-10 bg-gray-200"></div>
+                                <div class="sm:text-right">
+                                    <div class="text-[10px] text-atom-text-grey uppercase font-bold tracking-wider mb-1" data-i18n="iban">IBAN</div>
+                                    <div class="flex items-center gap-2 text-sm font-mono text-atom-text-dark-grey">
+                                        <span id="displayIban">-</span>
+                                        <button class="text-atom-primary hover:text-atom-secondary transition-colors" onclick="copyIban()">
+                                            <span class="material-symbols-outlined text-base">content_copy</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recipient Section -->
+                        <div class="flex flex-col gap-6 mb-10 relative z-10">
+                             <label class="text-xs font-bold text-atom-text-grey uppercase tracking-wider ml-1" data-i18n="recipient">Recipient</label>
+                             
+                             <!-- Toggle -->
+                             <div class="flex p-1.5 bg-atom-bg rounded-2xl w-full">
+                                <button onclick="toggleRecipient('new')" id="btnNew" class="flex-1 py-3 rounded-xl bg-white shadow-sm font-semibold text-sm text-atom-text-black transition-all" data-i18n="newRecipient">New Recipient</button>
+                                <button onclick="toggleRecipient('saved')" id="btnSaved" class="flex-1 py-3 rounded-xl text-atom-text-dark-grey font-medium text-sm hover:text-atom-text-black transition-all" data-i18n="savedRecipient">Saved Recipient</button>
+                             </div>
+
+                             <!-- New Recipient Form -->
+                             <div id="formNew" class="flex flex-col gap-5 transition-all duration-300">
+                                <div class="relative">
+                                    <input id="inputIban" class="w-full bg-atom-bg border-none rounded-2xl py-4 pl-5 pr-40 text-atom-text-black font-mono text-sm focus:ring-2 focus:ring-atom-primary/50 placeholder-gray-400" placeholder="TR00 0000 0000 0000 0000 0000 00" type="text"/>
+                                    <button id="pasteBtn" class="absolute right-20 top-1/2 -translate-y-1/2 bg-white text-atom-text-dark-grey hover:text-atom-primary px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all flex items-center gap-1" data-i18n="paste">Paste</button>
+                                </div>
+                                <input id="inputName" class="w-full bg-atom-bg border-none rounded-2xl py-4 pl-5 pr-5 text-atom-text-black font-medium focus:ring-2 focus:ring-atom-primary/50 placeholder-gray-400" placeholder="Recipient Name (e.g. Alex Morgan)" type="text" data-i18n-placeholder="recipientName"/>
+                             </div>
+
+                             <!-- Saved Recipient Dropdown (Hidden initially) -->
+                             <div id="formSaved" class="hidden relative group">
+                                <select class="w-full bg-atom-bg border-none rounded-2xl py-4 pl-12 pr-12 text-atom-text-black font-medium focus:ring-2 focus:ring-atom-primary/50 cursor-pointer appearance-none">
+                                </select>
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-atom-text-grey">account_circle</span>
+                                <span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-atom-text-grey">expand_more</span>
+                             </div>
+                        </div>
+
+                        <!-- Amount Section -->
+                        <div class="flex flex-col gap-3 mb-6 relative z-10">
+                            <label class="text-xs font-bold text-atom-text-grey uppercase tracking-wider ml-1" data-i18n="amount">Amount</label>
+                            <div class="relative">
+                                <input id="inputAmount" class="w-full bg-transparent border-b-2 border-gray-200 focus:border-atom-primary py-3 px-2 text-4xl font-bold text-atom-text-black placeholder-gray-300 focus:outline-none transition-colors" placeholder="0.00" type="number"/>
+                                <span id="currencyDisplay" class="absolute right-2 top-1/2 -translate-y-1/2 text-lg font-bold text-atom-text-grey pointer-events-none">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Save Recipient Toggle -->
+                        <div class="flex items-center justify-between px-1 mb-6 relative z-10">
+                            <span class="text-sm font-medium text-atom-text-dark-grey" data-i18n="savePayee">Save this payee</span>
+                            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 left-0 transition-all duration-200" id="savePayeeToggle" name="savePayeeToggle" type="checkbox"/>
+                                <label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition-colors duration-200" for="savePayeeToggle"></label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button id="btnTransfer" disabled class="w-full bg-gray-200 text-gray-400 font-bold py-4 rounded-2xl transition-all uppercase tracking-wide cursor-not-allowed shadow-none flex items-center justify-center gap-2 hover:brightness-105" data-i18n="transferFunds">
+                            Transfer Funds <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+        </section>
+    </div>
+
+    <!-- Data Fetcher Utility -->
+    <script src="./dataFetcher.js"></script>
+
+    <!-- Main JS -->
+    <!-- Translations -->
+    <script src="./translations.js"></script>
+    <script src="./main.js"></script>
+
+    <!-- Fund Transfer Data Loader -->
+    <script src="./fundtransferData.js"></script>
+
+<script>
+    window.activeMode = 'new'; // 'new' or 'saved'
+
+    function toggleRecipient(mode) {
+        window.activeMode = mode;
+        const btnNew = document.getElementById('btnNew');
+        const btnSaved = document.getElementById('btnSaved');
+        const formNew = document.getElementById('formNew');
+        const formSaved = document.getElementById('formSaved');
+
+        if (mode === 'new') {
+            btnNew.className = "flex-1 py-3 rounded-xl bg-white shadow-sm font-semibold text-sm text-atom-text-black transition-all";
+            btnSaved.className = "flex-1 py-3 rounded-xl text-atom-text-dark-grey font-medium text-sm hover:text-atom-text-black transition-all";
+            
+            formNew.classList.remove('hidden');
+            formSaved.classList.add('hidden');
+        } else {
+            btnSaved.className = "flex-1 py-3 rounded-xl bg-white shadow-sm font-semibold text-sm text-atom-text-black transition-all";
+            btnNew.className = "flex-1 py-3 rounded-xl text-atom-text-dark-grey font-medium text-sm hover:text-atom-text-black transition-all";
+            
+            formNew.classList.add('hidden');
+            formSaved.classList.remove('hidden');
+        }
+        // validateForm will be called from fundtransferData.js
+        if (typeof validateForm === 'function') {
+            validateForm();
+        }
+    }
+
+    // Copy IBAN function
+    window.copyIban = function() {
+        const ibanEl = document.getElementById('displayIban');
+        if (ibanEl && ibanEl.dataset.fullIban) {
+            navigator.clipboard.writeText(ibanEl.dataset.fullIban).then(() => {
+                alert('IBAN copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy IBAN');
+            });
+        }
+    };
+
+</script>
+</body>
+</html>

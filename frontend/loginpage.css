@@ -1,0 +1,463 @@
+/* ===================== GLOBAL ===================== */
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  position: relative;
+  overflow: hidden;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* ARTIK: login kapalıyken soft, gri-mor arka plan */
+  background:
+    radial-gradient(circle at 0% 0%, #c7d2fe 0%, transparent 55%),
+    radial-gradient(circle at 100% 0%, #fed7f2 0%, transparent 55%),
+    linear-gradient(135deg, #e0e7ff 0%, #e5e7eb 45%, #f5e9ff 100%);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Sol–orta büyük aurora bulutu */
+body::before {
+  background:
+    radial-gradient(circle at 20% 60%, rgba(45, 212, 191, 0.55) 0%, transparent 55%),
+    radial-gradient(circle at 40% 40%, rgba(56, 189, 248, 0.55) 0%, transparent 55%),
+    radial-gradient(circle at 55% 70%, rgba(129, 140, 248, 0.5) 0%, transparent 60%);
+  filter: blur(40px);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+/* Sağ üst pembe–mavi vurgu */
+body::after {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.65) 0%, transparent 55%),
+    radial-gradient(circle at 95% 55%, rgba(59, 130, 246, 0.45) 0%, transparent 60%);
+  filter: blur(45px);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+}
+
+.atom-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  perspective: 900px;
+}
+
+/* ===================== ATOM (3x BÜYÜK) ===================== */
+
+.atom-toggle {
+  width: 510px;
+  height: 510px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    0 0 40px rgba(59, 130, 246, 0.0),
+    0 0 110px rgba(56, 189, 248, 0.0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease;
+  z-index: 1;
+}
+
+.atom-toggle:hover {
+  transform: translateZ(12px) scale(1.02);
+  box-shadow: none;
+}
+
+/* Çekirdek – aurora renk paleti */
+.atom-core {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 20%, #f9fafb 0%, #e0f2fe 26%, #38bdf8 55%, #6366f1 85%);
+  box-shadow:
+    0 0 32px rgba(191, 219, 254, 1),
+    0 0 64px rgba(56, 189, 248, 0.95);
+  z-index: 3;
+}
+
+/* Orbit genel yapı – kalın eliptik çizgiler */
+.atom-orbit {
+  position: absolute;
+  width: 690px;
+  height: 690px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform-style: flat;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.atom-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border-width: 30px;
+  border-style: solid;
+  border-color: transparent;
+  box-sizing: border-box;
+  box-shadow: 0 0 18px rgba(15, 23, 42, 0.25);
+}
+
+/* Mavi / camgöbeği orbitler (kuzey-güney ve doğu-batı) */
+.orbit-blue-1::before {
+  border-color: #3b82f6;
+}
+
+.orbit-blue-2::before {
+  border-color: #0ea5e9;
+}
+
+/* Mor / pembe orbitler (çaprazlar) */
+.orbit-orange-1::before {
+  border-color: #a855f7;
+}
+
+.orbit-orange-2::before {
+  border-color: #ec4899;
+}
+
+/* Açı ve sıkıştırma – 4 halka düzlemde */
+.orbit-blue-1 {  /* yatay (doğu-batı) */
+  transform: translate(-50%, -50%) scaleY(0.60);
+}
+
+.orbit-blue-2 {  /* dikey (kuzey-güney) */
+  transform: translate(-50%, -50%) scaleX(0.60);
+}
+
+.orbit-orange-1 {  /* 45 derece çapraz */
+  transform: translate(-50%, -50%) rotate(45deg) scaleY(0.60);
+}
+
+.orbit-orange-2 {  /* -45 derece çapraz */
+  transform: translate(-50%, -50%) rotate(-45deg) scaleY(0.60);
+}
+
+/* Elektronlar – orbitlerde dönenler */
+.atom-electron {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(15, 23, 42, 0.35);
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+}
+
+.electron-orange {
+  /* Artık mor/pembe ton */
+  background: radial-gradient(circle, #fdf2ff 0%, #f9a8d4 40%, #ec4899 80%);
+}
+
+.electron-blue {
+  background: radial-gradient(circle, #e0f2fe 0%, #93c5fd 40%, #3b82f6 80%);
+}
+
+.electron-orange-1 {
+  animation: electron-spin-1 8s linear infinite;
+}
+
+.electron-orange-2 {
+  animation: electron-spin-2 10s linear infinite;
+}
+
+.electron-blue-1 {
+  animation: electron-spin-3 12s linear infinite;
+}
+
+/* ATOM BANK yazısı – gradient mavi/mor */
+.atom-toggle span {
+  position: absolute;
+  bottom: -72px;               /* ↓ aşağıdan uzaklaştır → yazı yukarı çıktı */
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 900;
+  font-size: 4rem;          /* ↑ daha büyük */
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  padding-left: 0.32em;
+  background: linear-gradient(90deg,
+    #e0f2fe,
+    #38bdf8,
+    #a855f7,
+    #ec4899,
+    #e0f2fe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow:
+    0 0 10px rgba(15, 23, 42, 0.9),
+    0 0 16px rgba(129, 140, 248, 0.95);
+  white-space: nowrap;
+}
+
+/* ===================== AUTH PANELS ===================== */
+
+.auth-panel {
+  position: absolute;
+  width: 100%;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+/* LOGIN PANEL BOYUTU */
+#loginPanel {
+    max-width: 400px;
+}
+
+/* REGISTER PANEL BOYUTU (Daha geniş) */
+#registerPanel {
+    max-width: 500px; /* Detaylı form için daha geniş */
+}
+
+.auth-panel.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Backward compatibility - keep old class name working */
+.login-panel-wrapper {
+  position: absolute;
+  max-width: 380px;
+  width: 100%;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s ease;
+}
+
+.login-panel-wrapper.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.login-card {
+  background: radial-gradient(circle at 0% 0%, #020617 0%, #020617 25%, #020617 60%, #0b1120 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow:
+    0 22px 55px rgba(15, 23, 42, 0.65),
+    0 0 36px rgba(15, 118, 205, 0.35);
+  backdrop-filter: blur(16px);
+  color: #e5e7eb;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Register paneli için scroll ayarı */
+#registerPanel .login-card {
+    max-height: 85vh; /* Ekrandan taşmaması için */
+}
+
+#registerPanel .card-body {
+    overflow-y: auto;
+    /* Scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: #38bdf8 rgba(15, 23, 42, 0.5);
+}
+
+#registerPanel .card-body::-webkit-scrollbar {
+    width: 8px;
+}
+#registerPanel .card-body::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 4px;
+}
+#registerPanel .card-body::-webkit-scrollbar-thumb {
+    background-color: #38bdf8;
+    border-radius: 4px;
+}
+
+.login-card .card-header {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.login-title {
+  font-size: 1.05rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #e2e8f0;
+}
+
+.brand-accent {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  color: #e5e7eb;
+  margin-bottom: 0.25rem;
+}
+
+.form-control {
+  background-color: rgba(15, 23, 42, 0.9);
+  border-color: rgba(94, 234, 212, 0.7);
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.form-control:focus {
+  background-color: rgba(15, 23, 42, 0.96);
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 0.16rem rgba(56, 189, 248, 0.55);
+  color: #e5e7eb;
+}
+
+/* Readonly inputs (like Country) */
+.form-control:read-only {
+    background-color: rgba(15, 23, 42, 0.6);
+    color: #94a3b8;
+}
+
+.btn-atom {
+  background: linear-gradient(135deg, #22c55e, #38bdf8, #6366f1);
+  border: none;
+  color: #0b1120;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border-radius: 999px;
+}
+
+.btn-atom:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.small-link {
+  font-size: 0.8rem;
+  color: #a5b4fc;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.small-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.switch-auth-link {
+    font-size: 0.85rem;
+    color: #e5e7eb;
+    text-align: center;
+    margin-top: 1rem;
+    display: block;
+}
+
+.switch-auth-link a {
+    color: #38bdf8;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.switch-auth-link a:hover {
+    color: #22c55e;
+    text-decoration: underline;
+}
+
+.section-divider {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    letter-spacing: 0.05em;
+}
+
+/* Login açıkken zemini hafif yoğunlaştır */
+.bg-active {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(224, 231, 255, 0.9) 0%, transparent 55%),
+    radial-gradient(circle at 100% 0%, rgba(255, 228, 243, 0.9) 0%, transparent 55%),
+    linear-gradient(135deg, #dbe4ff 0%, #e3e8ff 30%, #ffe8fa 100%);
+  filter: brightness(1.15) saturate(1.25);
+  transition: background 0.4s ease, filter 0.4s ease;
+}
+
+@media (max-width: 576px) {
+  .auth-panel { 
+    top: 50%; 
+    transform: translate(-50%, -50%) scale(0.9); 
+  }
+  
+  #registerPanel .login-card { 
+    max-height: 90vh; 
+  }
+  
+  .login-panel-wrapper {
+    top: 65%;
+  }
+
+  .atom-toggle {
+    width: 360px;
+    height: 360px;
+  }
+
+  .atom-orbit {
+    width: 520px;
+    height: 520px;
+  }
+  
+  .atom-toggle span { 
+    font-size: 2.5rem; 
+    bottom: -50px; 
+  }
+}
+
+/* ===================== ELEKTRON ANİMASYONLARI (AYNI) ===================== */
+
+@keyframes electron-spin-1 {
+  from { transform: rotate(0deg) translateX(300px); }
+  to   { transform: rotate(-360deg) translateX(300px); }
+}
+
+@keyframes electron-spin-2 {
+  from { transform: rotate(0deg) translateX(300px); }
+  to   { transform: rotate(-360deg) translateX(300px); }
+}
+
+@keyframes electron-spin-3 {
+  from { transform: rotate(0deg) translateX(280px); }
+  to   { transform: rotate(-360deg) translateX(280px); }
+}
+

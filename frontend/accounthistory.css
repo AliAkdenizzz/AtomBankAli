@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.material-symbols-outlined { 
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+}
+.icon-fill { 
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+}
+
+body {
+    background-color: #e5e8f0;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.dark body {
+    background-color: #0a0e1a;
+}
+
+.bg-circle-1 {
+    position: fixed;
+    top: -10%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: #ffd8f0;
+    filter: blur(80px);
+    z-index: -2;
+    transition: background 0.3s ease;
+}
+
+.dark .bg-circle-1 {
+    background: #4c1d95;
+}
+
+.bg-circle-2 {
+    position: fixed;
+    bottom: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: #c7bfff;
+    filter: blur(80px);
+    z-index: -1;
+    transition: background 0.3s ease;
+}
+
+.dark .bg-circle-2 {
+    background: #1e3a8a;
+}
+
+/* Dark mode styles - PURE BLACK */
+body.dark {
+    background-color: #000000 !important;
+    background: #000000 !important;
+}
+
+.dark .main_content,
+.dark section.main_content {
+    background-color: #000000 !important;
+    background: #000000 !important;
+}
+
+.dark main,
+.dark .flex-1,
+.dark .overflow-y-auto {
+    background-color: #000000 !important;
+}
+
+.dark .bg-white {
+    background-color: #000000 !important;
+    color: #f1f5f9;
+}
+
+.dark .text-atom-text-black {
+    color: #f8fafc !important;
+}
+
+.dark .text-atom-text-dark-grey {
+    color: #a1a1aa !important;
+}
+
+.dark .text-atom-text-grey {
+    color: #71717a !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: #0a0a0a !important;
+}
+
+.dark .border-white,
+.dark .border-gray-50,
+.dark .border-gray-100 {
+    border-color: #1a1a1a !important;
+}
+
+/* Modal and table dark mode */
+.dark .modal-content-box {
+    background-color: #000000 !important;
+}
+
+.dark table thead {
+    background-color: #0a0a0a !important;
+}
+
+.dark table tbody tr:hover {
+    background-color: #111111 !important;
+}
+
+.nav-active {
+    background: linear-gradient(135deg, #22c55e, #38bdf8, #6366f1);
+    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
+    color: white !important;
+}
+.nav-active .material-symbols-outlined {
+    color: white !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar { 
+    display: none; 
+}
+.scrollbar-hide { 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+/* Gradient Button Class */
+.btn-gradient {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.3);
+}
+
+.dark .btn-gradient {
+    background: #a855f7;
+    box-shadow: 0 5px 20px rgba(168, 85, 247, 0.3);
+}
+
+/* Modal Transitions */
+.modal-enter {
+    opacity: 0;
+    pointer-events: none;
+}
+.modal-enter .modal-content-box {
+    transform: scale(0.95);
+}
+
+.modal-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-active .modal-content-box {
+    transform: scale(1);
+}
+
+/* Receipt Download Button */
+.receipt-download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.receipt-download-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
+}
+
+.receipt-download-btn:active {
+    transform: scale(0.95);
+}
+
+.receipt-download-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* Dark mode support for receipt button */
+.dark .receipt-download-btn {
+    background: linear-gradient(135deg, #818cf8, #a78bfa);
+}
+

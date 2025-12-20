@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script src="config.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atom Bank Dashboard</title>
+  <!-- meta -->
+  <meta name="title" content="Atom Bank – Modern Banking Dashboard">
+  <meta name="description" content="Atom Bank finance dashboard. Manage everything from one clean interface.">
+  <meta name="keywords" content="Atom Bank, finance, dashboard, banking, web app">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "atom-bg": "#e5e8f0",
+            "atom-text-black": "#020617",
+            "atom-text-grey": "#a1a3af",
+            "atom-text-dark-grey": "#4b5563",
+            "atom-primary": "#6366f1",
+            "atom-secondary": "#22c55e",
+            "atom-blue": "#38bdf8",
+          },
+          fontFamily: {
+            "sans": ["Poppins", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"]
+          },
+        },
+      },
+    }
+  </script>
+  <!-- Theme System CSS (must load before dashboard.css) -->
+  <link rel="stylesheet" href="./theme.css">
+  <!-- Dashboard CSS -->
+  <link rel="stylesheet" href="./dashboard.css">
+<script src="./authGuard.js"></script>
+</head>
+<body class="light">
+  <div class="container">
+    <!-- ================= SIDEBAR ================= -->
+    <nav class="sidebar" id="sidebar">
+      <!-- close btn for responsive sidebar -->
+      <button id="btn_close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+        </svg>
+      </button>
+      <div class="logo">
+        <!-- Placeholder fallback added for all images -->
+        <img src="./images/logo.png" onerror="this.src='https://placehold.co/40x40?text=AB'" alt="Atom Bank Logo">
+        <span>Atom Bank</span>
+      </div>
+
+      <!-- Sidebar menu -->
+      <div class="nav_links">
+        <a href="./dashboard.html" class="nav_link active" aria-label="overview">
+          <span class="material-symbols-outlined icon-fill">grid_view</span>
+          <div class="nav_link_text" data-i18n="overview">Overview</div>
+        </a>
+        <a href="./accounthistory.html" class="nav_link" aria-label="account-history">
+          <span class="material-symbols-outlined">history</span>
+          <div class="nav_link_text" data-i18n="accounts">Account History</div>
+        </a>
+        <a href="./fundtransfer.html" class="nav_link" aria-label="fund-transfer">
+          <span class="material-symbols-outlined">swap_horiz</span>
+          <div class="nav_link_text" data-i18n="fundTransfer">Fund Transfer</div>
+        </a>
+        <a href="./billpayments.html" class="nav_link" aria-label="bill-payment">
+          <span class="material-symbols-outlined">receipt_long</span>
+          <div class="nav_link_text" data-i18n="billPayment">Bill Payment</div>
+        </a>
+        <a href="./currencyexchange.html" class="nav_link" aria-label="currency-exchange">
+          <span class="material-symbols-outlined">currency_exchange</span>
+          <div class="nav_link_text" data-i18n="currencyExchange">Currency Exchange</div>
+        </a>
+        <a href="./smartassistant.html" class="nav_link" aria-label="smart-assistant">
+          <span class="material-symbols-outlined">smart_toy</span>
+          <div class="nav_link_text" data-i18n="smartAssistantSupport">Smart Assistant Support</div>
+        </a>
+        
+        <!-- LOGOUT BUTTON -->
+        <a href="#" class="nav_link" id="navLogout" style="margin-top: 20px;">
+          <span class="material-symbols-outlined">logout</span>
+          <div class="nav_link_text">Log Out</div>
+        </a>
+      </div>
+
+      <!-- life cover / small promo alanı -->
+      <div class="life_cover_offer">
+        <img src="./images/women.svg" onerror="this.src='https://placehold.co/130x150/png?text=Offer'" alt="" />
+        <div class="life_cover_text">
+          <p class="title" data-i18n="welcomeToAtomBank">Welcome to Atom Bank</p>
+          <p class="desc" data-i18n="manageBalance">Manage your balance, transfers and cards in one aurora-style dashboard.</p>
+        </div>
+        <a href="#" aria-label="open-account" data-i18n="openNewAccount">Open new account</a>
+      </div>
+
+      <!-- profile card -->
+      <div class="profile" id="profileCard">
+        <div class="img_with_name">
+          <img src="./images/profile.jpg" id="sidebarProfileImg" onerror="this.src='https://placehold.co/40x40?text=U'" alt="User">
+          <div class="profile_text">
+            <p class="name" id="profileName">User</p>
+          </div>
+        </div>
+        <svg id="logoutIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+          style="cursor: pointer;">
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path class="icon" d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
+        </svg>
+      </div>
+    </nav>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <section class="main_content">
+      <!-- Topbar -->
+      <div class="topbar">
+        <button id="menu_btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+            <path fill="none" d="M0 0h24v24H0z" />
+            <path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z" />
+          </svg>
+        </button>
+        <div class="overview_text">
+          <p class="title">Overview</p>
+          <p class="desc">Hi User, welcome back!</p>
+        </div>
+        <div class="topbar_icons">
+          <a href="#" aria-label="search" class="topbar_icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path
+                d="M11 2c4.968 0 9 4.032 9 9s-4.032 9-9 9-9-4.032-9-9 4.032-9 9-9zm0 16c3.867 0 7-3.133 7-7 0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7zm8.485.071l2.829 2.828-1.415 1.415-2.828-2.829 1.414-1.414z" />
+            </svg>
+          </a>
+          <a href="#" aria-label="notifications" class="topbar_icon alert">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path
+                d="M22 20H2v-2h1v-6.969C3 6.043 7.03 2 12 2s9 4.043 9 9.031V18h1v2zM5 18h14v-6.969C19 7.148 15.866 4 12 4s-7 3.148-7 7.031V18zm4.5 3h5a2.5 2.5 0 1 1-5 0z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Layout: main + aside -->
+      <section>
+        <!-- ========== MAIN (balance + transactions) ========== -->
+        <main>
+          <div class="overview_text">
+            <p class="title">Overview</p>
+            <p class="desc">Hi <span id="welcomeUserName">User</span>, welcome back!</p>
+          </div>
+
+          <!-- Main Balance Card -->
+          <div class="bank_balance_card">
+            <p>your balance</p>
+            <p class="balance">₺120,845.90</p>
+            <div class="account_no">
+              <span>Account No : <span class="no">4567&nbsp;8910&nbsp;1121&nbsp;3141</span></span>
+              <button class="view_account_no" aria-label="show_ac">
+                <span class="material-symbols-outlined" style="font-size: 18px; color:#4b5563;">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Balance actions -->
+          <div class="button_group">
+            <button class="r_transaction" id="toggleTransactions" aria-label="show_transaction">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path d="M16 16v-4l5 5-5 5v-4H4v-2h12zM8 2v3.999L20 6v2H8v4L3 7l5-5z" fill="rgba(255,255,255,1)" />
+              </svg>
+              <span>recent transactions</span>
+            </button>
+            <button class="s_analysis" aria-label="show_analysis">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path class="icon"
+                  d="M11 .543c.33-.029.663-.043 1-.043C18.351.5 23.5 5.649 23.5 12c0 .337-.014.67-.043 1h-1.506c-.502 5.053-4.766 9-9.951 9-5.523 0-10-4.477-10-10 0-5.185 3.947-9.449 9-9.95V.542zM11 13V4.062A8.001 8.001 0 0 0 12 20a8.001 8.001 0 0 0 7.938-7H11zm10.448-2A9.503 9.503 0 0 0 13 2.552V11h8.448z" />
+              </svg>
+              <span>spend analysis</span>
+            </button>
+          </div>
+
+          <!-- Transactions list -->
+          <div id="transactionsContainer">
+          <div class="transaction_info">
+            <div class="transaction_date">
+              Today | 14th Nov, 2025
+            </div>
+            <div class="transaction_data">
+              <div class="get_send_money">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M5 11h14v2H5z" fill="rgba(255,0,0,1)" />
+                  </svg>
+                </span>
+                <div class="trasaction_details">
+                  <p class="transaction_metadata">Transfer to <span>Nike</span></p>
+                  <p>Shopping – sneakers</p>
+                </div>
+              </div>
+              <p class="transaction_value">₺1,250.00</p>
+            </div>
+            <div class="transaction_data">
+              <div class="get_send_money">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="#24cca7" />
+                  </svg>
+                </span>
+                <div class="trasaction_details">
+                  <p class="transaction_metadata">Received from <span>Freelance Client</span></p>
+                  <p>Project payment</p>
+                </div>
+              </div>
+              <p class="transaction_value">₺12,400.00</p>
+            </div>
+          </div>
+
+          <div class="transaction_info">
+            <div class="transaction_date">
+              Yesterday | 13th Nov, 2025
+            </div>
+            <div class="transaction_data">
+              <div class="get_send_money">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M5 11h14v2H5z" fill="rgba(255,0,0,1)" />
+                  </svg>
+                </span>
+                <div class="trasaction_details">
+                  <p class="transaction_metadata">Payment to <span>Spotify</span></p>
+                  <p>Monthly subscription</p>
+                </div>
+              </div>
+              <p class="transaction_value">₺59.99</p>
+            </div>
+            <div class="transaction_data">
+              <div class="get_send_money">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="#24cca7" />
+                  </svg>
+                </span>
+                <div class="trasaction_details">
+                  <p class="transaction_metadata">Received from <span>Scholarship</span></p>
+                  <p>Monthly payment</p>
+                </div>
+              </div>
+              <p class="transaction_value">₺3,000.00</p>
+            </div>
+          </div>
+          </div><!-- end transactionsContainer -->
+
+          <button class="show_more" aria-label="show_more">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z" />
+            </svg>
+          </button>
+        </main>
+
+        <!-- ========== ASIDE (quick transfer + cards) ========== -->
+        <aside>
+          <!-- Quick Transfer -->
+          <div class="transfer_money_section">
+            <p class="title">quick transfer</p>
+            <div class="button_group">
+              <button class="via_no active" id="viaMobileBtn" aria-label="via_no">via mobile no.</button>
+              <button class="via_ac" id="viaAccountBtn" aria-label="via_ac">via account no.</button>
+            </div>
+            <form id="quickTransferForm">
+              <!-- Phone Number Mode (default) -->
+              <div class="phone_no_info" id="phoneInputSection">
+                <label for="quick_phone">
+                  <img src="./images/turkey.png" onerror="this.src='https://placehold.co/20x20?text=TR'" alt="">&nbsp;+90
+                </label>
+                <input type="tel" name="quick_phone" id="quick_phone" placeholder="5551234567" maxlength="10">
+                <button type="button" id="searchPhoneBtn" class="search-phone-btn" title="Search recipient">
+                  <span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+                </button>
+              </div>
+              <!-- IBAN Mode (hidden by default) -->
+              <div class="iban_info" id="ibanInputSection" style="display: none;">
+                <input type="text" name="quick_iban" id="quick_iban" placeholder="TR00 0000 0000 0000 0000 0000 00" maxlength="32" style="width: 100%; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px;">
+              </div>
+              <!-- Recipient Name (for IBAN mode) -->
+              <div class="recipient_name_info" id="recipientNameSection" style="display: none; margin-top: 10px;">
+                <input type="text" name="quick_recipient" id="quick_recipient" placeholder="Recipient Name" style="width: 100%; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px;">
+              </div>
+              <!-- Found Recipient Display (for phone mode) -->
+              <div class="found_recipient" id="foundRecipientSection" style="display: none; margin-top: 10px; padding: 10px; background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%); border-radius: 8px;">
+                <p style="font-size: 12px; color: #666; margin: 0;">Recipient Found:</p>
+                <p id="foundRecipientName" style="font-size: 16px; font-weight: 600; color: #333; margin: 5px 0 0 0;"></p>
+              </div>
+              <div class="amount">
+                <div>
+                  <label for="quick_amount">₺</label>
+                  <input type="number" name="quick_amount" id="quick_amount" placeholder="2,000.00" step="0.01" min="0.01">
+                </div>
+                <span>TRY</span>
+              </div>
+              <!-- Hidden fields for phone mode transfer -->
+              <input type="hidden" id="quick_found_iban" value="">
+              <input type="hidden" id="quick_found_name" value="">
+              <input type="submit" value="send now" />
+            </form>
+          </div>
+
+          <!-- Your Accounts -->
+          <div class="cards">
+            <div class="title_with_button">
+              <p class="title">your accounts</p>
+              <div class="sliber_controller">
+                <div class="swipe_previous">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path
+                      d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 18c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8zm0-9h4v2h-4v3l-4-4 4-4v3z" />
+                  </svg>
+                </div>
+                <div class="swipe_next">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path
+                      d="M12 11V8l4 4-4 4v-3H8v-2h4zm0-9c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 18c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="swiper mySwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="./images/card1.webp" onerror="this.src='https://placehold.co/300x180/6366f1/ffffff?text=Credit+Card+1'" alt="Atom Card 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="./images/card2.webp" onerror="this.src='https://placehold.co/300x180/22c55e/ffffff?text=Debit+Card+2'" alt="Atom Card 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="./images/card3.webp" onerror="this.src='https://placehold.co/300x180/38bdf8/ffffff?text=Virtual+Card+3'" alt="Atom Card 3">
+                </div>
+              </div>
+              <div class="swiper-page"></div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </section>
+  </div>
+
+  <!-- Spend Analysis Modal -->
+  <div class="spend-analysis-modal-overlay" id="spendAnalysisModal" style="display: none;">
+    <div class="spend-analysis-modal">
+      <div class="spend-analysis-header">
+        <h2>Spend Analysis</h2>
+        <button class="spend-analysis-close" id="closeSpendAnalysis">&times;</button>
+      </div>
+      <div class="spend-analysis-period-selector">
+        <button class="period-btn active" data-period="daily">Daily</button>
+        <button class="period-btn" data-period="weekly">Weekly</button>
+        <button class="period-btn" data-period="monthly">Monthly</button>
+        <button class="period-btn" data-period="yearly">Yearly</button>
+      </div>
+      <div class="spend-analysis-summary" id="spendAnalysisSummary">
+        <div class="summary-card income">
+          <span class="summary-label">Total Income</span>
+          <span class="summary-value" id="summaryIncome">₺0.00</span>
+        </div>
+        <div class="summary-card spending">
+          <span class="summary-label">Total Spending</span>
+          <span class="summary-value" id="summarySpending">₺0.00</span>
+        </div>
+        <div class="summary-card net">
+          <span class="summary-label">Net Amount</span>
+          <span class="summary-value" id="summaryNet">₺0.00</span>
+        </div>
+      </div>
+      <div class="spend-analysis-content">
+        <h3>Spending by Category</h3>
+        <div class="category-table-container">
+          <table class="category-table" id="categoryTable">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Percentage</th>
+                <th>Visual</th>
+              </tr>
+            </thead>
+            <tbody id="categoryTableBody">
+              <!-- Data will be inserted here -->
+            </tbody>
+          </table>
+        </div>
+        <div class="no-data-message" id="noDataMessage" style="display: none;">
+          <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">analytics</span>
+          <p>No spending data for this period</p>
+        </div>
+      </div>
+      <div class="spend-analysis-footer">
+        <p id="periodRange">Period: --</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+  <!-- Dashboard-specific Interaction Logic -->
+  <script>
+    // View Account Number toggle (Dashboard specific)
+    document.addEventListener('DOMContentLoaded', function() {
+        const viewBtn = document.querySelector('.view_account_no');
+        const acNoSpan = document.querySelector('.account_no .no');
+        let isVisible = true;
+
+        if(viewBtn && acNoSpan) {
+            const originalText = acNoSpan.innerText;
+            viewBtn.addEventListener('click', function() {
+                isVisible = !isVisible;
+                if(isVisible) {
+                    // Showing account number - eye open icon
+                    acNoSpan.innerText = originalText;
+                    viewBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px; color:#4b5563;">visibility</span>';
+                } else {
+                    // Hiding account number - eye closed icon
+                    acNoSpan.innerText = "**** **** **** ****";
+                    viewBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px; color:#4b5563;">visibility_off</span>';
+                }
+            });
+        }
+    });
+
+    // Quick Transfer Form (Dashboard specific)
+    let quickTransferMode = 'phone'; // 'phone' or 'iban'
+    let foundRecipientData = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const viaMobileBtn = document.getElementById('viaMobileBtn');
+      const viaAccountBtn = document.getElementById('viaAccountBtn');
+      const phoneInputSection = document.getElementById('phoneInputSection');
+      const ibanInputSection = document.getElementById('ibanInputSection');
+      const recipientNameSection = document.getElementById('recipientNameSection');
+      const foundRecipientSection = document.getElementById('foundRecipientSection');
+      const searchPhoneBtn = document.getElementById('searchPhoneBtn');
+      const quickTransferForm = document.getElementById('quickTransferForm');
+
+      // Mode toggle handlers
+      if (viaMobileBtn && viaAccountBtn) {
+        viaMobileBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          quickTransferMode = 'phone';
+          viaMobileBtn.classList.add('active');
+          viaAccountBtn.classList.remove('active');
+          phoneInputSection.style.display = 'flex';
+          ibanInputSection.style.display = 'none';
+          recipientNameSection.style.display = 'none';
+          foundRecipientSection.style.display = 'none';
+          foundRecipientData = null;
+          document.getElementById('quick_found_iban').value = '';
+          document.getElementById('quick_found_name').value = '';
+        });
+
+        viaAccountBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          quickTransferMode = 'iban';
+          viaAccountBtn.classList.add('active');
+          viaMobileBtn.classList.remove('active');
+          phoneInputSection.style.display = 'none';
+          ibanInputSection.style.display = 'block';
+          recipientNameSection.style.display = 'block';
+          foundRecipientSection.style.display = 'none';
+          foundRecipientData = null;
+        });
+      }
+
+      // Phone search handler
+      if (searchPhoneBtn) {
+        searchPhoneBtn.addEventListener('click', async function() {
+          const phone = document.getElementById('quick_phone').value.trim();
+          if (!phone || phone.length < 10) {
+            if (typeof showResultModal === 'function') {
+              showResultModal({ type: 'warning', title: 'Invalid Phone', message: 'Please enter a valid 10-digit phone number.' });
+            } else {
+              alert('Please enter a valid 10-digit phone number.');
+            }
+            return;
+          }
+
+          searchPhoneBtn.disabled = true;
+          searchPhoneBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size: 20px; animation: spin 1s linear infinite;">sync</span>';
+
+          try {
+            const res = await fetch(`/api/user/search-by-phone?phone=${encodeURIComponent(phone)}`, {
+              method: 'GET',
+              headers: getAuthHeaders()
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+              throw new Error(data.message || 'User not found');
+            }
+
+            // Store found recipient data
+            foundRecipientData = data.data;
+            document.getElementById('quick_found_iban').value = data.data.iban;
+            document.getElementById('quick_found_name').value = data.data.fullName;
+
+            // Show found recipient
+            document.getElementById('foundRecipientName').textContent = data.data.maskedName;
+            foundRecipientSection.style.display = 'block';
+
+          } catch (err) {
+            foundRecipientData = null;
+            foundRecipientSection.style.display = 'none';
+            if (typeof showResultModal === 'function') {
+              showResultModal({ type: 'error', title: 'Not Found', message: err.message || 'No user found with this phone number.' });
+            } else {
+              alert(err.message || 'No user found with this phone number.');
+            }
+          } finally {
+            searchPhoneBtn.disabled = false;
+            searchPhoneBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size: 20px;">search</span>';
+          }
+        });
+      }
+
+      // Form submit handler
+      if (quickTransferForm) {
+        quickTransferForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+
+          const amount = parseFloat(document.getElementById('quick_amount').value);
+          if (!amount || amount <= 0) {
+            if (typeof showResultModal === 'function') {
+              showResultModal({ type: 'warning', title: 'Invalid Amount', message: 'Please enter a valid amount.' });
+            } else {
+              alert('Please enter a valid amount.');
+            }
+            return;
+          }
+
+          let recipientIban, recipientName;
+
+          if (quickTransferMode === 'phone') {
+            // Phone mode - must have found recipient
+            if (!foundRecipientData) {
+              if (typeof showResultModal === 'function') {
+                showResultModal({ type: 'warning', title: 'No Recipient', message: 'Please search for a recipient first using the search button.' });
+              } else {
+                alert('Please search for a recipient first using the search button.');
+              }
+              return;
+            }
+            recipientIban = foundRecipientData.iban;
+            recipientName = foundRecipientData.fullName;
+
+            // Verify name before transfer
+            if (typeof showNameVerification === 'function') {
+              const verified = await showNameVerification({
+                recipientName: recipientName,
+                amount: formatCurrency(amount, 'TRY'),
+                iban: recipientIban
+              });
+              if (!verified) return;
+            }
+          } else {
+            // IBAN mode - get from inputs
+            recipientIban = document.getElementById('quick_iban').value.trim().replace(/\s/g, '');
+            recipientName = document.getElementById('quick_recipient').value.trim();
+
+            if (!recipientIban || recipientIban.length < 15) {
+              if (typeof showResultModal === 'function') {
+                showResultModal({ type: 'warning', title: 'Invalid IBAN', message: 'Please enter a valid IBAN.' });
+              } else {
+                alert('Please enter a valid IBAN.');
+              }
+              return;
+            }
+
+            if (!recipientName) {
+              if (typeof showResultModal === 'function') {
+                showResultModal({ type: 'warning', title: 'Missing Name', message: 'Please enter the recipient name.' });
+              } else {
+                alert('Please enter the recipient name.');
+              }
+              return;
+            }
+
+            // Verify name before transfer
+            if (typeof showNameVerification === 'function') {
+              const verified = await showNameVerification({
+                recipientName: recipientName,
+                amount: formatCurrency(amount, 'TRY'),
+                iban: recipientIban
+              });
+              if (!verified) return;
+            }
+          }
+
+          // Get user's primary account
+          try {
+            const accounts = await fetchUserAccounts();
+            const tryAccounts = accounts.filter(acc => acc.currency === 'TRY' && acc.status === 'active');
+            const sourceAccount = tryAccounts.length > 0 ? tryAccounts[0] : accounts.find(acc => acc.status === 'active');
+
+            if (!sourceAccount) {
+              if (typeof showResultModal === 'function') {
+                showResultModal({ type: 'error', title: 'No Account', message: 'No active account found for transfer.' });
+              } else {
+                alert('No active account found for transfer.');
+              }
+              return;
+            }
+
+            if (sourceAccount.balance < amount) {
+              if (typeof showResultModal === 'function') {
+                showResultModal({ type: 'error', title: 'Insufficient Balance', message: `Your balance (${formatCurrency(sourceAccount.balance, sourceAccount.currency)}) is insufficient for this transfer.` });
+              } else {
+                alert('Insufficient balance for this transfer.');
+              }
+              return;
+            }
+
+            // Submit button loading state
+            const submitBtn = quickTransferForm.querySelector('input[type="submit"]');
+            const originalValue = submitBtn.value;
+            submitBtn.value = 'Processing...';
+            submitBtn.disabled = true;
+
+            // Make transfer
+            const res = await fetch('/api/transactions/transfer-external', {
+              method: 'POST',
+              headers: getAuthHeaders(),
+              body: JSON.stringify({
+                accountId: sourceAccount._id,
+                toIBAN: recipientIban,
+                recipientName: recipientName,
+                amount: amount,
+                description: `Quick Transfer to ${recipientName}`
+              })
+            });
+
+            const data = await res.json();
+
+            submitBtn.value = originalValue;
+            submitBtn.disabled = false;
+
+            if (!res.ok) {
+              throw new Error(data.message || 'Transfer failed');
+            }
+
+            // Success
+            if (typeof showResultModal === 'function') {
+              showResultModal({
+                type: 'success',
+                title: 'Transfer Successful',
+                message: `${formatCurrency(amount, 'TRY')} has been sent to ${recipientName}.`,
+                details: [
+                  { label: 'New Balance', value: formatCurrency(data.data.newBalance, sourceAccount.currency) },
+                  { label: 'IBAN', value: recipientIban.replace(/(.{4})/g, '$1 ').trim() }
+                ]
+              });
+            } else {
+              alert(`Transfer successful! ${formatCurrency(amount, 'TRY')} sent to ${recipientName}.`);
+            }
+
+            // Reset form
+            quickTransferForm.reset();
+            foundRecipientSection.style.display = 'none';
+            foundRecipientData = null;
+            document.getElementById('quick_found_iban').value = '';
+            document.getElementById('quick_found_name').value = '';
+
+            // Refresh dashboard data
+            if (typeof loadDashboardData === 'function') {
+              loadDashboardData();
+            } else {
+              // Reload page to show updated balance
+              setTimeout(() => location.reload(), 1500);
+            }
+
+          } catch (err) {
+            const submitBtn = quickTransferForm.querySelector('input[type="submit"]');
+            submitBtn.value = 'send now';
+            submitBtn.disabled = false;
+
+            if (typeof showResultModal === 'function') {
+              showResultModal({ type: 'error', title: 'Transfer Failed', message: err.message || 'An error occurred during transfer.' });
+            } else {
+              alert(err.message || 'An error occurred during transfer.');
+            }
+          }
+        });
+      }
+    });
+
+    // Add CSS animation for loading spinner
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .via_no.active, .via_ac.active {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+      }
+      .search-phone-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6366f1;
+        transition: transform 0.2s;
+      }
+      .search-phone-btn:hover {
+        transform: scale(1.1);
+      }
+      .search-phone-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // ========== SPEND ANALYSIS MODAL ==========
+    const categoryIcons = {
+      income: '💰',
+      utilities: '💡',
+      shopping: '🛒',
+      food: '🍔',
+      transport: '🚗',
+      entertainment: '🎬',
+      health: '🏥',
+      education: '📚',
+      transfer: '↔️',
+      other: '📋'
+    };
+
+    const categoryColors = {
+      income: '#22c55e',
+      utilities: '#f59e0b',
+      shopping: '#ec4899',
+      food: '#f97316',
+      transport: '#3b82f6',
+      entertainment: '#8b5cf6',
+      health: '#ef4444',
+      education: '#06b6d4',
+      transfer: '#6366f1',
+      other: '#6b7280'
+    };
+
+    async function loadSpendAnalysis(period = 'monthly') {
+      try {
+        const res = await fetch(`/api/smart/spending?period=${period}`, {
+          method: 'GET',
+          headers: getAuthHeaders()
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch spending data');
+        }
+
+        const data = await res.json();
+        const analysis = data.data;
+
+        // Update summary cards
+        document.getElementById('summaryIncome').textContent = formatCurrency(analysis.totalIncome, 'TRY');
+        document.getElementById('summarySpending').textContent = formatCurrency(analysis.totalSpending, 'TRY');
+
+        const netEl = document.getElementById('summaryNet');
+        netEl.textContent = formatCurrency(analysis.netAmount, 'TRY');
+        netEl.style.color = analysis.netAmount >= 0 ? '#22c55e' : '#ef4444';
+
+        // Update period range
+        const startDate = new Date(analysis.periodStart);
+        const endDate = new Date(analysis.periodEnd);
+        document.getElementById('periodRange').textContent =
+          `Period: ${startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+
+        // Update category table
+        const tbody = document.getElementById('categoryTableBody');
+        const noDataMessage = document.getElementById('noDataMessage');
+        const tableContainer = document.querySelector('.category-table-container');
+
+        tbody.innerHTML = '';
+
+        const categories = analysis.byCategory || {};
+        const categoryEntries = Object.entries(categories).sort((a, b) => b[1] - a[1]);
+
+        if (categoryEntries.length === 0) {
+          tableContainer.style.display = 'none';
+          noDataMessage.style.display = 'flex';
+        } else {
+          tableContainer.style.display = 'block';
+          noDataMessage.style.display = 'none';
+
+          const totalSpending = analysis.totalSpending || 1;
+
+          categoryEntries.forEach(([category, amount]) => {
+            const percentage = ((amount / totalSpending) * 100).toFixed(1);
+            const icon = categoryIcons[category] || '📋';
+            const color = categoryColors[category] || '#6b7280';
+            const displayName = category.charAt(0).toUpperCase() + category.slice(1);
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>
+                <span class="category-icon">${icon}</span>
+                <span class="category-name">${displayName}</span>
+              </td>
+              <td class="amount-cell">${formatCurrency(amount, 'TRY')}</td>
+              <td class="percentage-cell">${percentage}%</td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: ${percentage}%; background-color: ${color};"></div>
+                </div>
+              </td>
+            `;
+            tbody.appendChild(row);
+          });
+        }
+
+      } catch (err) {
+        console.error('Error loading spending analysis:', err);
+        if (typeof showResultModal === 'function') {
+          showResultModal({ type: 'error', title: 'Error', message: 'Failed to load spending analysis.' });
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const spendAnalysisBtn = document.querySelector('.s_analysis');
+      const spendAnalysisModal = document.getElementById('spendAnalysisModal');
+      const closeSpendAnalysisBtn = document.getElementById('closeSpendAnalysis');
+      const periodBtns = document.querySelectorAll('.period-btn');
+
+      // Open modal
+      if (spendAnalysisBtn) {
+        spendAnalysisBtn.addEventListener('click', function() {
+          spendAnalysisModal.style.display = 'flex';
+          loadSpendAnalysis('monthly');
+          // Set monthly as active
+          periodBtns.forEach(btn => btn.classList.remove('active'));
+          document.querySelector('.period-btn[data-period="monthly"]').classList.add('active');
+        });
+      }
+
+      // Close modal
+      if (closeSpendAnalysisBtn) {
+        closeSpendAnalysisBtn.addEventListener('click', function() {
+          spendAnalysisModal.style.display = 'none';
+        });
+      }
+
+      // Close on overlay click
+      if (spendAnalysisModal) {
+        spendAnalysisModal.addEventListener('click', function(e) {
+          if (e.target === spendAnalysisModal) {
+            spendAnalysisModal.style.display = 'none';
+          }
+        });
+      }
+
+      // Period selector
+      periodBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          periodBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          loadSpendAnalysis(btn.dataset.period);
+        });
+      });
+    });
+  </script>
+<script src="./dataFetcher.js"></script>
+<script src="./translations.js"></script>
+<script src="./main.js"></script>
+<script src="./dashboardData.js"></script>
+</body>
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script src="config.js"></script>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Atom Bank - Currency Exchange</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme System CSS (must load before dashboard.css) -->
+    <link rel="stylesheet" href="./theme.css">
+    <!-- Dashboard CSS for Sidebar -->
+    <link rel="stylesheet" href="./dashboard.css">
+    <!-- Page specific CSS -->
+    <link rel="stylesheet" href="./currencyexchange.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "atom-bg": "#e5e8f0",
+                        "atom-text-black": "#020617",
+                        "atom-text-grey": "#a1a3af",
+                        "atom-text-dark-grey": "#4b5563",
+                        "atom-primary": "#6366f1", /* Indigo */
+                        "atom-secondary": "#22c55e", /* Green */
+                        "atom-blue": "#38bdf8",
+                        "atom-circle-1": "#ffd8f0", /* Pinkish */
+                        "atom-circle-2": "#c7bfff", /* Lavender */
+                    },
+                    fontFamily: {
+                        "sans": ["Poppins", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"]
+                    },
+                    boxShadow: {
+                        "soft": "0 18px 40px rgba(148, 163, 184, 0.35)",
+                        "glow": "0 10px 30px rgba(79, 70, 229, 0.5)",
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<script src="./authGuard.js"></script>
+</head>
+<body class="light">
+
+    <!-- Ambient Background Elements -->
+    <div class="bg-circle-1"></div>
+    <div class="bg-circle-2"></div>
+
+    <div class="container">
+        
+        <!-- Sidebar from Dashboard -->
+        <nav class="sidebar" id="sidebar">
+          <!-- close btn for responsive sidebar -->
+          <button id="btn_close">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path
+                d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+            </svg>
+          </button>
+
+          <div class="logo">
+            <img src="./images/logo.png" alt="Atom Bank Logo">
+            <span>Atom Bank</span>
+          </div>
+
+          <!-- Sidebar menu -->
+          <div class="nav_links">
+            <a href="./dashboard.html" class="nav_link" aria-label="overview">
+              <span class="material-symbols-outlined">grid_view</span>
+              <div class="nav_link_text" data-i18n="overview">Overview</div>
+            </a>
+
+            <a href="./accounthistory.html" class="nav_link" aria-label="account-history">
+              <span class="material-symbols-outlined">history</span>
+              <div class="nav_link_text" data-i18n="accounts">Account History</div>
+            </a>
+
+            <a href="./fundtransfer.html" class="nav_link" aria-label="fund-transfer">
+              <span class="material-symbols-outlined">swap_horiz</span>
+              <div class="nav_link_text" data-i18n="fundTransfer">Fund Transfer</div>
+            </a>
+
+            <a href="./billpayments.html" class="nav_link" aria-label="bill-payment">
+              <span class="material-symbols-outlined">receipt_long</span>
+              <div class="nav_link_text" data-i18n="billPayment">Bill Payment</div>
+            </a>
+
+            <a href="./currencyexchange.html" class="nav_link active" aria-label="currency-exchange">
+              <span class="material-symbols-outlined icon-fill">currency_exchange</span>
+              <div class="nav_link_text" data-i18n="currencyExchange">Currency Exchange</div>
+            </a>
+
+            <a href="./smartassistant.html" class="nav_link" aria-label="smart-assistant">
+              <span class="material-symbols-outlined">smart_toy</span>
+              <div class="nav_link_text" data-i18n="smartAssistantSupport">Smart Assistant Support</div>
+            </a>
+            
+            <!-- LOGOUT BUTTON -->
+            <a href="#" class="nav_link" id="navLogout" style="margin-top: 20px;">
+              <span class="material-symbols-outlined">logout</span>
+              <div class="nav_link_text">Log Out</div>
+            </a>
+          </div>
+
+          <!-- life cover / small promo alanı aynı kalabilir -->
+          <div class="life_cover_offer">
+            <img src="./images/women.svg" alt="" />
+          <div class="life_cover_text">
+            <p class="title" data-i18n="welcomeToAtomBank">Welcome to Atom Bank</p>
+            <p class="desc" data-i18n="manageBalance">Manage your balance, transfers and cards in one aurora-style dashboard.</p>
+          </div>
+          <a href="#" aria-label="open-account" data-i18n="openNewAccount">Open new account</a>
+          </div>
+
+          <!-- profile card -->
+          <div class="profile" id="profileCard">
+            <div class="img_with_name">
+              <img src="./images/profile.jpg" id="sidebarProfileImg" alt="User">
+              <div class="profile_text">
+                <p class="name" id="profileName">User</p>
+              </div>
+            </div>
+            <!-- Sağdaki oka logout davranışı vereceğiz -->
+            <svg
+              id="logoutIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              style="cursor: pointer;"
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path class="icon" d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
+            </svg>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <section class="main_content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <button id="menu_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z" />
+                    </svg>
+                </button>
+                <div class="topbar_icons">
+                </div>
+            </div>
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+
+            <div class="flex-1 overflow-y-auto p-6 md:p-10 scrollbar-hide">
+                <div class="max-w-4xl mx-auto flex flex-col gap-8">
+                    
+                    <!-- Page Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-4xl font-light text-atom-text-black" data-i18n="currencyExchange">Currency Exchange</h2>
+                            <p class="text-sm text-atom-text-dark-grey mt-1" data-i18n="exchangeDesc">Real-time rates, zero hidden fees.</p>
+                        </div>
+                    </div>
+
+                    <!-- Exchange Card -->
+                    <div class="bg-white rounded-[30px] p-8 md:p-10 w-full shadow-soft relative overflow-hidden z-10">
+                        
+                        <!-- Decorative bg blob inside card -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-atom-primary/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+
+                        <!-- Source Selection -->
+                        <div class="flex flex-col gap-3 mb-8 relative z-10">
+                            <div class="flex justify-between items-center px-1">
+                                <span class="text-xs font-bold text-atom-text-grey uppercase tracking-wider" data-i18n="sourceAccount">From Account</span>
+                                <span class="text-sm text-atom-text-black font-semibold">Balance: <span id="availBalance">0.00 TRY</span></span>
+                            </div>
+                            <div class="relative group">
+                                <select class="w-full bg-atom-bg border-none rounded-2xl py-4 pl-5 pr-12 text-atom-text-black font-medium focus:ring-2 focus:ring-atom-primary/50 cursor-pointer transition-shadow">
+                                    <option>Loading accounts...</option>
+                                </select>
+                                <span class="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-atom-text-grey">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Currency Pair Logic -->
+                        <div class="flex flex-col gap-3 mb-8 relative z-10">
+                            <span class="text-xs font-bold text-atom-text-grey uppercase tracking-wider px-1" data-i18n="currency">Currency Pair</span>
+                            <div class="flex items-center gap-4">
+                                <!-- From Currency (read-only, from selected account) -->
+                                <div class="relative flex-1">
+                                    <div class="w-full bg-atom-bg rounded-2xl py-4 pl-5 pr-4 text-atom-text-black font-bold flex items-center gap-3 shadow-inner">
+                                        <span class="material-symbols-outlined text-atom-secondary p-2 bg-white rounded-xl shadow-sm" id="iconFrom">currency_lira</span>
+                                        <span id="labelFrom" class="text-lg">TRY</span>
+                                    </div>
+                                </div>
+
+                                <!-- Arrow Icon -->
+                                <div class="shrink-0 text-atom-text-grey">
+                                    <span class="material-symbols-outlined">arrow_forward</span>
+                                </div>
+
+                                <!-- To Currency (selectable dropdown) -->
+                                <div class="relative flex-1">
+                                    <select id="toCurrencySelect" class="w-full bg-atom-bg rounded-2xl py-4 pl-14 pr-10 text-atom-text-black font-bold text-lg focus:ring-2 focus:ring-atom-primary/50 cursor-pointer appearance-none">
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="GBP">GBP</option>
+                                        <option value="TRY">TRY</option>
+                                    </select>
+                                    <span class="material-symbols-outlined text-atom-primary p-2 bg-white rounded-xl shadow-sm absolute left-4 top-1/2 -translate-y-1/2" id="iconTo">attach_money</span>
+                                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-atom-text-grey">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rate Info -->
+                        <div class="flex items-center justify-between mb-8 p-4 bg-atom-primary/5 border border-atom-primary/10 rounded-2xl">
+                             <div class="flex items-center gap-3">
+                                 <span class="material-symbols-outlined text-atom-primary">trending_up</span>
+                                 <div class="flex flex-col">
+                                     <span class="text-xs text-atom-text-grey" data-i18n="exchangeRate">Live Exchange Rate</span>
+                                     <span class="text-base font-bold text-atom-text-black" id="rateDisplay">1 USD = 36.15 TRY</span>
+                                 </div>
+                             </div>
+                             <div class="bg-white px-3 py-1 rounded-lg text-xs font-bold text-atom-primary shadow-sm">Updated just now</div>
+                        </div>
+
+                        <!-- Input Fields -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Sell Input -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-xs font-bold text-atom-text-grey uppercase ml-1" data-i18n="from">You Sell</label>
+                                <div class="relative group">
+                                    <input id="inputSell" class="w-full bg-transparent border-b-2 border-gray-200 focus:border-atom-secondary py-3 px-2 text-2xl font-bold text-atom-text-black placeholder-gray-300 focus:outline-none transition-colors text-right" placeholder="0.00" type="number" step="0.01"/>
+                                    <span class="absolute left-2 top-1/2 -translate-y-1/2 text-sm font-bold text-atom-text-grey pointer-events-none" id="unitSell">TRY</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Buy Input -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-xs font-bold text-atom-text-grey uppercase ml-1" data-i18n="to">You Buy</label>
+                                <div class="relative group">
+                                    <input id="inputBuy" class="w-full bg-transparent border-b-2 border-gray-200 focus:border-atom-primary py-3 px-2 text-2xl font-bold text-atom-text-black placeholder-gray-300 focus:outline-none transition-colors text-right" placeholder="0.00" type="number" step="0.01"/>
+                                    <span class="absolute left-2 top-1/2 -translate-y-1/2 text-sm font-bold text-atom-text-grey pointer-events-none" id="unitBuy">USD</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="bg-gray-50 rounded-2xl p-6 mb-8 border border-gray-100">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-sm text-atom-text-dark-grey">Fee (0.1%)</span>
+                                <span class="text-sm font-semibold text-atom-text-black" id="summaryFee">0.00 TRY</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-sm text-atom-text-dark-grey" data-i18n="totalCost">Total Cost</span>
+                                <span class="text-sm font-bold text-atom-text-black" id="totalCost">0.00 TRY</span>
+                            </div>
+                            <div class="h-px bg-gray-200 w-full mb-4"></div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-base font-medium text-atom-text-dark-grey" data-i18n="toReceive">To Receive</span>
+                                <span class="text-2xl font-bold text-atom-primary" id="receiveAmount">0.00 USD</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex flex-col gap-6">
+                            <button id="continueBtn" disabled class="w-full bg-gray-200 text-gray-400 font-bold py-4 rounded-2xl transition-all uppercase tracking-wide cursor-not-allowed text-sm hover:brightness-105">
+                                Enter Amount
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+        </section>
+    </div>
+
+    <!-- Data Fetcher Utility -->
+    <script src="./dataFetcher.js"></script>
+
+    <!-- Main JS -->
+    <!-- Translations -->
+    <script src="./translations.js"></script>
+    <script src="./main.js"></script>
+
+    <!-- Currency Exchange Data Loader -->
+    <script src="./currencyexchangeData.js"></script>
+
+<script>
+    // --- Configuration ---
+    const feePercent = 0.001; // 0.1%
+    window.userAccounts = window.userAccounts || [];
+    window.exchangeRates = {}; // Will store all rates
+
+    // --- DOM Elements ---
+    const inputSell = document.getElementById('inputSell');
+    const inputBuy = document.getElementById('inputBuy');
+    const toCurrencySelect = document.getElementById('toCurrencySelect');
+
+    // Labels & Icons
+    const unitSell = document.getElementById('unitSell');
+    const unitBuy = document.getElementById('unitBuy');
+    const labelFrom = document.getElementById('labelFrom');
+    const iconFrom = document.getElementById('iconFrom');
+    const iconTo = document.getElementById('iconTo');
+    const rateDisplay = document.getElementById('rateDisplay');
+
+    // Summary Elements
+    const summaryFee = document.getElementById('summaryFee');
+    const totalCost = document.getElementById('totalCost');
+    const receiveAmount = document.getElementById('receiveAmount');
+
+    // --- Helper Functions ---
+    function getCurrencyIcon(currency) {
+        const icons = { TRY: "currency_lira", USD: "attach_money", EUR: "euro", GBP: "currency_pound" };
+        return icons[currency] || "payments";
+    }
+
+    function formatAmount(amount) {
+        return amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function getSelectedAccountCurrency() {
+        const select = document.querySelector('select:not(#toCurrencySelect)');
+        const option = select?.options[select.selectedIndex];
+        return option?.dataset.currency || "TRY";
+    }
+
+    function getSelectedToCurrency() {
+        return toCurrencySelect?.value || "USD";
+    }
+
+    function getCurrentRate() {
+        const fromCurrency = getSelectedAccountCurrency();
+        const toCurrency = getSelectedToCurrency();
+
+        // Get rate from cached rates
+        if (window.exchangeRates[fromCurrency] && window.exchangeRates[fromCurrency][toCurrency]) {
+            return window.exchangeRates[fromCurrency][toCurrency];
+        }
+        return null;
+    }
+
+    // --- Core Functions ---
+    function updateUI() {
+        const fromCurrency = getSelectedAccountCurrency();
+        const toCurrency = getSelectedToCurrency();
+
+        // Update "From" display
+        labelFrom.innerText = fromCurrency;
+        iconFrom.innerText = getCurrencyIcon(fromCurrency);
+
+        // Update "To" icon
+        iconTo.innerText = getCurrencyIcon(toCurrency);
+
+        // Update input labels
+        unitSell.innerText = fromCurrency;
+        unitBuy.innerText = toCurrency;
+
+        // Filter out same currency from dropdown
+        const options = toCurrencySelect.querySelectorAll('option');
+        options.forEach(opt => {
+            if (opt.value === fromCurrency) {
+                opt.disabled = true;
+                opt.style.display = 'none';
+            } else {
+                opt.disabled = false;
+                opt.style.display = '';
+            }
+        });
+
+        // If current selection is same as from, change to different currency
+        if (toCurrencySelect.value === fromCurrency) {
+            const currencies = ['USD', 'EUR', 'GBP', 'TRY'];
+            const available = currencies.find(c => c !== fromCurrency);
+            toCurrencySelect.value = available;
+        }
+
+        // Update rate display
+        const rate = getCurrentRate();
+        if (rate && rate > 0) {
+            const inverseRate = 1 / rate;
+            rateDisplay.innerText = `1 ${toCurrency} = ${inverseRate.toFixed(2)} ${fromCurrency}`;
+        } else {
+            rateDisplay.innerText = "Loading rate...";
+        }
+
+        // Recalculate if there are values
+        if (parseFloat(inputSell.value) > 0) {
+            calculateFromSell();
+        }
+    }
+
+    function calculateFromSell() {
+        const sellVal = parseFloat(inputSell.value);
+        const rate = getCurrentRate();
+
+        if (isNaN(sellVal) || sellVal <= 0 || !rate || rate <= 0) {
+            resetSummary();
+            return;
+        }
+
+        const buyVal = sellVal * rate;
+        inputBuy.value = buyVal.toFixed(2);
+        updateSummary(sellVal, buyVal);
+    }
+
+    function calculateFromBuy() {
+        const buyVal = parseFloat(inputBuy.value);
+        const rate = getCurrentRate();
+
+        if (isNaN(buyVal) || buyVal <= 0 || !rate || rate <= 0) {
+            resetSummary();
+            return;
+        }
+
+        const sellVal = buyVal / rate;
+        inputSell.value = sellVal.toFixed(2);
+        updateSummary(sellVal, buyVal);
+    }
+
+    function updateSummary(sellVal, buyVal) {
+        if (!sellVal || sellVal <= 0 || !buyVal || buyVal <= 0) {
+            resetSummary();
+            return;
+        }
+
+        const fromCurrency = getSelectedAccountCurrency();
+        const toCurrency = getSelectedToCurrency();
+
+        const fee = sellVal * feePercent;
+        const total = sellVal + fee;
+
+        summaryFee.innerText = `${formatAmount(fee)} ${fromCurrency}`;
+        totalCost.innerText = `${formatAmount(total)} ${fromCurrency}`;
+        receiveAmount.innerText = `${formatAmount(buyVal)} ${toCurrency}`;
+
+        enableContinueButton();
+    }
+
+    function resetSummary() {
+        const fromCurrency = getSelectedAccountCurrency();
+        summaryFee.innerText = `0.00 ${fromCurrency}`;
+        totalCost.innerText = `0.00 ${fromCurrency}`;
+        receiveAmount.innerText = "0.00";
+        disableContinueButton();
+    }
+
+    function enableContinueButton() {
+        const btn = document.getElementById('continueBtn');
+        if (btn) {
+            btn.disabled = false;
+            btn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+            btn.classList.add('text-white', 'shadow-glow');
+            btn.style.background = 'linear-gradient(135deg, #22c55e, #38bdf8, #6366f1)';
+            btn.style.cursor = 'pointer';
+            btn.innerText = "Exchange Now";
+        }
+    }
+
+    function disableContinueButton() {
+        const btn = document.getElementById('continueBtn');
+        if (btn) {
+            btn.disabled = true;
+            btn.classList.add('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+            btn.classList.remove('text-white', 'shadow-glow');
+            btn.style.background = '';
+            btn.style.cursor = 'not-allowed';
+            btn.innerText = "Enter Amount";
+        }
+    }
+
+    // --- Event Listeners ---
+    inputSell.addEventListener('input', calculateFromSell);
+    inputBuy.addEventListener('input', calculateFromBuy);
+
+    // When target currency changes
+    toCurrencySelect.addEventListener('change', async () => {
+        // Fetch new rate for this pair
+        const fromCurrency = getSelectedAccountCurrency();
+        const toCurrency = getSelectedToCurrency();
+
+        iconTo.innerText = getCurrencyIcon(toCurrency);
+        unitBuy.innerText = toCurrency;
+
+        // Fetch rate if not cached
+        if (!window.exchangeRates[fromCurrency] || !window.exchangeRates[fromCurrency][toCurrency]) {
+            await fetchRatesForCurrency(fromCurrency);
+        }
+
+        updateUI();
+    });
+
+    // Initial setup
+    updateUI();
+
+    // --- Fetch Rates ---
+    async function fetchRatesForCurrency(baseCurrency) {
+        try {
+            const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
+            const res = await fetch(`/api/exchange/rates?baseCurrency=${baseCurrency}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token ? "Bearer " + token : "",
+                },
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                // Handle both response formats: data.rates or data.data.rates
+                window.exchangeRates[baseCurrency] = data.data?.rates || data.rates || data.data || {};
+                console.log(`Rates for ${baseCurrency}:`, window.exchangeRates[baseCurrency]);
+            }
+        } catch (err) {
+            console.error("Error fetching rates:", err);
+        }
+    }
+
+    // --- Exchange Handler ---
+    async function handleExchange(e) {
+        if (e) e.preventDefault();
+
+        const fromAccountSelect = document.querySelector('select:not(#toCurrencySelect)');
+        const fromAccountId = fromAccountSelect?.value;
+        const fromCurrency = getSelectedAccountCurrency();
+        const toCurrency = getSelectedToCurrency();
+
+        if (!fromAccountId) {
+            alert("Please select an account");
+            return;
+        }
+
+        const amount = parseFloat(inputSell.value);
+
+        if (!amount || amount <= 0 || isNaN(amount)) {
+            alert("Please enter a valid amount");
+            return;
+        }
+
+        if (toCurrency === fromCurrency) {
+            alert("Cannot exchange to the same currency");
+            return;
+        }
+
+        // Find target account with the selected currency
+        let toAccount = window.userAccounts.find(a => a.currency === toCurrency && a._id !== fromAccountId);
+
+        // If no account exists for target currency, create one automatically
+        if (!toAccount) {
+            try {
+                const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
+                const createRes = await fetch((window.API_BASE_URL || "") + "/api/account", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: token ? "Bearer " + token : "",
+                    },
+                    body: JSON.stringify({
+                        accountName: `${toCurrency} Account`,
+                        type: "savings",
+                        currency: toCurrency
+                    }),
+                });
+
+                const createData = await createRes.json();
+
+                if (!createRes.ok) {
+                    alert(createData.message || `Failed to create ${toCurrency} account`);
+                    return;
+                }
+
+                // Use the newly created account
+                toAccount = createData.data;
+                
+                // Ensure _id exists (Mongoose subdocument _id)
+                if (!toAccount._id && toAccount.id) {
+                    toAccount._id = toAccount.id;
+                }
+                
+                if (!toAccount._id) {
+                    console.error("Created account missing _id:", toAccount);
+                    alert(`Failed to get account ID for newly created ${toCurrency} account`);
+                    return;
+                }
+                
+                window.userAccounts.push(toAccount);
+                console.log(`Created new ${toCurrency} account:`, toAccount);
+            } catch (err) {
+                console.error("Error creating account:", err);
+                alert(`Failed to create ${toCurrency} account`);
+                return;
+            }
+        }
+
+        // Validate toAccount exists and has _id
+        if (!toAccount || !toAccount._id) {
+            console.error("toAccount is missing or has no _id:", toAccount);
+            alert("Target account is not available. Please try again.");
+            return;
+        }
+
+        // Check balance
+        const account = window.userAccounts.find(a => a._id === fromAccountId);
+        if (account && account.balance < amount) {
+            alert("Insufficient funds");
+            return;
+        }
+
+        // Show loading
+        const btn = document.getElementById('continueBtn');
+        const originalText = btn.innerText;
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
+        try {
+            const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
+            
+            // Final validation before sending request
+            if (!fromAccountId || !toAccount._id || !amount || amount <= 0) {
+                alert("Missing required information. Please try again.");
+                btn.innerText = originalText;
+                btn.disabled = false;
+                return;
+            }
+            
+            const res = await fetch((window.API_BASE_URL || "") + "/api/exchange/convert", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token ? "Bearer " + token : "",
+                },
+                body: JSON.stringify({
+                    fromAccountId,
+                    toAccountId: toAccount._id,
+                    amount,
+                }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.message || "Exchange failed");
+                btn.innerText = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            alert("Currency exchange completed successfully!");
+            location.reload();
+        } catch (err) {
+            console.error("Exchange error:", err);
+            alert("An error occurred during exchange");
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    // Attach click handler
+    document.getElementById('continueBtn').addEventListener('click', handleExchange);
+
+    // Enter key support
+    inputSell.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !document.getElementById('continueBtn').disabled) {
+            handleExchange(e);
+        }
+    });
+    inputBuy.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !document.getElementById('continueBtn').disabled) {
+            handleExchange(e);
+        }
+    });
+
+    // Make functions globally available
+    window.updateUI = updateUI;
+    window.fetchRatesForCurrency = fetchRatesForCurrency;
+
+</script>
+</body>
+</html>

@@ -1,0 +1,862 @@
+/* ============================================
+   ATOM BANK - THEME SYSTEM
+   Single Source of Truth for Colors & Tokens
+   ============================================ */
+
+/* ========== LIGHT THEME (Default) ========== */
+:root,
+.light {
+  /* === Color Scheme Declaration === */
+  color-scheme: light;
+
+  /* === Base Backgrounds === */
+  --bg-base: #e5e8f0;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f9fafb;
+  --bg-surface-3: #f3f4f6;
+  --bg-elevated: #ffffff;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* === Aurora Background Colors === */
+  --aurora-1: #ffd8f0;
+  --aurora-2: #c7bfff;
+  --aurora-blur: 100px;
+
+  /* === Text Colors === */
+  --text-primary: #020617;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --text-placeholder: #9ca3af;
+  --text-inverse: #ffffff;
+  --text-link: #3b82f6;
+  --text-link-hover: #2563eb;
+
+  /* === Primary Colors (Blue) === */
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-active: #1d4ed8;
+  --primary-light: #dbeafe;
+  --primary-dark: #1e40af;
+
+  /* === Secondary Colors (Green) === */
+  --secondary: #22c55e;
+  --secondary-hover: #16a34a;
+  --secondary-active: #15803d;
+  --secondary-light: #dcfce7;
+
+  /* === Accent Colors === */
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-light: #e0e7ff;
+
+  --accent-2: #8b5cf6;
+  --accent-2-hover: #7c3aed;
+  --accent-2-light: #ede9fe;
+
+  /* === Semantic Colors === */
+  --success: #22c55e;
+  --success-light: #dcfce7;
+  --success-dark: #15803d;
+
+  --info: #3b82f6;
+  --info-light: #dbeafe;
+  --info-dark: #1d4ed8;
+
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --warning-dark: #b45309;
+
+  --danger: #ef4444;
+  --danger-light: #fee2e2;
+  --danger-dark: #b91c1c;
+
+  /* === Border Colors === */
+  --border: #e5e7eb;
+  --border-hover: #d1d5db;
+  --border-focus: #3b82f6;
+  --border-muted: #f3f4f6;
+
+  /* === Shadow Colors === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  /* === Focus Ring === */
+  --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.4);
+  --focus-ring-danger: 0 0 0 3px rgba(239, 68, 68, 0.4);
+
+  /* === Component Specific === */
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --card-shadow: var(--shadow);
+
+  --sidebar-bg: #f3f4f6;
+  --sidebar-text: #374151;
+  --sidebar-active: #3b82f6;
+  --sidebar-hover: #e5e7eb;
+
+  --navbar-bg: rgba(255, 255, 255, 0.9);
+  --navbar-border: #e5e7eb;
+
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-focus-border: var(--primary);
+  --input-placeholder: #9ca3af;
+
+  --table-header-bg: #f9fafb;
+  --table-row-hover: #f3f4f6;
+  --table-border: #e5e7eb;
+
+  --modal-bg: #ffffff;
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+
+  --tooltip-bg: #1f2937;
+  --tooltip-text: #ffffff;
+
+  --badge-default-bg: #f3f4f6;
+  --badge-default-text: #374151;
+
+  /* === Solid Colors (no gradients) === */
+  --gradient-primary: #3b82f6;
+  --gradient-accent: #3b82f6;
+  --gradient-card: #3b82f6;
+
+  /* === Scrollbar === */
+  --scrollbar-track: #f3f4f6;
+  --scrollbar-thumb: #d1d5db;
+  --scrollbar-thumb-hover: #9ca3af;
+
+  /* === Transition === */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* === Border Radius === */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* === Spacing (reference) === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+}
+
+/* ========== DARK THEME ========== */
+.dark {
+  /* === Color Scheme Declaration === */
+  color-scheme: dark;
+
+  /* === Base Backgrounds (Pure Black) === */
+  --bg-base: #000000;
+  --bg-surface: #0a0a0f;
+  --bg-surface-2: #111118;
+  --bg-surface-3: #18181f;
+  --bg-elevated: #1a1a24;
+  --bg-overlay: rgba(0, 0, 0, 0.75);
+
+  /* === Aurora Background Colors (Dark Theme) === */
+  --aurora-1: #4c1d95;
+  --aurora-2: #7c2d12;
+  --aurora-blur: 120px;
+
+  /* === Text Colors === */
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-placeholder: #64748b;
+  --text-inverse: #0f172a;
+  --text-link: #a78bfa;
+  --text-link-hover: #c4b5fd;
+
+  /* === Primary Colors (Purple in Dark) === */
+  --primary: #a855f7;
+  --primary-hover: #c084fc;
+  --primary-active: #d8b4fe;
+  --primary-light: #3b0764;
+  --primary-dark: #e9d5ff;
+
+  /* === Secondary Colors (Orange in Dark) === */
+  --secondary: #f97316;
+  --secondary-hover: #fb923c;
+  --secondary-active: #fdba74;
+  --secondary-light: #431407;
+
+  /* === Accent Colors === */
+  --accent: #a855f7;
+  --accent-hover: #c084fc;
+  --accent-light: #2e1065;
+
+  --accent-2: #f97316;
+  --accent-2-hover: #fb923c;
+  --accent-2-light: #431407;
+
+  /* === Semantic Colors === */
+  --success: #4ade80;
+  --success-light: #052e16;
+  --success-dark: #86efac;
+
+  --info: #60a5fa;
+  --info-light: #172554;
+  --info-dark: #93c5fd;
+
+  --warning: #fbbf24;
+  --warning-light: #422006;
+  --warning-dark: #fcd34d;
+
+  --danger: #f87171;
+  --danger-light: #450a0a;
+  --danger-dark: #fca5a5;
+
+  /* === Border Colors === */
+  --border: #27272a;
+  --border-hover: #3f3f46;
+  --border-focus: #a855f7;
+  --border-muted: #1c1c22;
+
+  /* === Shadow Colors (Subtle glow in dark) === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --shadow-glow-purple: 0 0 20px rgba(168, 85, 247, 0.3);
+  --shadow-glow-orange: 0 0 20px rgba(249, 115, 22, 0.3);
+
+  /* === Focus Ring === */
+  --focus-ring: 0 0 0 3px rgba(168, 85, 247, 0.5);
+  --focus-ring-danger: 0 0 0 3px rgba(248, 113, 113, 0.5);
+
+  /* === Component Specific === */
+  --card-bg: #0a0a0f;
+  --card-border: #27272a;
+  --card-shadow: var(--shadow);
+
+  --sidebar-bg: #0a0a0f;
+  --sidebar-text: #e2e8f0;
+  --sidebar-active: #a855f7;
+  --sidebar-hover: #18181f;
+
+  --navbar-bg: rgba(10, 10, 15, 0.95);
+  --navbar-border: #27272a;
+
+  --input-bg: #111118;
+  --input-border: #27272a;
+  --input-focus-border: var(--primary);
+  --input-placeholder: #64748b;
+
+  --table-header-bg: #111118;
+  --table-row-hover: #18181f;
+  --table-border: #27272a;
+
+  --modal-bg: #0a0a0f;
+  --modal-overlay: rgba(0, 0, 0, 0.8);
+
+  --tooltip-bg: #27272a;
+  --tooltip-text: #f8fafc;
+
+  --badge-default-bg: #27272a;
+  --badge-default-text: #e2e8f0;
+
+  /* === Solid Colors (no gradients) === */
+  --gradient-primary: #a855f7;
+  --gradient-accent: #a855f7;
+  --gradient-card: #a855f7;
+
+  /* === Scrollbar === */
+  --scrollbar-track: #111118;
+  --scrollbar-thumb: #3f3f46;
+  --scrollbar-thumb-hover: #52525b;
+}
+
+/* ========== THEME TRANSITION ========== */
+body,
+body * {
+  transition: background-color var(--transition-normal),
+              border-color var(--transition-normal),
+              color var(--transition-fast);
+}
+
+/* Disable transitions on page load */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+}
+
+/* ========== BASE STYLES USING TOKENS ========== */
+
+/* Body */
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+}
+
+/* Aurora Background Override */
+body::after {
+  background: var(--aurora-1) !important;
+  filter: blur(var(--aurora-blur)) !important;
+  opacity: 0.6;
+}
+
+body::before {
+  background: var(--aurora-2) !important;
+  filter: blur(var(--aurora-blur)) !important;
+  opacity: 0.6;
+}
+
+/* Links */
+a {
+  color: var(--text-link);
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--text-link-hover);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Selection */
+::selection {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
+
+.dark ::selection {
+  background: var(--accent);
+  color: var(--text-inverse);
+}
+
+/* ========== COMPONENT OVERRIDES ========== */
+
+/* Cards */
+.card,
+.bank_balance_card,
+[class*="card"] {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  box-shadow: var(--card-shadow);
+}
+
+/* Inputs */
+input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+}
+
+input:not([type="submit"]):not([type="button"])::placeholder,
+textarea::placeholder {
+  color: var(--input-placeholder);
+}
+
+input:not([type="submit"]):not([type="button"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* Buttons - Primary */
+.btn-primary,
+button[type="submit"],
+input[type="submit"] {
+  background: var(--gradient-primary);
+  color: var(--text-inverse);
+  border: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-primary:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.dark .btn-primary:hover,
+.dark button[type="submit"]:hover,
+.dark input[type="submit"]:hover {
+  box-shadow: var(--shadow-glow-purple);
+}
+
+/* Buttons - Secondary */
+.btn-secondary {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-surface-3);
+  border-color: var(--border-hover);
+}
+
+/* Buttons - Ghost */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+}
+
+.btn-ghost:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+}
+
+/* Buttons - Danger */
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background: var(--danger-dark);
+}
+
+/* Tables */
+table {
+  background: var(--bg-surface);
+  border-color: var(--table-border);
+}
+
+thead,
+th {
+  background: var(--table-header-bg);
+  color: var(--text-secondary);
+  border-color: var(--table-border);
+}
+
+tbody tr {
+  border-color: var(--table-border);
+}
+
+tbody tr:hover {
+  background: var(--table-row-hover);
+}
+
+td {
+  color: var(--text-primary);
+  border-color: var(--table-border);
+}
+
+/* Modals */
+.modal,
+[class*="modal"] {
+  background: var(--modal-bg);
+  border-color: var(--border);
+}
+
+[class*="modal-overlay"] {
+  background: var(--modal-overlay);
+}
+
+/* Dropdowns */
+.dropdown,
+[class*="dropdown"] {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tooltips */
+.tooltip,
+[class*="tooltip"] {
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+}
+
+/* Badges */
+.badge {
+  background: var(--badge-default-bg);
+  color: var(--badge-default-text);
+}
+
+.badge-success {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.badge-warning {
+  background: var(--warning-light);
+  color: var(--warning);
+}
+
+.badge-danger {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+.badge-info {
+  background: var(--info-light);
+  color: var(--info);
+}
+
+/* Alerts */
+.alert {
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+.alert-success {
+  background: var(--success-light);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.alert-warning {
+  background: var(--warning-light);
+  color: var(--warning);
+  border: 1px solid var(--warning);
+}
+
+.alert-danger {
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.alert-info {
+  background: var(--info-light);
+  color: var(--info);
+  border: 1px solid var(--info);
+}
+
+/* Dividers */
+hr,
+.divider {
+  border-color: var(--border);
+}
+
+/* ========== THEME TOGGLE BUTTON ========== */
+.theme-toggle {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 50%;
+  left: 3px;
+  transition: transform var(--transition-normal);
+}
+
+.dark .theme-toggle {
+  background: var(--bg-surface-2);
+}
+
+.dark .theme-toggle::after {
+  transform: translateX(22px);
+  background: var(--accent);
+}
+
+.theme-toggle-icon {
+  position: absolute;
+  font-size: 12px;
+  transition: opacity var(--transition-fast);
+}
+
+.theme-toggle-icon.sun {
+  left: 6px;
+  opacity: 1;
+}
+
+.theme-toggle-icon.moon {
+  right: 6px;
+  opacity: 0.5;
+}
+
+.dark .theme-toggle-icon.sun {
+  opacity: 0.5;
+}
+
+.dark .theme-toggle-icon.moon {
+  opacity: 1;
+}
+
+/* ========== LANGUAGE TOGGLE ========== */
+.language-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-surface-3);
+  padding: 4px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.language-toggle button {
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.language-toggle button:hover {
+  color: var(--text-primary);
+}
+
+.language-toggle button.active {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+/* ========== ULTRA HIGH SPECIFICITY DARK MODE OVERRIDES FOR TAILWIND ========== */
+
+/* Force pure black backgrounds - MAXIMUM SPECIFICITY */
+html body.dark .bg-white,
+html body.dark div.bg-white,
+html body.dark main .bg-white,
+html body.dark section .bg-white,
+html body.dark .main_content .bg-white,
+html body.dark .bg-white.rounded-\[30px\],
+html body.dark .bg-white.rounded-3xl,
+html body.dark .bg-white.rounded-2xl,
+html body.dark .bg-white.shadow-soft,
+html body.dark [class*="bg-white"] {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* Triple specificity override */
+body.dark.dark.dark .bg-white,
+.dark .dark .bg-white,
+.dark.dark .bg-white {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* Cards with rounded corners - even deeper black */
+body.dark .rounded-\[30px\].bg-white,
+body.dark .rounded-3xl.bg-white,
+body.dark .rounded-2xl.bg-white,
+body.dark [class*="rounded-"][class*="bg-white"] {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* Main content area cards */
+body.dark .main_content .bg-white,
+body.dark section.main_content .bg-white {
+  background-color: #000000 !important;
+}
+
+/* Gray backgrounds - slightly elevated */
+body.dark .bg-gray-50,
+body.dark .bg-gray-100,
+body.dark [class*="bg-gray-50"],
+body.dark [class*="bg-gray-100"] {
+  background-color: #0a0a0a !important;
+}
+
+/* Account history cards grid */
+body.dark .grid .bg-white {
+  background-color: #000000 !important;
+}
+
+/* Chat container - pure black */
+body.dark #chatContainer,
+body.dark .chat-scroll,
+body.dark [class*="bg-gray-50/30"] {
+  background-color: #000000 !important;
+}
+
+/* Input backgrounds - slightly elevated */
+body.dark input,
+body.dark select,
+body.dark textarea,
+body.dark .bg-atom-bg {
+  background-color: #0a0a0a !important;
+  border-color: #1a1a1a !important;
+  color: #f8fafc !important;
+}
+
+/* Form summary boxes */
+body.dark .bg-gray-50.rounded-2xl,
+body.dark .bg-gray-50.p-6,
+body.dark [class*="bg-gray-50"][class*="rounded"] {
+  background-color: #0a0a0a !important;
+  border-color: #1a1a1a !important;
+}
+
+/* Chat header/footer areas */
+body.dark .p-6.border-b.border-gray-100,
+body.dark .p-6.border-t.border-gray-100,
+body.dark [class*="p-6"][class*="border-b"],
+body.dark [class*="p-6"][class*="border-t"] {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* Suggestions container */
+body.dark #suggestionsContainer,
+body.dark [class*="px-6"][class*="py-3"][class*="bg-white"] {
+  background-color: #000000 !important;
+  border-color: #1a1a1a !important;
+}
+
+/* History button area in account cards */
+body.dark .bg-gray-50\/80,
+body.dark [class*="bg-gray-50/80"] {
+  background-color: #0a0a0a !important;
+}
+
+/* Tables */
+body.dark table thead,
+body.dark thead.sticky {
+  background-color: #0a0a0a !important;
+}
+
+body.dark table tbody tr:hover {
+  background-color: #111111 !important;
+}
+
+/* Modal content boxes */
+body.dark .modal-content-box,
+body.dark [class*="modal-content"] {
+  background-color: #000000 !important;
+}
+
+/* Border overrides */
+body.dark .border-white,
+body.dark .border-gray-100,
+body.dark .border-gray-200,
+body.dark [class*="border-gray"] {
+  border-color: #1a1a1a !important;
+}
+
+/* Text colors in dark mode */
+body.dark .text-atom-text-black {
+  color: #f8fafc !important;
+}
+
+body.dark .text-atom-text-dark-grey {
+  color: #a1a1aa !important;
+}
+
+body.dark .text-atom-text-grey {
+  color: #71717a !important;
+}
+
+/* Override any white shadows */
+body.dark .shadow-soft,
+body.dark [class*="shadow-soft"] {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Quick actions and suggestions in chat */
+body.dark .quick-action-btn {
+  background-color: #0a0a0a !important;
+  border-color: #1a1a1a !important;
+  color: #e4e4e7 !important;
+}
+
+body.dark .suggestion-btn {
+  background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%) !important;
+  border-color: #1a1a1a !important;
+  color: #a1a1aa !important;
+}
+
+body.dark .suggestion-btn:hover {
+  background: linear-gradient(135deg, #a855f7, #f97316) !important;
+  color: white !important;
+}
+
+/* Rate info boxes */
+body.dark [class*="bg-atom-primary/5"],
+body.dark [class*="bg-atom-primary\/5"] {
+  background-color: rgba(168, 85, 247, 0.1) !important;
+  border-color: rgba(168, 85, 247, 0.25) !important;
+}
+
+/* Currency badges */
+body.dark .bg-purple-50 {
+  background-color: rgba(168, 85, 247, 0.15) !important;
+}
+
+body.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+body.dark .bg-indigo-50 {
+  background-color: rgba(99, 102, 241, 0.15) !important;
+}
+
+body.dark .bg-green-50 {
+  background-color: rgba(34, 197, 94, 0.15) !important;
+}
+
+/* Data cards in chat */
+body.dark .data-card {
+  background-color: #0a0a0a !important;
+  border-color: #1a1a1a !important;
+}
+
+body.dark .data-card-item {
+  border-color: #1a1a1a !important;
+}
+
+body.dark .data-card-label {
+  color: #71717a !important;
+}
+
+body.dark .data-card-value {
+  color: #f4f4f5 !important;
+}
+
+/* Disabled buttons */
+body.dark button:disabled,
+body.dark button[disabled] {
+  background-color: #1a1a1a !important;
+  color: #52525b !important;
+  cursor: not-allowed !important;
+}

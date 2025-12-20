@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script src="config.js"></script>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Atom Bank - Accounts</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- jsPDF for PDF Receipt Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Theme System CSS (must load before dashboard.css) -->
+    <link rel="stylesheet" href="./theme.css">
+    <!-- Dashboard CSS for Sidebar -->
+    <link rel="stylesheet" href="./dashboard.css">
+    <!-- Page specific CSS -->
+    <link rel="stylesheet" href="./accounthistory.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "atom-bg": "#e5e8f0",
+                        "atom-text-black": "#020617",
+                        "atom-text-grey": "#a1a3af",
+                        "atom-text-dark-grey": "#4b5563",
+                        "atom-primary": "#6366f1", /* Indigo */
+                        "atom-secondary": "#22c55e", /* Green */
+                        "atom-blue": "#38bdf8",
+                        "atom-circle-1": "#ffd8f0", /* Pinkish */
+                        "atom-circle-2": "#c7bfff", /* Lavender */
+                    },
+                    fontFamily: {
+                        "sans": ["Poppins", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"]
+                    },
+                    boxShadow: {
+                        "soft": "0 18px 40px rgba(148, 163, 184, 0.35)",
+                        "glow": "0 10px 30px rgba(79, 70, 229, 0.5)",
+                        "card-hover": "0 20px 40px rgba(148, 163, 184, 0.5)",
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<script src="./authGuard.js"></script>
+</head>
+<body class="light">
+
+    <div class="bg-circle-1"></div>
+    <div class="bg-circle-2"></div>
+
+    <div class="container">
+        
+        <!-- Sidebar from Dashboard -->
+        <nav class="sidebar" id="sidebar">
+          <!-- close btn for responsive sidebar -->
+          <button id="btn_close">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path
+                d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+            </svg>
+          </button>
+
+          <div class="logo">
+            <img src="./images/logo.png" alt="Atom Bank Logo">
+            <span>Atom Bank</span>
+          </div>
+
+          <!-- Sidebar menu -->
+          <div class="nav_links">
+            <a href="./dashboard.html" class="nav_link" aria-label="overview">
+              <span class="material-symbols-outlined">grid_view</span>
+              <div class="nav_link_text" data-i18n="overview">Overview</div>
+            </a>
+
+            <a href="./accounthistory.html" class="nav_link active" aria-label="account-history">
+              <span class="material-symbols-outlined icon-fill">history</span>
+              <div class="nav_link_text" data-i18n="accounts">Account History</div>
+            </a>
+
+            <a href="./fundtransfer.html" class="nav_link" aria-label="fund-transfer">
+              <span class="material-symbols-outlined">swap_horiz</span>
+              <div class="nav_link_text" data-i18n="fundTransfer">Fund Transfer</div>
+            </a>
+
+            <a href="./billpayments.html" class="nav_link" aria-label="bill-payment">
+              <span class="material-symbols-outlined">receipt_long</span>
+              <div class="nav_link_text" data-i18n="billPayment">Bill Payment</div>
+            </a>
+
+            <a href="./currencyexchange.html" class="nav_link" aria-label="currency-exchange">
+              <span class="material-symbols-outlined">currency_exchange</span>
+              <div class="nav_link_text" data-i18n="currencyExchange">Currency Exchange</div>
+            </a>
+
+            <a href="./smartassistant.html" class="nav_link" aria-label="smart-assistant">
+              <span class="material-symbols-outlined">smart_toy</span>
+              <div class="nav_link_text" data-i18n="smartAssistantSupport">Smart Assistant Support</div>
+            </a>
+            
+            <!-- LOGOUT BUTTON -->
+            <a href="#" class="nav_link" id="navLogout" style="margin-top: 20px;">
+              <span class="material-symbols-outlined">logout</span>
+              <div class="nav_link_text">Log Out</div>
+            </a>
+          </div>
+
+          <!-- life cover / small promo alanı aynı kalabilir -->
+          <div class="life_cover_offer">
+            <img src="./images/women.svg" alt="" />
+          <div class="life_cover_text">
+            <p class="title" data-i18n="welcomeToAtomBank">Welcome to Atom Bank</p>
+            <p class="desc" data-i18n="manageBalance">Manage your balance, transfers and cards in one aurora-style dashboard.</p>
+          </div>
+          <a href="#" aria-label="open-account" data-i18n="openNewAccount">Open new account</a>
+          </div>
+
+          <!-- profile card -->
+          <div class="profile" id="profileCard">
+            <div class="img_with_name">
+              <img src="./images/profile.jpg" id="sidebarProfileImg" alt="User">
+              <div class="profile_text">
+                <p class="name" id="profileName">User</p>
+              </div>
+            </div>
+            <!-- Sağdaki oka logout davranışı vereceğiz -->
+            <svg
+              id="logoutIcon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              style="cursor: pointer;"
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path class="icon" d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
+            </svg>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <section class="main_content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <button id="menu_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z" />
+                    </svg>
+                </button>
+                <div class="topbar_icons">
+                </div>
+            </div>
+
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+
+            <div class="flex-1 overflow-y-auto p-6 md:p-8 lg:p-10 scrollbar-hide">
+                <div class="max-w-7xl mx-auto flex flex-col gap-8">
+                    
+                    <!-- Header -->
+                    <div class="flex justify-between items-center shrink-0">
+                        <div>
+                            <h2 class="text-4xl font-light text-atom-text-black" data-i18n="accountHistory">Account History</h2>
+                            <p class="text-sm text-atom-text-dark-grey mt-1" data-i18n="viewTransactions">View your recent transactions and statements.</p>
+                        </div>
+                        <button id="createAccountBtn" class="btn-gradient px-6 py-3 rounded-2xl font-bold text-sm hover:scale-105 transition-all flex items-center gap-2 shadow-glow" data-i18n="createAccount">
+                            <span class="material-symbols-outlined text-lg">add</span>
+                            Create Account
+                        </button>
+                    </div>
+
+                    <!-- Accounts Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <!-- TRY Account Card -->
+                        <div class="bg-white rounded-[30px] flex overflow-hidden shadow-soft border border-white h-72 relative group transition-all hover:-translate-y-1 hover:shadow-card-hover">
+                            <div class="flex-1 p-8 flex flex-col justify-between relative z-10">
+                                <div class="flex items-start justify-between">
+                                    <div class="bg-purple-50 p-3 rounded-2xl border border-purple-100 shadow-sm">
+                                        <span class="material-symbols-outlined text-purple-600">account_balance_wallet</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-purple-600 uppercase tracking-wider bg-purple-50 px-3 py-1 rounded-full">TRY Account</span>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <div>
+                                        <span class="text-4xl font-semibold text-atom-text-black tracking-tight">₺120,845.90</span>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-[10px] text-atom-text-grey font-bold uppercase tracking-widest">Mastercard</span>
+                                            <div class="flex -space-x-1">
+                                                <div class="w-5 h-5 rounded-full bg-red-500 opacity-80 border-2 border-white"></div>
+                                                <div class="w-5 h-5 rounded-full bg-yellow-400 opacity-80 border-2 border-white"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-end border-t border-gray-50 pt-4">
+                                        <div class="flex flex-col gap-1">
+                                            <span class="text-[10px] text-atom-text-grey font-bold uppercase tracking-widest">Account Details</span>
+                                            <span class="text-sm text-atom-text-dark-grey font-mono tracking-wide">TR45 6789 1811 ... 41XX</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- TRIGGER FOR POPUP (onclick added) -->
+                            <button onclick="openHistoryModal('TRY')" class="w-16 bg-gray-50/80 backdrop-blur-sm border-l border-white flex flex-col items-center justify-center gap-4 text-atom-text-grey hover:text-purple-600 hover:bg-purple-50 transition-all cursor-pointer group-hover:w-20 duration-300">
+                                <span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">history</span>
+                                <span class="vertical-text text-[10px] font-bold tracking-widest uppercase rotate-180" data-i18n="accountHistory">History</span>
+                            </button>
+                        </div>
+
+                        <!-- EUR Account Card -->
+                        <div class="bg-white rounded-[30px] flex overflow-hidden shadow-soft border border-white h-72 relative group transition-all hover:-translate-y-1 hover:shadow-card-hover">
+                            <div class="flex-1 p-8 flex flex-col justify-between relative z-10">
+                                <div class="flex items-start justify-between">
+                                    <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-100 shadow-sm">
+                                        <span class="material-symbols-outlined text-emerald-600">euro_symbol</span>
+                                    </div>
+                                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full">EUR Account</span>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <div>
+                                        <span class="text-4xl font-semibold text-atom-text-black tracking-tight">€34,256.00</span>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="text-[10px] text-atom-text-grey font-bold uppercase tracking-widest">VISA Card</span>
+                                            <span class="font-bold italic text-blue-600 text-sm tracking-tight">VISA</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-end border-t border-gray-50 pt-4">
+                                        <div class="flex flex-col gap-1">
+                                            <span class="text-[10px] text-atom-text-grey font-bold uppercase tracking-widest">Account Details</span>
+                                            <span class="text-sm text-atom-text-dark-grey font-mono tracking-wide">TR90 1234 5678 ... 34XX</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <!-- TRIGGER FOR POPUP (onclick added) -->
+                            <button onclick="openHistoryModal('EUR')" class="w-16 bg-gray-50/80 backdrop-blur-sm border-l border-white flex flex-col items-center justify-center gap-4 text-atom-text-grey hover:text-emerald-600 hover:bg-emerald-50 transition-all cursor-pointer group-hover:w-20 duration-300">
+                                <span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">history</span>
+                                <span class="vertical-text text-[10px] font-bold tracking-widest uppercase rotate-180" data-i18n="accountHistory">History</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+        </section>
+    </div>
+
+    <!-- Data Fetcher Utility -->
+    <script src="./dataFetcher.js"></script>
+
+    <!-- Main JS -->
+    <!-- Translations -->
+    <script src="./translations.js"></script>
+    <script src="./main.js"></script>
+
+    <!-- Account History Data Loader -->
+    <script src="./accounthistoryData.js"></script>
+
+
+    <!-- MODAL STRUCTURE -->
+    <div id="historyModal" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 modal-enter">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeHistoryModal()"></div>
+        
+        <!-- Content -->
+        <div class="modal-content-box bg-white w-[90%] max-w-3xl rounded-[30px] p-8 md:p-10 shadow-2xl relative transition-all duration-300 z-10 flex flex-col max-h-[85vh]">
+            <!-- Close Button -->
+            <button onclick="closeHistoryModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center transition-colors group">
+                <span class="material-symbols-outlined text-gray-400 group-hover:text-gray-600">close</span>
+            </button>
+
+            <h2 id="modalTitle" class="text-2xl font-bold text-atom-text-black mb-8">Account History</h2>
+
+            <div class="overflow-y-auto pr-2 scrollbar-hide">
+                <table class="w-full text-left border-collapse">
+                    <thead class="sticky top-0 bg-white">
+                        <tr class="border-b border-gray-100">
+                            <th class="pb-4 font-bold text-xs text-atom-text-grey uppercase tracking-wider pl-2">Date</th>
+                            <th class="pb-4 font-bold text-xs text-atom-text-grey uppercase tracking-wider">Description</th>
+                            <th class="pb-4 font-bold text-xs text-atom-text-grey uppercase tracking-wider">Status</th>
+                            <th class="pb-4 font-bold text-xs text-atom-text-grey uppercase tracking-wider text-right pr-6">Amount</th>
+                            <th class="pb-4 font-bold text-xs text-atom-text-grey uppercase tracking-wider text-center pl-4 pr-2">Receipt</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="text-sm font-medium text-atom-text-dark-grey">
+                        <!-- JS populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // Close on Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            if (typeof closeHistoryModal === 'function') {
+                closeHistoryModal();
+            }
+        }
+    });
+</script>
+</body>
+</html>

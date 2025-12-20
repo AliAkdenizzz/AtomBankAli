@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en-tr">
+<head>
+    <script src="config.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atom Bank - Login & Register</title>
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./loginpage.css">
+</head>
+<body>
+  <div class="atom-container">
+    <!-- ATOM BUTONU -->
+    <div id="atomToggle" class="atom-toggle">
+      <div class="atom-core"></div>
+      <!-- 4 ana orbit: 2 mavi, 2 turuncu -->
+      <div class="atom-orbit orbit-blue-1"></div>
+      <div class="atom-orbit orbit-blue-2"></div>
+      <div class="atom-orbit orbit-orange-1"></div>
+      <div class="atom-orbit orbit-orange-2"></div>
+      <!-- Elektronlar -->
+      <div class="atom-electron electron-orange electron-orange-1"></div>
+      <div class="atom-electron electron-orange electron-orange-2"></div>
+      <div class="atom-electron electron-blue   electron-blue-1"></div>
+      <span>ATOM BANK</span>
+    </div>
+
+    <!-- ================== LOGIN PANEL ================== -->
+    <div id="loginPanel" class="auth-panel">
+      <div class="card login-card text-light">
+        <div class="card-header d-flex justify-content-between align-items-center px-3 py-2">
+          <div>
+            <div class="login-title mb-0">Secure Login</div>
+            <small class="text-muted" style="font-size: 0.75rem;">Atom Bank Internet Banking</small>
+          </div>
+          <button type="button" class="btn-close btn-close-white close-panel-btn" aria-label="Close"></button>
+        </div>
+        <div class="card-body px-4 pb-3 pt-3">
+          <h5 class="mb-3"><span class="brand-accent">Welcome Back</span></h5>
+
+          <div id="loginAlert" class="alert d-none py-2 px-3 mb-3" role="alert" style="font-size: 0.85rem;"></div>
+
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" autocomplete="username" required />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" autocomplete="current-password" required />
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="rememberMe" />
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+              </div>
+              <a href="#" id="forgotPasswordLink" class="small-link">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn btn-atom w-100 py-2" id="loginSubmitBtn">Sign In</button>
+            
+            <div class="switch-auth-link">
+                Don't have an account? <a href="#" id="toRegisterBtn">Create one</a>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer border-0 px-4 pb-2 pt-1 text-center">
+          <small class="text-muted" style="font-size: 0.7rem;">Secure connection encrypted by 256-bit SSL</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================== REGISTER PANEL (DETAILED) ================== -->
+    <div id="registerPanel" class="auth-panel">
+        <div class="card login-card text-light">
+          <div class="card-header d-flex justify-content-between align-items-center px-3 py-2">
+            <div>
+              <div class="login-title mb-0">Join Atom Bank</div>
+              <small class="text-muted" style="font-size: 0.75rem;">Create your secure profile</small>
+            </div>
+            <button type="button" class="btn-close btn-close-white close-panel-btn" aria-label="Close"></button>
+          </div>
+          <div class="card-body px-4 pb-3 pt-3">
+            <h5 class="mb-2"><span class="brand-accent">New Journey</span></h5>
+  
+            <div id="registerAlert" class="alert d-none py-2 px-3 mb-3" role="alert" style="font-size: 0.85rem;"></div>
+  
+            <form id="registerForm">
+              
+              <!-- SECTION 1: Personal Info -->
+              <div class="section-divider">Personal Information</div>
+              <div class="mb-2">
+                  <label for="regTC" class="form-label">TC Identity Number</label>
+                  <input type="text" class="form-control form-control-sm" id="regTC" required placeholder="11-digit number" maxlength="11" pattern="\d{11}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" />
+              </div>
+              <div class="mb-2">
+                  <label for="regName" class="form-label">Full Name</label>
+                  <input type="text" class="form-control form-control-sm" id="regName" required placeholder="Name Surname" />
+              </div>
+              <div class="mb-2">
+                  <label for="regDob" class="form-label">Date of Birth</label>
+                  <input type="date" class="form-control form-control-sm" id="regDob" required />
+              </div>
+
+              <!-- SECTION 2: Contact -->
+              <div class="section-divider">Contact Details</div>
+              <div class="row">
+                  <div class="col-6 mb-2">
+                    <label for="regEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control form-control-sm" id="regEmail" autocomplete="username" required placeholder="name@mail.com"/>
+                  </div>
+                  <div class="col-6 mb-2">
+                    <label for="regPhone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control form-control-sm" id="regPhone" required placeholder="+90 5XX..." />
+                  </div>
+              </div>
+
+              <!-- SECTION 3: Address -->
+              <div class="section-divider">Address</div>
+              <div class="mb-2">
+                  <label for="regAddress" class="form-label">Street Address</label>
+                  <input type="text" class="form-control form-control-sm" id="regAddress" required placeholder="Street, Apt, No" />
+              </div>
+              <div class="row">
+                  <div class="col-6 mb-2">
+                      <label for="regCity" class="form-label">City</label>
+                      <input type="text" class="form-control form-control-sm" id="regCity" required placeholder="Istanbul" />
+                  </div>
+                  <div class="col-6 mb-2">
+                      <label for="regState" class="form-label">District/State</label>
+                      <input type="text" class="form-control form-control-sm" id="regState" required placeholder="Kadikoy" />
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-6 mb-2">
+                      <label for="regZip" class="form-label">Postal Code</label>
+                      <input type="text" class="form-control form-control-sm" id="regZip" required placeholder="34000" />
+                  </div>
+                  <div class="col-6 mb-2">
+                      <label for="regCountry" class="form-label">Country</label>
+                      <input type="text" class="form-control form-control-sm" id="regCountry" value="Turkey" readonly />
+                  </div>
+              </div>
+
+              <!-- SECTION 4: Security -->
+              <div class="section-divider">Security</div>
+              <div class="row">
+                  <div class="col-6 mb-2">
+                    <label for="regPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control form-control-sm" id="regPassword" autocomplete="new-password" required />
+                  </div>
+                  <div class="col-6 mb-2">
+                    <label for="regPasswordConfirm" class="form-label">Confirm</label>
+                    <input type="password" class="form-control form-control-sm" id="regPasswordConfirm" autocomplete="new-password" required />
+                  </div>
+              </div>
+              
+              <div class="form-check mb-3 mt-2">
+                  <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                  <label class="form-check-label text-muted" for="termsCheck" style="font-size: 0.75rem;">
+                    I agree to the <a href="#" class="small-link">Banking Terms & Conditions</a>.
+                  </label>
+              </div>
+
+              <button type="submit" class="btn btn-atom w-100 py-2" id="registerSubmitBtn">Create Account</button>
+              
+              <div class="switch-auth-link">
+                  Already have an account? <a href="#" id="toLoginBtn">Log In</a>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer border-0 px-4 pb-2 pt-1 text-center">
+            <small class="text-muted" style="font-size: 0.7rem;">Your data is protected under PDPL (KVKK).</small>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const atomToggle          = document.getElementById("atomToggle");
+    
+    // Panels
+    const loginPanel          = document.getElementById("loginPanel");
+    const registerPanel       = document.getElementById("registerPanel");
+    
+    // Switch Buttons
+    const toRegisterBtn       = document.getElementById("toRegisterBtn");
+    const toLoginBtn          = document.getElementById("toLoginBtn");
+    
+    // Close Buttons
+    const closeBtns           = document.querySelectorAll(".close-panel-btn");
+
+    // Forms
+    const loginForm           = document.getElementById("loginForm");
+    const registerForm        = document.getElementById("registerForm");
+    
+    // Alerts
+    const loginAlert          = document.getElementById("loginAlert");
+    const registerAlert       = document.getElementById("registerAlert");
+
+    // ========= Panel Yönetimi =========
+    
+    function closeAllPanels() {
+        loginPanel.classList.remove("active");
+        registerPanel.classList.remove("active");
+        document.body.classList.remove("bg-active");
+    }
+
+    function openLogin() {
+        registerPanel.classList.remove("active");
+        setTimeout(() => {
+            loginPanel.classList.add("active");
+            document.body.classList.add("bg-active");
+        }, registerPanel.classList.contains("active") ? 300 : 0);
+    }
+
+    function openRegister() {
+        loginPanel.classList.remove("active");
+        setTimeout(() => {
+            registerPanel.classList.add("active");
+            document.body.classList.add("bg-active");
+        }, loginPanel.classList.contains("active") ? 300 : 0);
+    }
+
+    // Atom'a tıklanınca
+    atomToggle.addEventListener("click", function () {
+      const isAnyActive = loginPanel.classList.contains("active") || registerPanel.classList.contains("active");
+      if (isAnyActive) {
+        closeAllPanels();
+      } else {
+        openLogin();
+      }
+    });
+
+    closeBtns.forEach(btn => {
+        btn.addEventListener("click", closeAllPanels);
+    });
+
+    toRegisterBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openRegister();
+    });
+
+    toLoginBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openLogin();
+    });
+
+    // ========= Alert Helper =========
+    function showAlert(el, message, type) {
+      el.className = "alert py-2 px-3 mb-3 alert-" + type;
+      el.textContent = message;
+      el.classList.remove("d-none");
+      // Form içindeyse ve scroll varsa en üste kaydır ki hata görünsün
+      if (el.closest('.card-body')) {
+        el.closest('.card-body').scrollTop = 0;
+      }
+    }
+
+    function clearAlert(el) {
+      el.classList.add("d-none");
+      el.textContent = "";
+    }
+
+    // ========= Validation Functions =========
+    
+    function validateTC(tc) {
+      return /^[0-9]{11}$/.test(tc);
+    }
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function validatePhone(phone) {
+      // Turkish phone format: +90XXXXXXXXXX or 0XXXXXXXXXX or XXXXXXXXXX (10 digits)
+      const cleaned = phone.replace(/\s/g, '');
+      return /^(\+90|0)?[0-9]{10}$/.test(cleaned);
+    }
+
+    function validatePassword(password) {
+      return password && password.length >= 6;
+    }
+
+    function validateDateOfBirth(dob) {
+      if (!dob) return false;
+      const date = new Date(dob);
+      const today = new Date();
+      // Check if date is valid and not in the future
+      return date instanceof Date && !isNaN(date) && date <= today;
+    }
+
+    // ========= Auto Redirect Check =========
+    (function autoRedirectIfLoggedIn() {
+      const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
+      if (token) {
+        try {
+          const base64Url = token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          }).join(''));
+          const decoded = JSON.parse(jsonPayload);
+          const userRole = decoded.role || "user";
+          
+          if (userRole === "admin") {
+            window.location.href = "/Adminpage.html";
+          } else {
+            window.location.href = "/dashboard.html";
+          }
+        } catch (err) {
+          console.warn("Token decode error:", err);
+          window.location.href = "/dashboard.html";
+        }
+      }
+    })();
+
+    // ========= Login Submit =========
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      clearAlert(loginAlert);
+      
+      const btn = document.getElementById("loginSubmitBtn");
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const rememberMeCheckbox = document.getElementById("rememberMe");
+
+      if (!email || !password) {
+        showAlert(loginAlert, "Please fill in both email and password fields.", "warning");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Signing in...";
+
+      try {
+        const res = await fetch((window.API_BASE_URL || "") + "/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email: email, password: password })
+        });
+
+        let data = {};
+        try {
+          data = await res.json();
+        } catch (err) {
+          data = {};
+        }
+
+        if (!res.ok || !data.success) {
+          const msg = data && data.message ? data.message : "Login failed. Please check your credentials.";
+          showAlert(loginAlert, msg, "danger");
+        } else {
+          const token = data.access_token;
+          const userRole = data.data?.role || "user";
+          
+          if (rememberMeCheckbox.checked) {
+            localStorage.setItem("atomBankToken", token);
+          } else {
+            sessionStorage.setItem("atomBankToken", token);
+          }
+
+          showAlert(loginAlert, "Login successful, welcome " + (data.data?.name || "") + "!", "success");
+
+          setTimeout(function () {
+            if (userRole === "admin") {
+              window.location.href = "/Adminpage.html";
+            } else {
+              window.location.href = "/dashboard.html";
+            }
+          }, 700);
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        showAlert(loginAlert, "A server error occurred. Please try again later.", "danger");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Sign In";
+      }
+    });
+
+    // ========= Register Submit (With Backend Integration) =========
+    registerForm.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        clearAlert(registerAlert);
+        
+        const btn = document.getElementById("registerSubmitBtn");
+        
+        // Get all form fields
+        const tc = document.getElementById("regTC").value.trim();
+        const fullName = document.getElementById("regName").value.trim();
+        const dob = document.getElementById("regDob").value;
+        const email = document.getElementById("regEmail").value.trim();
+        const phone = document.getElementById("regPhone").value.trim();
+        const address = document.getElementById("regAddress").value.trim();
+        const city = document.getElementById("regCity").value.trim();
+        const state = document.getElementById("regState").value.trim();
+        const zip = document.getElementById("regZip").value.trim();
+        const country = document.getElementById("regCountry").value.trim() || "Turkey";
+        const password = document.getElementById("regPassword").value;
+        const confirmPass = document.getElementById("regPasswordConfirm").value;
+        
+        // Client-side validation
+        if (!tc || !validateTC(tc)) {
+            showAlert(registerAlert, "TC Identity Number must be exactly 11 digits!", "warning");
+            return;
+        }
+
+        if (!fullName || fullName.length < 2) {
+            showAlert(registerAlert, "Please enter your full name.", "warning");
+            return;
+        }
+
+        if (!dob || !validateDateOfBirth(dob)) {
+            showAlert(registerAlert, "Please enter a valid date of birth.", "warning");
+            return;
+        }
+
+        if (!email || !validateEmail(email)) {
+            showAlert(registerAlert, "Please enter a valid email address.", "warning");
+            return;
+        }
+
+        if (!phone || !validatePhone(phone)) {
+            showAlert(registerAlert, "Please enter a valid Turkish phone number (e.g., +90 5XX XXX XX XX or 0XXX XXX XX XX).", "warning");
+            return;
+        }
+
+        if (!address || !city || !state || !zip) {
+            showAlert(registerAlert, "Please fill in all address fields.", "warning");
+            return;
+        }
+
+        if (!password || !validatePassword(password)) {
+            showAlert(registerAlert, "Password must be at least 6 characters long.", "warning");
+            return;
+        }
+
+        if (password !== confirmPass) {
+            showAlert(registerAlert, "Passwords do not match!", "warning");
+            return;
+        }
+
+        // Extract first name from full name
+        const nameParts = fullName.split(' ');
+        const firstName = nameParts[0] || fullName;
+
+        // Prepare data for backend
+        const registerData = {
+            tc: tc,
+            name: firstName,
+            fullName: fullName,
+            email: email,
+            password: password,
+            phone: phone,
+            dateOfBirth: dob,
+            address: {
+                street: address,
+                city: city,
+                state: state,
+                postalCode: zip,
+                country: country
+            }
+        };
+
+        btn.disabled = true;
+        btn.textContent = "Creating Account...";
+
+        try {
+            const res = await fetch((window.API_BASE_URL || "") + "/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(registerData)
+            });
+
+            let data = {};
+            try {
+                data = await res.json();
+            } catch (err) {
+                data = {};
+            }
+
+            if (!res.ok || !data.success) {
+                const msg = data && data.message ? data.message : "Registration failed. Please try again.";
+                showAlert(registerAlert, msg, "danger");
+                btn.disabled = false;
+                btn.textContent = "Create Account";
+            } else {
+                // Registration successful - backend returns JWT token
+                const token = data.access_token;
+                const userRole = data.data?.role || "user";
+                
+                // Store token (default to sessionStorage for new registrations)
+                sessionStorage.setItem("atomBankToken", token);
+                
+                showAlert(registerAlert, "Account created successfully! Redirecting...", "success");
+                
+                setTimeout(() => {
+                    // Redirect based on role
+                    if (userRole === "admin") {
+                        window.location.href = "/Adminpage.html";
+                    } else {
+                        window.location.href = "/dashboard.html";
+                    }
+                }, 1500);
+            }
+        } catch (err) {
+            console.error("Registration error:", err);
+            showAlert(registerAlert, "A server error occurred. Please try again later.", "danger");
+            btn.disabled = false;
+            btn.textContent = "Create Account";
+        }
+    });
+
+    // ========= Forgot Password =========
+    document.getElementById("forgotPasswordLink").addEventListener("click", async function (e) {
+      e.preventDefault();
+      clearAlert(loginAlert);
+      
+      const emailInput = document.getElementById("email").value.trim();
+      const email = emailInput || prompt("Enter the email address to receive the password reset link:");
+
+      if (!email) return;
+
+      try {
+        const res = await fetch((window.API_BASE_URL || "") + "/api/auth/forgotpassword", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email: email })
+        });
+
+        let data = {};
+        try {
+          data = await res.json();
+        } catch (err) {
+          data = {};
+        }
+
+        if (!res.ok || !data.success) {
+          const msg = data && data.message ? data.message : "Password reset request failed.";
+          showAlert(loginAlert, msg, "danger");
+        } else {
+          showAlert(loginAlert, "A password reset link has been sent to your email address.", "success");
+        }
+      } catch (err) {
+        console.error("Forgot password error:", err);
+        showAlert(loginAlert, "An error occurred while connecting to the server.", "danger");
+      }
+    });
+  </script>
+</body>
+</html>

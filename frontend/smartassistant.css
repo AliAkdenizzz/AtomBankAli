@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.material-symbols-outlined { 
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+}
+.icon-fill { 
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; 
+}
+
+body {
+    background-color: #e5e8f0;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.dark body {
+    background-color: #0a0e1a;
+}
+
+.bg-circle-1 {
+    position: fixed;
+    top: -10%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: #ffd8f0;
+    filter: blur(80px);
+    z-index: -2;
+    transition: background 0.3s ease;
+}
+
+.dark .bg-circle-1 {
+    background: #4c1d95;
+}
+
+.bg-circle-2 {
+    position: fixed;
+    bottom: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: #c7bfff;
+    filter: blur(80px);
+    z-index: -1;
+    transition: background 0.3s ease;
+}
+
+.dark .bg-circle-2 {
+    background: #1e3a8a;
+}
+
+/* Dark mode styles - PURE BLACK */
+body.dark {
+    background-color: #000000 !important;
+    background: #000000 !important;
+}
+
+.dark .main_content,
+.dark section.main_content {
+    background-color: #000000 !important;
+    background: #000000 !important;
+}
+
+.dark main,
+.dark .flex-1,
+.dark .overflow-y-auto {
+    background-color: #000000 !important;
+}
+
+.dark .bg-white {
+    background-color: #000000 !important;
+    color: #f1f5f9;
+}
+
+.dark .text-atom-text-black {
+    color: #f8fafc !important;
+}
+
+.dark .text-atom-text-dark-grey {
+    color: #a1a1aa !important;
+}
+
+.dark .text-atom-text-grey {
+    color: #71717a !important;
+}
+
+.dark .bg-atom-bg {
+    background-color: #0a0a0a !important;
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-50\/30 {
+    background-color: #000000 !important;
+}
+
+.dark .border-gray-100,
+.dark .border-white {
+    border-color: #1a1a1a !important;
+}
+
+.dark input {
+    background-color: #0a0a0a !important;
+    color: #f8fafc !important;
+    border-color: #1a1a1a !important;
+}
+
+.dark input::placeholder {
+    color: #71717a !important;
+}
+
+/* Chat container dark mode */
+.dark #chatContainer {
+    background-color: #000000 !important;
+}
+
+.dark .chat-scroll {
+    background-color: #000000 !important;
+}
+
+/* Chat header and footer */
+.dark .p-6.border-b,
+.dark .p-6.border-t,
+.dark #suggestionsContainer {
+    background-color: #000000 !important;
+    border-color: #1a1a1a !important;
+}
+
+.nav-active {
+    background: linear-gradient(135deg, #22c55e, #38bdf8, #6366f1);
+    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
+    color: white !important;
+}
+.nav-active .material-symbols-outlined {
+    color: white !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar { 
+    display: none; 
+}
+.scrollbar-hide { 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+/* Chat Scrollbar Styling */
+.chat-scroll::-webkit-scrollbar { 
+    width: 6px; 
+}
+.chat-scroll::-webkit-scrollbar-track { 
+    background: transparent; 
+}
+.chat-scroll::-webkit-scrollbar-thumb { 
+    background-color: rgba(203, 213, 225, 0.5); 
+    border-radius: 20px; 
+}
+
+/* Gradient Button Class */
+.btn-gradient {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.3);
+}
+
+.dark .btn-gradient {
+    background: #a855f7;
+    box-shadow: 0 5px 20px rgba(168, 85, 247, 0.3);
+}
