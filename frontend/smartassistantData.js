@@ -4,7 +4,7 @@ function getApiBaseUrl() { return window.API_BASE_URL || ""; }
 // ================== SMART ASSISTANT DATA LOADER ==================
 // Smart assistant logic
 const API_BASE_URL = window.location.hostname.includes("vercel.app")
-  ? "https://atom-bank-backend.onrender.com"
+  ? "https://atombankali.onrender.com"
   : "";
 
 (async function loadSmartAssistantData() {
