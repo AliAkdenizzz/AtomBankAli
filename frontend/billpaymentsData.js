@@ -229,7 +229,7 @@ window.payBill = async function (billId) {
   try {
     console.log("Sending payment request:", { billId, accountId });
 
-    const res = await fetch(`/api/bills/${billId}/pay`, {
+    const res = await fetch(getApiBaseUrl() + `/api/bills/${billId}/pay`, {
       method: "POST",
       headers: getAuthHeaders(),
       body: JSON.stringify({ accountId }),
@@ -381,7 +381,7 @@ window.payAllBills = async function () {
     const billsToPay = [...bills];
 
     for (const bill of billsToPay) {
-      const res = await fetch(`/api/bills/${bill._id}/pay`, {
+      const res = await fetch(getApiBaseUrl() + `/api/bills/${bill._id}/pay`, {
         method: "POST",
         headers: getAuthHeaders(),
         body: JSON.stringify({ accountId }),

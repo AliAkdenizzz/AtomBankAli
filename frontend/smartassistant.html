@@ -783,7 +783,7 @@ async function sendMessage(text) {
     showTyping();
 
     try {
-        const response = await fetch('/api/chatbot/chat', {
+        const response = await fetch(getApiBaseUrl() + '/api/chatbot/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -828,7 +828,7 @@ async function loadQuickActions() {
     if (!token) return;
 
     try {
-        const response = await fetch('/api/chatbot/quick-actions', {
+        const response = await fetch(getApiBaseUrl() + '/api/chatbot/quick-actions', {
             headers: { 'Authorization': 'Bearer ' + token }
         });
         const result = await response.json();
@@ -875,7 +875,7 @@ async function showHelp() {
     showTyping();
 
     try {
-        const response = await fetch('/api/chatbot/help', {
+        const response = await fetch(getApiBaseUrl() + '/api/chatbot/help', {
             headers: { 'Authorization': 'Bearer ' + token }
         });
         const result = await response.json();
@@ -909,7 +909,7 @@ function clearChat() {
     // Clear session on server
     const token = getToken();
     if (token) {
-        fetch('/api/chatbot/session', {
+        fetch(getApiBaseUrl() + '/api/chatbot/session', {
             method: 'DELETE',
             headers: { 'Authorization': 'Bearer ' + token }
         });

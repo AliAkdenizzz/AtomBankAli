@@ -509,7 +509,7 @@
           searchPhoneBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size: 20px; animation: spin 1s linear infinite;">sync</span>';
 
           try {
-            const res = await fetch(`/api/user/search-by-phone?phone=${encodeURIComponent(phone)}`, {
+            const res = await fetch(getApiBaseUrl() + `/api/user/search-by-phone?phone=${encodeURIComponent(phone)}`, {
               method: 'GET',
               headers: getAuthHeaders()
             });
@@ -648,7 +648,7 @@
             submitBtn.disabled = true;
 
             // Make transfer
-            const res = await fetch('/api/transactions/transfer-external', {
+            const res = await fetch(getApiBaseUrl() + '/api/transactions/transfer-external', {
               method: 'POST',
               headers: getAuthHeaders(),
               body: JSON.stringify({
@@ -775,7 +775,7 @@
 
     async function loadSpendAnalysis(period = 'monthly') {
       try {
-        const res = await fetch(`/api/smart/spending?period=${period}`, {
+        const res = await fetch(getApiBaseUrl() + `/api/smart/spending?period=${period}`, {
           method: 'GET',
           headers: getAuthHeaders()
         });

@@ -506,7 +506,7 @@
     async function fetchRatesForCurrency(baseCurrency) {
         try {
             const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
-            const res = await fetch(`/api/exchange/rates?baseCurrency=${baseCurrency}`, {
+            const res = await fetch((window.API_BASE_URL || "") + `/api/exchange/rates?baseCurrency=${baseCurrency}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
