@@ -1,0 +1,179 @@
+{
+  "users": {
+    "validUser": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "SecurePass123!",
+      "role": "user",
+      "status": "active"
+    },
+    "adminUser": {
+      "name": "Admin User",
+      "email": "admin@atombank.com",
+      "password": "AdminPass123!",
+      "role": "admin",
+      "status": "active"
+    },
+    "blockedUser": {
+      "name": "Blocked User",
+      "email": "blocked@example.com",
+      "password": "BlockedPass123!",
+      "role": "user",
+      "status": "blocked"
+    },
+    "inactiveUser": {
+      "name": "Inactive User",
+      "email": "inactive@example.com",
+      "password": "InactivePass123!",
+      "role": "user",
+      "status": "inactive"
+    }
+  },
+  "accounts": {
+    "checkingTRY": {
+      "accountNumber": "1000000001",
+      "iban": "TR330006100519786457841326",
+      "accountType": "checking",
+      "currency": "TRY",
+      "balance": 50000,
+      "status": "active"
+    },
+    "savingsUSD": {
+      "accountNumber": "1000000002",
+      "iban": "TR330006100519786457841327",
+      "accountType": "savings",
+      "currency": "USD",
+      "balance": 5000,
+      "status": "active"
+    },
+    "checkingEUR": {
+      "accountNumber": "1000000003",
+      "iban": "TR330006100519786457841328",
+      "accountType": "checking",
+      "currency": "EUR",
+      "balance": 3000,
+      "status": "active"
+    },
+    "closedAccount": {
+      "accountNumber": "1000000004",
+      "iban": "TR330006100519786457841329",
+      "accountType": "checking",
+      "currency": "TRY",
+      "balance": 0,
+      "status": "closed"
+    }
+  },
+  "transactions": {
+    "deposit": {
+      "type": "deposit",
+      "amount": 5000,
+      "currency": "TRY",
+      "description": "Salary deposit",
+      "status": "completed"
+    },
+    "withdrawal": {
+      "type": "withdrawal",
+      "amount": 1000,
+      "currency": "TRY",
+      "description": "ATM withdrawal",
+      "status": "completed"
+    },
+    "transferInternal": {
+      "type": "transfer-internal",
+      "amount": 2000,
+      "currency": "TRY",
+      "description": "Transfer to savings",
+      "status": "completed"
+    },
+    "transferExternal": {
+      "type": "transfer-external",
+      "amount": 3000,
+      "currency": "TRY",
+      "description": "External transfer",
+      "receiverIban": "TR330006100519786457841999",
+      "receiverName": "Jane Doe",
+      "status": "completed"
+    }
+  },
+  "bills": {
+    "electricBill": {
+      "billType": "electricity",
+      "provider": "TEDAS",
+      "subscriberNo": "1234567890",
+      "amount": 450,
+      "currency": "TRY",
+      "dueDate": "2025-12-25",
+      "status": "pending"
+    },
+    "waterBill": {
+      "billType": "water",
+      "provider": "ISKI",
+      "subscriberNo": "0987654321",
+      "amount": 180,
+      "currency": "TRY",
+      "dueDate": "2025-12-20",
+      "status": "pending"
+    },
+    "paidBill": {
+      "billType": "internet",
+      "provider": "Turk Telekom",
+      "subscriberNo": "5555555555",
+      "amount": 200,
+      "currency": "TRY",
+      "dueDate": "2025-12-15",
+      "status": "paid"
+    }
+  },
+  "savingsGoals": {
+    "vacation": {
+      "name": "Summer Vacation",
+      "targetAmount": 20000,
+      "currentAmount": 5000,
+      "currency": "TRY",
+      "deadline": "2025-06-01",
+      "status": "active"
+    },
+    "emergency": {
+      "name": "Emergency Fund",
+      "targetAmount": 50000,
+      "currentAmount": 30000,
+      "currency": "TRY",
+      "deadline": "2025-12-31",
+      "status": "active"
+    }
+  },
+  "invalidInputs": {
+    "emails": [
+      "",
+      "notanemail",
+      "missing@domain",
+      "@nodomain.com",
+      "spaces in@email.com",
+      "double@@at.com"
+    ],
+    "passwords": [
+      "",
+      "short",
+      "nouppercase123!",
+      "NOLOWERCASE123!",
+      "NoNumbers!",
+      "NoSpecialChar123"
+    ],
+    "amounts": [
+      -100,
+      0,
+      -0.01,
+      "not-a-number",
+      null,
+      undefined,
+      999999999999
+    ],
+    "ibans": [
+      "",
+      "TR12345",
+      "INVALID_IBAN_FORMAT",
+      "XX330006100519786457841326",
+      "TR33000610051978645784132"
+    ]
+  }
+}
