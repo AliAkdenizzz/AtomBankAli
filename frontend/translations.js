@@ -945,7 +945,7 @@ async function syncLanguageWithProfile(lang) {
   if (!token) return;
 
   try {
-    await fetch("/api/user/profile", {
+    await fetch((window.API_BASE_URL || "") + "/api/user/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -1182,7 +1182,7 @@ async function syncThemeWithProfile(theme) {
   if (!token) return;
 
   try {
-    await fetch("/api/user/profile", {
+    await fetch((window.API_BASE_URL || "") + "/api/user/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

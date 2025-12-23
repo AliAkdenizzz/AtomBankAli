@@ -1,3 +1,6 @@
+// Get API base URL
+function getApiBaseUrl() { return window.API_BASE_URL || ""; }
+
 // ================== AUTH GUARD + USER INFO ==================
 async function checkAuthAndLoadUser() {
   var token =
@@ -10,7 +13,7 @@ async function checkAuthAndLoadUser() {
   }
 
   try {
-    var res = await fetch("/api/user/me", {
+    var res = await fetch(getApiBaseUrl() + "/api/user/me", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -203,7 +206,7 @@ async function handleLogout() {
   sessionStorage.removeItem("atomBankToken");
 
   try {
-    await fetch("/api/auth/logout", {
+    await fetch(getApiBaseUrl() + "/api/auth/logout", {
       method: "GET",
       headers: token ? { Authorization: "Bearer " + token } : {},
     });
@@ -604,7 +607,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.getItem("atomBankToken") ||
         sessionStorage.getItem("atomBankToken");
 
-      var res = await fetch("/api/user/me", {
+      var res = await fetch(getApiBaseUrl() + "/api/user/me", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -771,7 +774,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var formData = new FormData();
         formData.append("profile_image", file);
 
-        var res = await fetch("/api/user/profile-image", {
+        var res = await fetch(getApiBaseUrl() + "/api/user/profile-image", {
           method: "POST",
           headers: {
             Authorization: "Bearer " + token,
@@ -913,7 +916,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Send update request
-        var res = await fetch("/api/user/profile", {
+        var res = await fetch(getApiBaseUrl() + "/api/user/profile", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1050,7 +1053,7 @@ document.addEventListener("DOMContentLoaded", function () {
           localStorage.getItem("atomBankToken") ||
           sessionStorage.getItem("atomBankToken");
 
-        var res = await fetch("/api/auth/change-password", {
+        var res = await fetch(getApiBaseUrl() + "/api/auth/change-password", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -1192,7 +1195,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        var response = await fetch("/api/account", {
+        var response = await fetch(getApiBaseUrl() + "/api/account", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

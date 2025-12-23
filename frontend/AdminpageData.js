@@ -1,3 +1,6 @@
+// Get API base URL
+function getApiBaseUrl() { return window.API_BASE_URL || ""; }
+
 // ================== GLOBAL STATE ==================
 let adminUsers = [];
 let adminTransactions = [];
@@ -17,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Verify admin access
   try {
-    const res = await fetch("/api/user/me", {
+    const res = await fetch(getApiBaseUrl() + "/api/user/me", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -591,7 +594,7 @@ async function handleAdminLogout() {
   sessionStorage.removeItem("atomBankToken");
 
   try {
-    await fetch("/api/auth/logout", {
+    await fetch(getApiBaseUrl() + "/api/auth/logout", {
       method: "GET",
       headers: token ? { Authorization: "Bearer " + token } : {},
     });

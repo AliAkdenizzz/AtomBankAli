@@ -1,3 +1,6 @@
+// Get API base URL
+function getApiBaseUrl() { return window.API_BASE_URL || ""; }
+
 // ================== CURRENCY EXCHANGE DATA LOADER ==================
 // Loads user accounts and exchange rates for the currency exchange page
 

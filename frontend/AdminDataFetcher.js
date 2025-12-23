@@ -1,5 +1,10 @@
 // ================== UTILITY FUNCTIONS ==================
 
+// Get API base URL
+function getAdminApiBaseUrl() {
+  return window.API_BASE_URL || "";
+}
+
 // Get authentication headers from localStorage
 function getAuthHeaders() {
   const token =
@@ -12,7 +17,8 @@ function getAuthHeaders() {
 }
 
 // Format currency amount
-function formatCurrency(amount, currency = "TRY") {
+function formatCurrency(amount, currency) {
+  currency = currency || "TRY";
   if (amount === null || amount === undefined) return "0.00";
   const numAmount = typeof amount === "string" ? parseFloat(amount) : amount;
   if (isNaN(numAmount)) return "0.00";
@@ -49,7 +55,7 @@ function formatDate(date) {
 // Fetch all users
 async function fetchAdminUsers() {
   try {
-    const res = await fetch("/api/admin/users", {
+    const res = await fetch(getAdminApiBaseUrl() + "/api/admin/users", {
       method: "GET",
       headers: getAuthHeaders(),
     });
@@ -76,16 +82,18 @@ async function fetchAdminUsers() {
 }
 
 // Fetch all transactions (with optional filters)
-async function fetchAdminTransactions(filters = {}) {
+async function fetchAdminTransactions(filters) {
+  filters = filters || {};
   try {
     const queryParams = new URLSearchParams();
     if (filters.userId) queryParams.append("userId", filters.userId);
     if (filters.type) queryParams.append("type", filters.type);
     if (filters.status) queryParams.append("status", filters.status);
 
-    const url = `/api/admin/transactions${
-      queryParams.toString() ? "?" + queryParams.toString() : ""
-    }`;
+    var url = getAdminApiBaseUrl() + "/api/admin/transactions";
+    if (queryParams.toString()) {
+      url += "?" + queryParams.toString();
+    }
 
     const res = await fetch(url, {
       method: "GET",
@@ -116,7 +124,7 @@ async function fetchAdminTransactions(filters = {}) {
 // Toggle user block status
 async function toggleUserBlock(userId) {
   try {
-    const res = await fetch(`/api/admin/users/${userId}/block`, {
+    const res = await fetch(getAdminApiBaseUrl() + "/api/admin/users/" + userId + "/block", {
       method: "PUT",
       headers: getAuthHeaders(),
     });

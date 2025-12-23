@@ -1,3 +1,6 @@
+// Get API base URL
+function getApiBaseUrl() { return window.API_BASE_URL || ""; }
+
 // ================== FUND TRANSFER DATA LOADER ==================
 
 // Store verified recipient info from IBAN lookup
@@ -14,7 +17,7 @@ async function verifyIbanAndGetRecipient(iban) {
 
   try {
     const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
-    const res = await fetch("/api/transactions/verify-iban", {
+    const res = await fetch(getApiBaseUrl() + "/api/transactions/verify-iban", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -205,7 +208,7 @@ function updateRecipientStatus(recipient) {
     if (savedSelect) {
       try {
         const token = getAuthToken();
-        const res = await fetch("/api/user/recipients/list", {
+        const res = await fetch(getApiBaseUrl() + "/api/user/recipients/list", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -307,7 +310,7 @@ function updateRecipientStatus(recipient) {
 
         try {
           const token = getAuthToken();
-          const res = await fetch("/api/user/recipients/add", {
+          const res = await fetch(getApiBaseUrl() + "/api/user/recipients/add", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -640,7 +643,7 @@ function updateRecipientStatus(recipient) {
 
         try {
           const token = getAuthToken();
-          const res = await fetch("/api/transactions/transfer-external", {
+          const res = await fetch(getApiBaseUrl() + "/api/transactions/transfer-external", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -677,7 +680,7 @@ function updateRecipientStatus(recipient) {
           if (activeMode === 'new' && savePayeeToggle && savePayeeToggle.checked && finalIban && finalRecipientName) {
             // Save the recipient silently
             try {
-              await fetch("/api/user/recipients/add", {
+              await fetch(getApiBaseUrl() + "/api/user/recipients/add", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

@@ -1,3 +1,6 @@
+// Get API base URL
+function getApiBaseUrl() { return window.API_BASE_URL || ""; }
+
 // ================== ACCOUNT HISTORY DATA LOADER ==================
 
 // ================== PDF RECEIPT GENERATOR ==================

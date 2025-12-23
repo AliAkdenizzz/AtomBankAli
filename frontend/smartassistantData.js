@@ -1,3 +1,6 @@
+// Get API base URL
+function getApiBaseUrl() { return window.API_BASE_URL || ""; }
+
 // ================== SMART ASSISTANT DATA LOADER ==================
 // Smart assistant logic
 const API_BASE_URL = window.location.hostname.includes("vercel.app")
