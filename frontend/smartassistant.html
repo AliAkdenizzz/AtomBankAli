@@ -783,13 +783,14 @@ async function sendMessage(text) {
     showTyping();
 
     try {
+        const currentLang = getLang();
         const response = await fetch(getApiBaseUrl() + '/api/chatbot/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             },
-            body: JSON.stringify({ message: text })
+            body: JSON.stringify({ message: text, language: currentLang })
         });
 
         const result = await response.json();
@@ -828,7 +829,9 @@ async function loadQuickActions() {
     if (!token) return;
 
     try {
-        const response = await fetch(getApiBaseUrl() + '/api/chatbot/quick-actions', {
+        // Get language from user preferences (stored in localStorage)
+        const userLang = getLang();
+        const response = await fetch(getApiBaseUrl() + '/api/chatbot/quick-actions?language=' + userLang, {
             headers: { 'Authorization': 'Bearer ' + token }
         });
         const result = await response.json();
@@ -875,7 +878,9 @@ async function showHelp() {
     showTyping();
 
     try {
-        const response = await fetch(getApiBaseUrl() + '/api/chatbot/help', {
+        // Get language from user preferences
+        const userLang = getLang();
+        const response = await fetch(getApiBaseUrl() + '/api/chatbot/help?language=' + userLang, {
             headers: { 'Authorization': 'Bearer ' + token }
         });
         const result = await response.json();
