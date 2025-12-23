@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-tr">
 <head>
-    <script src="config.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Atom Bank - Login & Register</title>
@@ -340,7 +339,7 @@
       btn.textContent = "Signing in...";
 
       try {
-        const res = await fetch((window.API_BASE_URL || "") + "/api/auth/login", {
+        const res = await fetch("/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -475,7 +474,7 @@
         btn.textContent = "Creating Account...";
 
         try {
-            const res = await fetch((window.API_BASE_URL || "") + "/api/auth/register", {
+            const res = await fetch("/api/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -533,7 +532,7 @@
       if (!email) return;
 
       try {
-        const res = await fetch((window.API_BASE_URL || "") + "/api/auth/forgotpassword", {
+        const res = await fetch("/api/auth/forgotpassword", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

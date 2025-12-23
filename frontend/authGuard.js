@@ -1,7 +1,6 @@
 // Auth Guard - Include this script at the top of all protected pages
 (function() {
   var token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
-  var apiBaseUrl = window.API_BASE_URL || "";
 
   if (!token) {
     window.location.href = "/index.html";
@@ -16,15 +15,11 @@
     options = options || {};
     options.headers = options.headers || {};
     options.headers["Authorization"] = "Bearer " + token;
-    // Prepend API base URL if the URL starts with /api
-    if (url.startsWith("/api")) {
-      url = apiBaseUrl + url;
-    }
     return fetch(url, options);
   };
 
   // Fetch current user info and set window.currentUser
-  fetch(apiBaseUrl + "/api/user/me", {
+  fetch("/api/user/me", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

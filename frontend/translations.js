@@ -894,7 +894,7 @@ async function syncLanguageWithProfile(lang) {
   if (!token) return;
 
   try {
-    await fetch((window.API_BASE_URL || "") + "/api/user/profile", {
+    await fetch("/api/user/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -918,8 +918,18 @@ async function syncLanguageWithProfile(lang) {
 
 /**
  * Get current theme from storage
+ * Syncs atomBankTheme with atomBankDarkMode for consistency
  */
 function getCurrentTheme() {
+  // Check atomBankDarkMode first (used by main.js and settings)
+  const darkModeValue = localStorage.getItem("atomBankDarkMode");
+  if (darkModeValue !== null) {
+    // Sync atomBankTheme with atomBankDarkMode
+    const theme = darkModeValue === "true" ? "dark" : "light";
+    localStorage.setItem("atomBankTheme", theme);
+    return theme;
+  }
+  // Fallback to atomBankTheme
   return localStorage.getItem("atomBankTheme") || "light";
 }
 
@@ -940,8 +950,9 @@ function setTheme(theme) {
   document.body.classList.remove("light", "dark");
   document.body.classList.add(theme);
 
-  // Store preference
+  // Store preference - sync both keys for consistency
   localStorage.setItem("atomBankTheme", theme);
+  localStorage.setItem("atomBankDarkMode", theme === "dark" ? "true" : "false");
 
   // FORCE dark mode styles with inline styles (highest specificity)
   applyDarkModeInlineStyles(theme);
@@ -1102,7 +1113,7 @@ async function syncThemeWithProfile(theme) {
   if (!token) return;
 
   try {
-    await fetch((window.API_BASE_URL || "") + "/api/user/profile", {
+    await fetch("/api/user/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

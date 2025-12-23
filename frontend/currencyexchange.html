@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <script src="config.js"></script>
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Atom Bank - Currency Exchange</title>
@@ -558,7 +557,7 @@
         if (!toAccount) {
             try {
                 const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
-                const createRes = await fetch((window.API_BASE_URL || "") + "/api/account", {
+                const createRes = await fetch("/api/account", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -632,7 +631,7 @@
                 return;
             }
             
-            const res = await fetch((window.API_BASE_URL || "") + "/api/exchange/convert", {
+            const res = await fetch("/api/exchange/convert", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

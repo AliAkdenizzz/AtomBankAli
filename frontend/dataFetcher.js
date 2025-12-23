@@ -2,13 +2,6 @@
 // Helper functions to fetch user-specific data from API
 
 /**
- * Get API base URL from config
- */
-function getApiBaseUrl() {
-  return window.API_BASE_URL || "";
-}
-
-/**
  * Get authentication token from storage
  */
 function getAuthToken() {
@@ -35,7 +28,7 @@ function getAuthHeaders() {
  */
 async function fetchUserAccounts() {
   try {
-    const res = await fetch(getApiBaseUrl() + "/api/account", {
+    const res = await fetch("/api/account", {
       method: "GET",
       headers: getAuthHeaders(),
     });
@@ -59,7 +52,7 @@ async function fetchUserAccounts() {
  */
 async function fetchAccountTransactions(accountId) {
   try {
-    const res = await fetch(getApiBaseUrl() + "/api/account/" + accountId + "/history", {
+    const res = await fetch(`/api/account/${accountId}/history`, {
       method: "GET",
       headers: getAuthHeaders(),
     });
@@ -72,7 +65,9 @@ async function fetchAccountTransactions(accountId) {
 
     const data = await res.json();
     console.log(
-      "Fetched " + (data.transactions?.length || 0) + " transactions for account " + accountId
+      `Fetched ${
+        data.transactions?.length || 0
+      } transactions for account ${accountId}`
     );
     return data.transactions || [];
   } catch (err) {
@@ -88,14 +83,15 @@ async function fetchAccountTransactions(accountId) {
 async function fetchAllTransactions() {
   try {
     const accounts = await fetchUserAccounts();
-    console.log("Fetching transactions for " + accounts.length + " accounts");
+    console.log(`Fetching transactions for ${accounts.length} accounts`);
     const allTransactions = [];
 
     for (const account of accounts) {
       const transactions = await fetchAccountTransactions(account._id);
       console.log(
-        "Account " + account._id + " (" + account.accountName + "): " + transactions.length + " transactions"
+        `Account ${account._id} (${account.accountName}): ${transactions.length} transactions`
       );
+      // Add account info to each transaction
       transactions.forEach((tx) => {
         allTransactions.push({
           ...tx,
@@ -107,7 +103,8 @@ async function fetchAllTransactions() {
       });
     }
 
-    console.log("Total transactions fetched: " + allTransactions.length);
+    console.log(`Total transactions fetched: ${allTransactions.length}`);
+    // Sort by date (newest first)
     return allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
   } catch (err) {
     console.error("Error fetching all transactions:", err);
@@ -120,11 +117,11 @@ async function fetchAllTransactions() {
  * @param {string} status - Optional: 'paid' or 'unpaid'
  * @returns {Promise<Array>} Array of bill objects
  */
-async function fetchUserBills(status) {
+async function fetchUserBills(status = null) {
   try {
-    var url = getApiBaseUrl() + "/api/bills";
+    let url = "/api/bills";
     if (status) {
-      url += "?status=" + status;
+      url += `?status=${status}`;
     }
 
     const res = await fetch(url, {
@@ -150,7 +147,7 @@ async function fetchUserBills(status) {
  */
 async function fetchUserProfile() {
   try {
-    const res = await fetch(getApiBaseUrl() + "/api/user/me", {
+    const res = await fetch("/api/user/me", {
       method: "GET",
       headers: getAuthHeaders(),
     });
@@ -169,8 +166,11 @@ async function fetchUserProfile() {
 
 /**
  * Calculate total balance across all accounts
+ * @param {Array} accounts - Array of account objects
+ * @param {string} currency - Optional: filter by currency
+ * @returns {number} Total balance
  */
-function calculateTotalBalance(accounts, currency) {
+function calculateTotalBalance(accounts, currency = null) {
   if (!accounts || accounts.length === 0) return 0;
 
   const filtered = currency
@@ -182,9 +182,11 @@ function calculateTotalBalance(accounts, currency) {
 
 /**
  * Format currency amount
+ * @param {number} amount - Amount to format
+ * @param {string} currency - Currency code (TRY, USD, EUR, etc.)
+ * @returns {string} Formatted currency string
  */
-function formatCurrency(amount, currency) {
-  currency = currency || "TRY";
+function formatCurrency(amount, currency = "TRY") {
   if (amount === null || amount === undefined) return "0.00";
   const numAmount = typeof amount === "string" ? parseFloat(amount) : amount;
   if (isNaN(numAmount)) return "0.00";
@@ -208,6 +210,8 @@ function formatCurrency(amount, currency) {
 
 /**
  * Format date for display
+ * @param {Date|string} date - Date to format
+ * @returns {string} Formatted date string
  */
 function formatDate(date) {
   const d = new Date(date);
@@ -217,6 +221,8 @@ function formatDate(date) {
 
 /**
  * Format date for transaction grouping (Today, Yesterday, etc.)
+ * @param {Date|string} date - Date to format
+ * @returns {string} Formatted date string
  */
 function formatTransactionDate(date) {
   const d = new Date(date);
@@ -224,23 +230,49 @@ function formatTransactionDate(date) {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
+  // Reset time for comparison
   const dateOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const yesterdayOnly = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
+  const todayOnly = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  const yesterdayOnly = new Date(
+    yesterday.getFullYear(),
+    yesterday.getMonth(),
+    yesterday.getDate()
+  );
 
   if (dateOnly.getTime() === todayOnly.getTime()) {
-    return "Today | " + d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+    return (
+      "Today | " +
+      d.toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    );
   } else if (dateOnly.getTime() === yesterdayOnly.getTime()) {
-    return "Yesterday | " + d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+    return (
+      "Yesterday | " +
+      d.toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    );
   } else {
-    return d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+    return d.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   }
 }
 
 // Export functions for use in other scripts
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
-    getApiBaseUrl,
     getAuthToken,
     getAuthHeaders,
     fetchUserAccounts,

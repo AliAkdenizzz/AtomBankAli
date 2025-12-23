@@ -1,6 +1,3 @@
-// Get API base URL
-function getApiBaseUrl() { return window.API_BASE_URL || ""; }
-
 // ================== DASHBOARD DATA LOADER ==================
 // Loads and displays user-specific data on dashboard page
 

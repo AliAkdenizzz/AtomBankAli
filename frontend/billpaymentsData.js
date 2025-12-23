@@ -1,6 +1,3 @@
-// Get API base URL
-function getApiBaseUrl() { return window.API_BASE_URL || ""; }
-
 // ================== BILL PAYMENTS DATA LOADER ==================
 
 // Global variables for bill payments
