@@ -328,7 +328,8 @@ const translations = {
 
     // ========== MESSAGES ==========
     welcomeToAtomBank: "Welcome to Atom Bank",
-    manageBalance: "Manage your balance, transfers and cards in one aurora-style dashboard.",
+    manageBalance:
+      "Manage your balance, transfers and cards in one aurora-style dashboard.",
     sureLogout: "Are you sure you want to log out?",
     noChanges: "No changes to save.",
     areYouSure: "Are you sure?",
@@ -373,11 +374,32 @@ const translations = {
     endDate: "End Date",
     createdAt: "Created At",
     updatedAt: "Updated At",
-    jan: "Jan", feb: "Feb", mar: "Mar", apr: "Apr", may: "May", jun: "Jun",
-    jul: "Jul", aug: "Aug", sep: "Sep", oct: "Oct", nov: "Nov", dec: "Dec",
-    sunday: "Sunday", monday: "Monday", tuesday: "Tuesday", wednesday: "Wednesday",
-    thursday: "Thursday", friday: "Friday", saturday: "Saturday",
-    sun: "Sun", mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat",
+    jan: "Jan",
+    feb: "Feb",
+    mar: "Mar",
+    apr: "Apr",
+    may: "May",
+    jun: "Jun",
+    jul: "Jul",
+    aug: "Aug",
+    sep: "Sep",
+    oct: "Oct",
+    nov: "Nov",
+    dec: "Dec",
+    sunday: "Sunday",
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+    saturday: "Saturday",
+    sun: "Sun",
+    mon: "Mon",
+    tue: "Tue",
+    wed: "Wed",
+    thu: "Thu",
+    fri: "Fri",
+    sat: "Sat",
 
     // ========== MISC ==========
     version: "Version",
@@ -560,7 +582,8 @@ const translations = {
 
     // ========== PARA TRANSFERİ ==========
     sendMoney: "Para Gönder",
-    sendMoneyDesc: "Herhangi bir banka hesabına güvenli bir şekilde para gönderin.",
+    sendMoneyDesc:
+      "Herhangi bir banka hesabına güvenli bir şekilde para gönderin.",
     recipient: "Alıcı",
     recipientName: "Alıcı Adı",
     recipientAccount: "Alıcı Hesap",
@@ -715,7 +738,8 @@ const translations = {
 
     // ========== MESAJLAR ==========
     welcomeToAtomBank: "Atom Bank'a Hoş Geldiniz",
-    manageBalance: "Bakiyenizi, transferlerinizi ve kartlarınızı tek bir aurora tarzı kontrol panelinden yönetin.",
+    manageBalance:
+      "Bakiyenizi, transferlerinizi ve kartlarınızı tek bir aurora tarzı kontrol panelinden yönetin.",
     sureLogout: "Çıkış yapmak istediğinize emin misiniz?",
     noChanges: "Kaydedilecek değişiklik yok.",
     areYouSure: "Emin misiniz?",
@@ -760,11 +784,32 @@ const translations = {
     endDate: "Bitiş Tarihi",
     createdAt: "Oluşturulma Tarihi",
     updatedAt: "Güncellenme Tarihi",
-    jan: "Oca", feb: "Şub", mar: "Mar", apr: "Nis", may: "May", jun: "Haz",
-    jul: "Tem", aug: "Ağu", sep: "Eyl", oct: "Eki", nov: "Kas", dec: "Ara",
-    sunday: "Pazar", monday: "Pazartesi", tuesday: "Salı", wednesday: "Çarşamba",
-    thursday: "Perşembe", friday: "Cuma", saturday: "Cumartesi",
-    sun: "Paz", mon: "Pzt", tue: "Sal", wed: "Çar", thu: "Per", fri: "Cum", sat: "Cmt",
+    jan: "Oca",
+    feb: "Şub",
+    mar: "Mar",
+    apr: "Nis",
+    may: "May",
+    jun: "Haz",
+    jul: "Tem",
+    aug: "Ağu",
+    sep: "Eyl",
+    oct: "Eki",
+    nov: "Kas",
+    dec: "Ara",
+    sunday: "Pazar",
+    monday: "Pazartesi",
+    tuesday: "Salı",
+    wednesday: "Çarşamba",
+    thursday: "Perşembe",
+    friday: "Cuma",
+    saturday: "Cumartesi",
+    sun: "Paz",
+    mon: "Pzt",
+    tue: "Sal",
+    wed: "Çar",
+    thu: "Per",
+    fri: "Cum",
+    sat: "Cmt",
 
     // ========== ÇEŞİTLİ ==========
     version: "Sürüm",
@@ -815,7 +860,9 @@ function setLanguage(lang) {
   });
 
   // Dispatch event for other scripts to react
-  window.dispatchEvent(new CustomEvent("languageChanged", { detail: { language: lang } }));
+  window.dispatchEvent(
+    new CustomEvent("languageChanged", { detail: { language: lang } })
+  );
 
   // Sync with user profile if logged in
   syncLanguageWithProfile(lang);
@@ -848,7 +895,9 @@ function t(key, params = {}) {
 function applyTranslations() {
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
-    const params = el.dataset.i18nParams ? JSON.parse(el.dataset.i18nParams) : {};
+    const params = el.dataset.i18nParams
+      ? JSON.parse(el.dataset.i18nParams)
+      : {};
     const translation = t(key, params);
 
     // Handle different element types
@@ -890,7 +939,9 @@ function applyTranslations() {
  * Sync language preference with user profile (if logged in)
  */
 async function syncLanguageWithProfile(lang) {
-  const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
+  const token =
+    localStorage.getItem("atomBankToken") ||
+    sessionStorage.getItem("atomBankToken");
   if (!token) return;
 
   try {
@@ -982,117 +1033,133 @@ function applyDarkModeInlineStyles(theme) {
 
   // BODY background - most important!
   if (isDark) {
-    document.body.style.setProperty('background-color', '#000000', 'important');
-    document.body.style.setProperty('background', '#000000', 'important');
+    document.body.style.setProperty("background-color", "#000000", "important");
+    document.body.style.setProperty("background", "#000000", "important");
   } else {
-    document.body.style.setProperty('background-color', '#e5e8f0', 'important');
-    document.body.style.removeProperty('background');
+    document.body.style.setProperty("background-color", "#e5e8f0", "important");
+    document.body.style.removeProperty("background");
   }
 
   // Main content section
-  document.querySelectorAll('.main_content, section.main_content').forEach(el => {
-    if (isDark) {
-      el.style.setProperty('background-color', '#000000', 'important');
-      el.style.setProperty('background', '#000000', 'important');
-    } else {
-      el.style.removeProperty('background-color');
-      el.style.removeProperty('background');
-    }
-  });
+  document
+    .querySelectorAll(".main_content, section.main_content")
+    .forEach((el) => {
+      if (isDark) {
+        el.style.setProperty("background-color", "#000000", "important");
+        el.style.setProperty("background", "#000000", "important");
+      } else {
+        el.style.removeProperty("background-color");
+        el.style.removeProperty("background");
+      }
+    });
 
   // Main element and flex containers
-  document.querySelectorAll('main, main.flex-1, .flex-1.overflow-y-auto, .overflow-y-auto').forEach(el => {
-    if (isDark) {
-      el.style.setProperty('background-color', '#000000', 'important');
-    } else {
-      el.style.removeProperty('background-color');
-    }
-  });
+  document
+    .querySelectorAll(
+      "main, main.flex-1, .flex-1.overflow-y-auto, .overflow-y-auto"
+    )
+    .forEach((el) => {
+      if (isDark) {
+        el.style.setProperty("background-color", "#000000", "important");
+      } else {
+        el.style.removeProperty("background-color");
+      }
+    });
 
   // Target all bg-white elements
-  document.querySelectorAll('.bg-white, [class*="bg-white"]').forEach(el => {
+  document.querySelectorAll('.bg-white, [class*="bg-white"]').forEach((el) => {
     if (isDark) {
-      el.style.setProperty('background-color', '#000000', 'important');
-      el.style.setProperty('background', '#000000', 'important');
+      el.style.setProperty("background-color", "#000000", "important");
+      el.style.setProperty("background", "#000000", "important");
     } else {
-      el.style.removeProperty('background-color');
-      el.style.removeProperty('background');
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("background");
     }
   });
 
   // Target gray backgrounds
-  document.querySelectorAll('.bg-gray-50, .bg-gray-100, [class*="bg-gray-50"], [class*="bg-gray-100"]').forEach(el => {
-    if (isDark) {
-      el.style.setProperty('background-color', '#0a0a0a', 'important');
-      el.style.setProperty('background', '#0a0a0a', 'important');
-    } else {
-      el.style.removeProperty('background-color');
-      el.style.removeProperty('background');
-    }
-  });
+  document
+    .querySelectorAll(
+      '.bg-gray-50, .bg-gray-100, [class*="bg-gray-50"], [class*="bg-gray-100"]'
+    )
+    .forEach((el) => {
+      if (isDark) {
+        el.style.setProperty("background-color", "#0a0a0a", "important");
+        el.style.setProperty("background", "#0a0a0a", "important");
+      } else {
+        el.style.removeProperty("background-color");
+        el.style.removeProperty("background");
+      }
+    });
 
   // Target bg-atom-bg elements (inputs)
-  document.querySelectorAll('.bg-atom-bg, [class*="bg-atom-bg"]').forEach(el => {
-    if (isDark) {
-      el.style.setProperty('background-color', '#0a0a0a', 'important');
-    } else {
-      el.style.removeProperty('background-color');
-    }
-  });
+  document
+    .querySelectorAll('.bg-atom-bg, [class*="bg-atom-bg"]')
+    .forEach((el) => {
+      if (isDark) {
+        el.style.setProperty("background-color", "#0a0a0a", "important");
+      } else {
+        el.style.removeProperty("background-color");
+      }
+    });
 
   // Target inputs and selects
-  document.querySelectorAll('input, select, textarea').forEach(el => {
+  document.querySelectorAll("input, select, textarea").forEach((el) => {
     if (isDark) {
-      el.style.setProperty('background-color', '#0a0a0a', 'important');
-      el.style.setProperty('border-color', '#1a1a1a', 'important');
-      el.style.setProperty('color', '#f8fafc', 'important');
+      el.style.setProperty("background-color", "#0a0a0a", "important");
+      el.style.setProperty("border-color", "#1a1a1a", "important");
+      el.style.setProperty("color", "#f8fafc", "important");
     } else {
-      el.style.removeProperty('background-color');
-      el.style.removeProperty('border-color');
-      el.style.removeProperty('color');
+      el.style.removeProperty("background-color");
+      el.style.removeProperty("border-color");
+      el.style.removeProperty("color");
     }
   });
 
   // Target borders
-  document.querySelectorAll('.border-white, .border-gray-100, .border-gray-200, [class*="border-gray"]').forEach(el => {
-    if (isDark) {
-      el.style.setProperty('border-color', '#1a1a1a', 'important');
-    } else {
-      el.style.removeProperty('border-color');
-    }
-  });
+  document
+    .querySelectorAll(
+      '.border-white, .border-gray-100, .border-gray-200, [class*="border-gray"]'
+    )
+    .forEach((el) => {
+      if (isDark) {
+        el.style.setProperty("border-color", "#1a1a1a", "important");
+      } else {
+        el.style.removeProperty("border-color");
+      }
+    });
 
   // Target text colors
-  document.querySelectorAll('.text-atom-text-black').forEach(el => {
+  document.querySelectorAll(".text-atom-text-black").forEach((el) => {
     if (isDark) {
-      el.style.setProperty('color', '#f8fafc', 'important');
+      el.style.setProperty("color", "#f8fafc", "important");
     } else {
-      el.style.removeProperty('color');
+      el.style.removeProperty("color");
     }
   });
 
-  document.querySelectorAll('.text-atom-text-dark-grey').forEach(el => {
+  document.querySelectorAll(".text-atom-text-dark-grey").forEach((el) => {
     if (isDark) {
-      el.style.setProperty('color', '#a1a1aa', 'important');
+      el.style.setProperty("color", "#a1a1aa", "important");
     } else {
-      el.style.removeProperty('color');
+      el.style.removeProperty("color");
     }
   });
 
-  document.querySelectorAll('.text-atom-text-grey').forEach(el => {
+  document.querySelectorAll(".text-atom-text-grey").forEach((el) => {
     if (isDark) {
-      el.style.setProperty('color', '#71717a', 'important');
+      el.style.setProperty("color", "#71717a", "important");
     } else {
-      el.style.removeProperty('color');
+      el.style.removeProperty("color");
     }
   });
 
   // Container div
-  document.querySelectorAll('.container').forEach(el => {
+  document.querySelectorAll(".container").forEach((el) => {
     if (isDark) {
-      el.style.setProperty('background-color', 'transparent', 'important');
+      el.style.setProperty("background-color", "transparent", "important");
     } else {
-      el.style.removeProperty('background-color');
+      el.style.removeProperty("background-color");
     }
   });
 }
@@ -1109,7 +1176,9 @@ function toggleTheme() {
  * Sync theme preference with user profile (if logged in)
  */
 async function syncThemeWithProfile(theme) {
-  const token = localStorage.getItem("atomBankToken") || sessionStorage.getItem("atomBankToken");
+  const token =
+    localStorage.getItem("atomBankToken") ||
+    sessionStorage.getItem("atomBankToken");
   if (!token) return;
 
   try {
@@ -1138,16 +1207,19 @@ async function syncThemeWithProfile(theme) {
  * Initialize theme and language on page load
  */
 function initThemeAndLanguage() {
-  // Check for user's system preference as fallback
-  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  // Initialize theme
+  // Initialize theme - default to "light" if no preference saved
+  // We prioritize user's explicit choice over system preference
   const savedTheme = localStorage.getItem("atomBankTheme");
+  const savedDarkMode = localStorage.getItem("atomBankDarkMode");
+
+  // Check if user has explicitly set a theme preference
   if (savedTheme) {
     setTheme(savedTheme);
-  } else if (systemPrefersDark) {
-    setTheme("dark");
+  } else if (savedDarkMode !== null) {
+    // Sync from atomBankDarkMode if it exists
+    setTheme(savedDarkMode === "true" ? "dark" : "light");
   } else {
+    // Default to light theme for new users (no system preference check)
     setTheme("light");
   }
 
@@ -1156,12 +1228,8 @@ function initThemeAndLanguage() {
   const userLang = navigator.language?.startsWith("tr") ? "tr" : "en";
   setLanguage(savedLang || userLang);
 
-  // Listen for system theme changes
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-    if (!localStorage.getItem("atomBankTheme")) {
-      setTheme(e.matches ? "dark" : "light");
-    }
-  });
+  // Don't listen for system theme changes - let user control theme manually
+  // This prevents unexpected theme switches
 
   // Re-apply dark mode styles after Tailwind renders (multiple attempts)
   const currentTheme = getCurrentTheme();
@@ -1171,8 +1239,8 @@ function initThemeAndLanguage() {
 
   // Watch for dynamically added elements
   const observer = new MutationObserver(() => {
-    if (getCurrentTheme() === 'dark') {
-      applyDarkModeInlineStyles('dark');
+    if (getCurrentTheme() === "dark") {
+      applyDarkModeInlineStyles("dark");
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
@@ -1207,8 +1275,12 @@ function createLanguageToggle(container) {
   const toggle = document.createElement("div");
   toggle.className = "language-toggle";
   toggle.innerHTML = `
-    <button data-lang="en" class="${currentLang === 'en' ? 'active' : ''}">EN</button>
-    <button data-lang="tr" class="${currentLang === 'tr' ? 'active' : ''}">TR</button>
+    <button data-lang="en" class="${
+      currentLang === "en" ? "active" : ""
+    }">EN</button>
+    <button data-lang="tr" class="${
+      currentLang === "tr" ? "active" : ""
+    }">TR</button>
   `;
 
   toggle.querySelectorAll("button").forEach((btn) => {
