@@ -51,11 +51,14 @@ const API_BASE_URL = window.location.hostname.includes("vercel.app")
     addMessage(message, true);
     chatInput.value = "";
 
+    // Get language from localStorage
+    const language = localStorage.getItem("atomBankLanguage") || "en";
+
     try {
       const res = await fetch(`${API_BASE_URL}/api/chatbot`, {
         method: "POST",
         headers: getAuthHeaders(),
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, language }),
       });
 
       const data = await res.json();

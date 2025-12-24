@@ -207,10 +207,28 @@ const translations = {
     en: { active: "In Progress", completed: "Completed" }
   },
 
+  // Create Savings Goal
+  savingsGoalNeedInfo: {
+    tr: "Tasarruf hedefi oluşturmak için hedef adı, miktar ve tarih belirtmeniz gerekiyor.\n\n**Örnek:** \"Yeni Araba için 500000 TL tasarruf hedefi oluştur 2026-06-01\"",
+    en: "To create a savings goal, you need to specify the goal name, amount and target date.\n\n**Example:** \"Create savings goal for New Car 500000 TRY 2026-06-01\""
+  },
+  savingsGoalConfirm: {
+    tr: (name, amount, date) => `**Tasarruf Hedefi Oluşturulacak**\n\n• Hedef: ${name}\n• Hedef Miktar: ${amount}\n• Hedef Tarih: ${date}\n\nOnaylıyor musunuz?`,
+    en: (name, amount, date) => `**Savings Goal Will Be Created**\n\n• Goal: ${name}\n• Target Amount: ${amount}\n• Target Date: ${date}\n\nDo you confirm?`
+  },
+  savingsGoalCreated: {
+    tr: (name, amount, date) => `✅ **Tasarruf hedefi başarıyla oluşturuldu!**\n\n• Hedef: ${name}\n• Hedef Miktar: ${amount}\n• Hedef Tarih: ${date}`,
+    en: (name, amount, date) => `✅ **Savings goal created successfully!**\n\n• Goal: ${name}\n• Target Amount: ${amount}\n• Target Date: ${date}`
+  },
+  savingsGoalSuggestions: {
+    tr: ["Hedeflerim", "Bakiyem", "Hesaplarım"],
+    en: ["My Goals", "My Balance", "My Accounts"]
+  },
+
   // Help
   helpTitle: {
-    tr: `**Atom Bank Akıllı Asistan Yardım**\n\n**Hesap İşlemleri:**\n• "Bakiyem" - Bakiye sorgulama\n• "Hesaplarım" - Tüm hesapları görme\n• "Yeni hesap aç" - Hesap oluşturma\n\n**Para Transferi:**\n• "Ali'ye 500 TL gönder"\n• "Para gönder"\n\n**Fatura İşlemleri:**\n• "Faturalarım" - Bekleyen faturaları görme\n• "Elektrik faturasını öde"\n\n**Diğer:**\n• "İşlem geçmişi"\n• "Harcamalarım"\n• "Hedeflerim"`,
-    en: `**Atom Bank Smart Assistant Help**\n\n**Account Operations:**\n• "My balance" - Check balance\n• "My accounts" - View all accounts\n• "Open new account" - Create account\n\n**Money Transfer:**\n• "Send 500 TRY to Ali"\n• "Send money"\n\n**Bill Operations:**\n• "My bills" - View pending bills\n• "Pay electricity bill"\n\n**Other:**\n• "Transaction history"\n• "My spending"\n• "My goals"`
+    tr: `**Atom Bank Akıllı Asistan Yardım**\n\n**Hesap İşlemleri:**\n• "Bakiyem" - Bakiye sorgulama\n• "Hesaplarım" - Tüm hesapları görme\n• "Yeni hesap aç" - Hesap oluşturma\n\n**Para Transferi:**\n• "Ali'ye 500 TL gönder"\n• "Para gönder"\n\n**Fatura İşlemleri:**\n• "Faturalarım" - Bekleyen faturaları görme\n• "Elektrik faturasını öde"\n\n**Tasarruf Hedefleri:**\n• "Hedeflerim" - Hedeflerimi görme\n• "Yeni Araba için 500000 TL tasarruf hedefi oluştur"\n\n**Diğer:**\n• "İşlem geçmişi"\n• "Harcamalarım"`,
+    en: `**Atom Bank Smart Assistant Help**\n\n**Account Operations:**\n• "My balance" - Check balance\n• "My accounts" - View all accounts\n• "Open new account" - Create account\n\n**Money Transfer:**\n• "Send 500 TRY to Ali"\n• "Send money"\n\n**Bill Operations:**\n• "My bills" - View pending bills\n• "Pay electricity bill"\n\n**Savings Goals:**\n• "My goals" - View my goals\n• "Create savings goal for New Car 500000 TRY"\n\n**Other:**\n• "Transaction history"\n• "My spending"`
   },
   helpSuggestions: {
     tr: ["Bakiyem", "Faturalarım", "Hesaplarım", "Para gönder"],
@@ -403,6 +421,50 @@ function parseAccountCommand(message) {
   }
 
   return { accountType, currency };
+}
+
+// Helper: Parse savings goal command
+// Examples: "Yeni Araba için 500000 TL tasarruf hedefi oluştur 2026-06-01"
+//           "Create savings goal for New Car 500000 TRY 2026-06-01"
+function parseSavingsGoalCommand(message) {
+  const lowerMsg = message.toLowerCase();
+
+  // Extract goal name (text before "için" or "for")
+  let goalName = null;
+  let targetAmount = null;
+  let targetDate = null;
+
+  // Turkish pattern: "X için Y TL tasarruf hedefi"
+  const trPattern = /(.+?)\s+için\s+(\d+(?:[.,]\d+)?)\s*(tl|try|lira)?/i;
+  // English pattern: "savings goal for X Y TRY"
+  const enPattern = /(?:savings\s*goal\s*(?:for)?|goal\s*for)\s+(.+?)\s+(\d+(?:[.,]\d+)?)\s*(tl|try|usd|eur|gbp)?/i;
+
+  let match = message.match(trPattern) || message.match(enPattern);
+
+  if (match) {
+    goalName = match[1].trim();
+    // Clean up goal name - remove common words
+    goalName = goalName.replace(/^(bir|yeni|new|a|an)\s+/i, '').trim();
+    // Capitalize first letter of each word
+    goalName = goalName.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+
+    targetAmount = parseFloat(match[2].replace(',', '.'));
+  }
+
+  // Extract date (YYYY-MM-DD format)
+  const datePattern = /(\d{4}-\d{2}-\d{2})/;
+  const dateMatch = message.match(datePattern);
+  if (dateMatch) {
+    targetDate = dateMatch[1];
+  } else {
+    // Try to find month/year patterns and set a default future date
+    // Default: 1 year from now if no date specified
+    const futureDate = new Date();
+    futureDate.setFullYear(futureDate.getFullYear() + 1);
+    targetDate = futureDate.toISOString().split('T')[0];
+  }
+
+  return { goalName, targetAmount, targetDate };
 }
 
 // Helper: Parse bill payment command
@@ -834,8 +896,36 @@ const sendMessage = errorWrapper(async (req, res, next) => {
     };
     suggestions = getArray('spendingSuggestions', lang);
   }
-  // ===================== SAVINGS GOALS =====================
-  else if (/hedef|tasarruf|birikimler|goals|my goals|savings/i.test(userMessage)) {
+  // ===================== CREATE SAVINGS GOAL =====================
+  else if (/için.*tasarruf|için.*hedef|tasarruf hedefi oluştur|hedef oluştur|create.*goal|savings.*goal.*for|goal.*for/i.test(userMessage)) {
+    const { goalName, targetAmount, targetDate } = parseSavingsGoalCommand(message);
+
+    if (!goalName || !targetAmount) {
+      response = getText('savingsGoalNeedInfo', lang);
+      suggestions = getArray('savingsGoalSuggestions', lang);
+    } else {
+      // Format date for display
+      const displayDate = new Date(targetDate).toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      pendingSessions.set(userId, {
+        type: "CREATE_SAVINGS_GOAL",
+        goalName,
+        targetAmount,
+        targetDate,
+        lang,
+      });
+
+      response = getText('savingsGoalConfirm', lang, goalName, formatCurrency(targetAmount, "TRY", lang), displayDate);
+      requiresConfirmation = true;
+      suggestions = getArray('confirmSuggestions', lang);
+    }
+  }
+  // ===================== VIEW SAVINGS GOALS =====================
+  else if (/hedeflerim|hedef|tasarruf|birikimler|goals|my goals|savings/i.test(userMessage)) {
     const goals = user.savingsGoals?.filter(g => g.status !== "abandoned") || [];
     const goalStatusText = translations.goalStatus[lang] || translations.goalStatus.en;
 
@@ -991,6 +1081,43 @@ async function executePendingAction(user, action, lang = 'en') {
         message = getText('billPaidSuccess', lang, action.billTitle, formatCurrency(action.amount, "TRY", lang), formatCurrency(sourceAccount.balance, sourceAccount.currency, lang));
         suggestions = getArray('billsSuggestions', lang);
       }
+      break;
+    }
+
+    case "CREATE_SAVINGS_GOAL": {
+      // Format date for display
+      const displayDate = new Date(action.targetDate).toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      const newGoal = {
+        name: action.goalName,
+        targetAmount: action.targetAmount,
+        currentAmount: 0,
+        startDate: new Date(),
+        targetDate: new Date(action.targetDate),
+        status: "onTrack",
+        contributions: [],
+      };
+
+      if (!user.savingsGoals) {
+        user.savingsGoals = [];
+      }
+      user.savingsGoals.push(newGoal);
+      await user.save();
+
+      message = getText('savingsGoalCreated', lang, action.goalName, formatCurrency(action.targetAmount, "TRY", lang), displayDate);
+      data = {
+        goal: {
+          name: action.goalName,
+          targetAmount: formatCurrency(action.targetAmount, "TRY", lang),
+          targetDate: displayDate,
+          progress: "0%",
+        },
+      };
+      suggestions = getArray('savingsGoalSuggestions', lang);
       break;
     }
 

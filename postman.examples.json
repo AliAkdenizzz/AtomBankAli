@@ -1,0 +1,977 @@
+{
+  "info": {
+    "name": "Atom Bank - Quick Register Examples",
+    "description": "8 test users with 2 accounts, 6 bills, savings goals, and saved recipients each",
+    "baseUrl": "http://localhost:5000"
+  },
+  "users": [
+    {
+      "name": "Ali Akdeniz",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30123456789",
+          "name": "Ali Akdeniz",
+          "fullName": "Ali Akdeniz",
+          "email": "ali.akdeniz@gmail.com",
+          "password": "123456",
+          "phone": "5301234567",
+          "dateOfBirth": "1995-03-15",
+          "address": {
+            "street": "Ataturk Caddesi No:42",
+            "city": "Istanbul",
+            "state": "Kadikoy",
+            "postalCode": "34710",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3001000000000001",
+              "accountName": "Ana Hesap",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 25000,
+              "iban": "TR100000103001000000000001"
+            },
+            {
+              "accountNumber": "3001000000000002",
+              "accountName": "Dolar Hesabi",
+              "type": "savings",
+              "currency": "USD",
+              "balance": 1500,
+              "iban": "TR110000103001000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik Faturasi",
+              "companyName": "AYEDAS",
+              "subscriberNo": "1234567890",
+              "category": "electricity",
+              "amount": 450,
+              "dueDate": "2025-01-15",
+              "isRecurring": true,
+              "recurringDay": 15
+            },
+            {
+              "title": "Su Faturasi",
+              "companyName": "ISKI",
+              "subscriberNo": "9876543210",
+              "category": "water",
+              "amount": 180,
+              "dueDate": "2025-01-20",
+              "isRecurring": true,
+              "recurringDay": 20
+            },
+            {
+              "title": "Internet",
+              "companyName": "Turk Telekom",
+              "subscriberNo": "TT12345678",
+              "category": "internet",
+              "amount": 350,
+              "dueDate": "2025-01-10",
+              "isRecurring": true,
+              "recurringDay": 10
+            },
+            {
+              "title": "Dogalgaz",
+              "companyName": "IGDAS",
+              "subscriberNo": "IG98765432",
+              "category": "gas",
+              "amount": 520,
+              "dueDate": "2025-01-25",
+              "isRecurring": true,
+              "recurringDay": 25
+            },
+            {
+              "title": "Netflix",
+              "companyName": "Netflix",
+              "subscriberNo": "NF001122",
+              "category": "streaming",
+              "amount": 99,
+              "dueDate": "2025-01-05",
+              "isRecurring": true,
+              "recurringDay": 5
+            },
+            {
+              "title": "Spor Salonu",
+              "companyName": "MacFit",
+              "subscriberNo": "MF334455",
+              "category": "gym",
+              "amount": 750,
+              "dueDate": "2025-01-01",
+              "isRecurring": true,
+              "recurringDay": 1
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Yeni Araba",
+              "targetAmount": 500000,
+              "currentAmount": 75000,
+              "targetDate": "2026-06-01"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Omer Mirac Dursun",
+              "iban": "TR120000103002000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Omer Mirac Dursun",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30234567890",
+          "name": "Omer Mirac Dursun",
+          "fullName": "Omer Mirac Dursun",
+          "email": "omer.dursun@gmail.com",
+          "password": "123456",
+          "phone": "5302345678",
+          "dateOfBirth": "1993-07-22",
+          "address": {
+            "street": "Bagdat Caddesi No:128",
+            "city": "Istanbul",
+            "state": "Maltepe",
+            "postalCode": "34844",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3002000000000001",
+              "accountName": "Vadesiz Hesap",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 18500,
+              "iban": "TR120000103002000000000001"
+            },
+            {
+              "accountNumber": "3002000000000002",
+              "accountName": "Euro Hesabi",
+              "type": "savings",
+              "currency": "EUR",
+              "balance": 800,
+              "iban": "TR130000103002000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik",
+              "companyName": "AYEDAS",
+              "subscriberNo": "2234567891",
+              "category": "electricity",
+              "amount": 380,
+              "dueDate": "2025-01-18",
+              "isRecurring": true,
+              "recurringDay": 18
+            },
+            {
+              "title": "Su",
+              "companyName": "ISKI",
+              "subscriberNo": "8876543211",
+              "category": "water",
+              "amount": 150,
+              "dueDate": "2025-01-22",
+              "isRecurring": true,
+              "recurringDay": 22
+            },
+            {
+              "title": "Fiber Internet",
+              "companyName": "Superonline",
+              "subscriberNo": "SO22334455",
+              "category": "internet",
+              "amount": 400,
+              "dueDate": "2025-01-12",
+              "isRecurring": true,
+              "recurringDay": 12
+            },
+            {
+              "title": "Dogalgaz Faturasi",
+              "companyName": "IGDAS",
+              "subscriberNo": "IG22334455",
+              "category": "gas",
+              "amount": 480,
+              "dueDate": "2025-01-28",
+              "isRecurring": true,
+              "recurringDay": 28
+            },
+            {
+              "title": "Spotify Premium",
+              "companyName": "Spotify",
+              "subscriberNo": "SP998877",
+              "category": "streaming",
+              "amount": 60,
+              "dueDate": "2025-01-08",
+              "isRecurring": true,
+              "recurringDay": 8
+            },
+            {
+              "title": "Telefon Hatti",
+              "companyName": "Vodafone",
+              "subscriberNo": "VF112233",
+              "category": "mobile",
+              "amount": 200,
+              "dueDate": "2025-01-03",
+              "isRecurring": true,
+              "recurringDay": 3
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Tatil Fonu",
+              "targetAmount": 30000,
+              "currentAmount": 12000,
+              "targetDate": "2025-08-01"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Ali Akdeniz",
+              "iban": "TR100000103001000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Ozan Olmez",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30345678901",
+          "name": "Ozan Olmez",
+          "fullName": "Ozan Olmez",
+          "email": "ozan.olmez@gmail.com",
+          "password": "123456",
+          "phone": "5303456789",
+          "dateOfBirth": "1998-11-08",
+          "address": {
+            "street": "Istiklal Caddesi No:55",
+            "city": "Istanbul",
+            "state": "Beyoglu",
+            "postalCode": "34430",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3003000000000001",
+              "accountName": "Gunluk Hesap",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 32000,
+              "iban": "TR140000103003000000000001"
+            },
+            {
+              "accountNumber": "3003000000000002",
+              "accountName": "Yatirim Hesabi",
+              "type": "investment",
+              "currency": "TRY",
+              "balance": 85000,
+              "iban": "TR150000103003000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik Gideri",
+              "companyName": "Bogazici Elektrik",
+              "subscriberNo": "BE33445566",
+              "category": "electricity",
+              "amount": 520,
+              "dueDate": "2025-01-16",
+              "isRecurring": true,
+              "recurringDay": 16
+            },
+            {
+              "title": "Su Gideri",
+              "companyName": "ISKI",
+              "subscriberNo": "IS77889900",
+              "category": "water",
+              "amount": 200,
+              "dueDate": "2025-01-21",
+              "isRecurring": true,
+              "recurringDay": 21
+            },
+            {
+              "title": "Internet Paketi",
+              "companyName": "TurkNet",
+              "subscriberNo": "TN445566",
+              "category": "internet",
+              "amount": 280,
+              "dueDate": "2025-01-14",
+              "isRecurring": true,
+              "recurringDay": 14
+            },
+            {
+              "title": "Dogalgaz",
+              "companyName": "IGDAS",
+              "subscriberNo": "IG55667788",
+              "category": "gas",
+              "amount": 600,
+              "dueDate": "2025-01-26",
+              "isRecurring": true,
+              "recurringDay": 26
+            },
+            {
+              "title": "Amazon Prime",
+              "companyName": "Amazon",
+              "subscriberNo": "AP778899",
+              "category": "streaming",
+              "amount": 40,
+              "dueDate": "2025-01-07",
+              "isRecurring": true,
+              "recurringDay": 7
+            },
+            {
+              "title": "Sigorta",
+              "companyName": "Anadolu Sigorta",
+              "subscriberNo": "AS123456",
+              "category": "insurance",
+              "amount": 1200,
+              "dueDate": "2025-02-15",
+              "isRecurring": true,
+              "recurringDay": 15
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Ev Alimi",
+              "targetAmount": 2000000,
+              "currentAmount": 350000,
+              "targetDate": "2028-01-01"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Sami Oguz Ozdemir",
+              "iban": "TR160000103004000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Sami Oguz Ozdemir",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30456789012",
+          "name": "Sami Oguz Ozdemir",
+          "fullName": "Sami Oguz Ozdemir",
+          "email": "sami.ozdemir@gmail.com",
+          "password": "123456",
+          "phone": "5304567890",
+          "dateOfBirth": "1990-05-30",
+          "address": {
+            "street": "Tunali Hilmi Caddesi No:88",
+            "city": "Ankara",
+            "state": "Cankaya",
+            "postalCode": "06680",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3004000000000001",
+              "accountName": "Maaş Hesabi",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 42000,
+              "iban": "TR160000103004000000000001"
+            },
+            {
+              "accountNumber": "3004000000000002",
+              "accountName": "Birikim Hesabi",
+              "type": "savings",
+              "currency": "TRY",
+              "balance": 120000,
+              "iban": "TR170000103004000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik Faturasi",
+              "companyName": "Baskent Elektrik",
+              "subscriberNo": "BK44556677",
+              "category": "electricity",
+              "amount": 340,
+              "dueDate": "2025-01-17",
+              "isRecurring": true,
+              "recurringDay": 17
+            },
+            {
+              "title": "Su Faturasi",
+              "companyName": "ASKi",
+              "subscriberNo": "AS66778899",
+              "category": "water",
+              "amount": 120,
+              "dueDate": "2025-01-23",
+              "isRecurring": true,
+              "recurringDay": 23
+            },
+            {
+              "title": "Internet",
+              "companyName": "Turk Telekom",
+              "subscriberNo": "TT66778899",
+              "category": "internet",
+              "amount": 320,
+              "dueDate": "2025-01-11",
+              "isRecurring": true,
+              "recurringDay": 11
+            },
+            {
+              "title": "Dogalgaz Faturasi",
+              "companyName": "Baskent Dogalgaz",
+              "subscriberNo": "BD88990011",
+              "category": "gas",
+              "amount": 420,
+              "dueDate": "2025-01-27",
+              "isRecurring": true,
+              "recurringDay": 27
+            },
+            {
+              "title": "Disney+",
+              "companyName": "Disney",
+              "subscriberNo": "DP556677",
+              "category": "streaming",
+              "amount": 65,
+              "dueDate": "2025-01-09",
+              "isRecurring": true,
+              "recurringDay": 9
+            },
+            {
+              "title": "Universite Harcı",
+              "companyName": "ODTU",
+              "subscriberNo": "ODTU2025",
+              "category": "tuition",
+              "amount": 8500,
+              "dueDate": "2025-02-01",
+              "isRecurring": false
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Acil Durum Fonu",
+              "targetAmount": 100000,
+              "currentAmount": 65000,
+              "targetDate": "2025-12-31"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Ozan Olmez",
+              "iban": "TR140000103003000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Sude Nur Ozdemir",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30567890123",
+          "name": "Sude Nur Ozdemir",
+          "fullName": "Sude Nur Ozdemir",
+          "email": "sude.ozdemir@gmail.com",
+          "password": "123456",
+          "phone": "5305678901",
+          "dateOfBirth": "1997-09-12",
+          "address": {
+            "street": "Kordonu Caddesi No:33",
+            "city": "Izmir",
+            "state": "Alsancak",
+            "postalCode": "35220",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3005000000000001",
+              "accountName": "Ana Hesabim",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 28500,
+              "iban": "TR180000103005000000000001"
+            },
+            {
+              "accountNumber": "3005000000000002",
+              "accountName": "Sterlin Hesabi",
+              "type": "savings",
+              "currency": "GBP",
+              "balance": 500,
+              "iban": "TR190000103005000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik",
+              "companyName": "GDZ Elektrik",
+              "subscriberNo": "GDZ55667788",
+              "category": "electricity",
+              "amount": 390,
+              "dueDate": "2025-01-19",
+              "isRecurring": true,
+              "recurringDay": 19
+            },
+            {
+              "title": "Su",
+              "companyName": "IZSU",
+              "subscriberNo": "IZ77889900",
+              "category": "water",
+              "amount": 140,
+              "dueDate": "2025-01-24",
+              "isRecurring": true,
+              "recurringDay": 24
+            },
+            {
+              "title": "Fiber Internet",
+              "companyName": "Vodafone Net",
+              "subscriberNo": "VN88990011",
+              "category": "internet",
+              "amount": 380,
+              "dueDate": "2025-01-13",
+              "isRecurring": true,
+              "recurringDay": 13
+            },
+            {
+              "title": "Dogalgaz",
+              "companyName": "Izmirgaz",
+              "subscriberNo": "IZGAZ99001122",
+              "category": "gas",
+              "amount": 380,
+              "dueDate": "2025-01-29",
+              "isRecurring": true,
+              "recurringDay": 29
+            },
+            {
+              "title": "Youtube Premium",
+              "companyName": "Google",
+              "subscriberNo": "YT667788",
+              "category": "streaming",
+              "amount": 80,
+              "dueDate": "2025-01-06",
+              "isRecurring": true,
+              "recurringDay": 6
+            },
+            {
+              "title": "Pilates",
+              "companyName": "Reformer Studio",
+              "subscriberNo": "RS445566",
+              "category": "gym",
+              "amount": 900,
+              "dueDate": "2025-01-02",
+              "isRecurring": true,
+              "recurringDay": 2
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Japonya Gezisi",
+              "targetAmount": 80000,
+              "currentAmount": 25000,
+              "targetDate": "2025-10-01"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Derin Meric Ozturk",
+              "iban": "TR200000103006000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Derin Meric Ozturk",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30678901234",
+          "name": "Derin Meric Ozturk",
+          "fullName": "Derin Meric Ozturk",
+          "email": "derin.ozturk@gmail.com",
+          "password": "123456",
+          "phone": "5306789012",
+          "dateOfBirth": "1996-02-28",
+          "address": {
+            "street": "Ataturk Bulvari No:99",
+            "city": "Antalya",
+            "state": "Muratpasa",
+            "postalCode": "07040",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3006000000000001",
+              "accountName": "Vadesiz TL",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 55000,
+              "iban": "TR200000103006000000000001"
+            },
+            {
+              "accountNumber": "3006000000000002",
+              "accountName": "USD Hesap",
+              "type": "savings",
+              "currency": "USD",
+              "balance": 2200,
+              "iban": "TR210000103006000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik Gideri",
+              "companyName": "TEDAS",
+              "subscriberNo": "TD66778899",
+              "category": "electricity",
+              "amount": 410,
+              "dueDate": "2025-01-20",
+              "isRecurring": true,
+              "recurringDay": 20
+            },
+            {
+              "title": "Su Gideri",
+              "companyName": "ASAT",
+              "subscriberNo": "AS88990011",
+              "category": "water",
+              "amount": 160,
+              "dueDate": "2025-01-25",
+              "isRecurring": true,
+              "recurringDay": 25
+            },
+            {
+              "title": "Internet",
+              "companyName": "D-Smart",
+              "subscriberNo": "DS99001122",
+              "category": "internet",
+              "amount": 450,
+              "dueDate": "2025-01-15",
+              "isRecurring": true,
+              "recurringDay": 15
+            },
+            {
+              "title": "Dogalgaz",
+              "companyName": "Aksa Dogalgaz",
+              "subscriberNo": "AK11223344",
+              "category": "gas",
+              "amount": 350,
+              "dueDate": "2025-01-30",
+              "isRecurring": true,
+              "recurringDay": 30
+            },
+            {
+              "title": "Apple Music",
+              "companyName": "Apple",
+              "subscriberNo": "AM778899",
+              "category": "streaming",
+              "amount": 50,
+              "dueDate": "2025-01-04",
+              "isRecurring": true,
+              "recurringDay": 4
+            },
+            {
+              "title": "Kira",
+              "companyName": "Ev Sahibi",
+              "subscriberNo": "KIRA001",
+              "category": "rent",
+              "amount": 12000,
+              "dueDate": "2025-01-01",
+              "isRecurring": true,
+              "recurringDay": 1
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Yeni Laptop",
+              "targetAmount": 45000,
+              "currentAmount": 30000,
+              "targetDate": "2025-04-01"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Sude Nur Ozdemir",
+              "iban": "TR180000103005000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Mert Kaan Yildiz",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30789012345",
+          "name": "Mert Kaan Yildiz",
+          "fullName": "Mert Kaan Yildiz",
+          "email": "mert.yildiz@gmail.com",
+          "password": "123456",
+          "phone": "5307890123",
+          "dateOfBirth": "1994-12-05",
+          "address": {
+            "street": "Cemal Gursel Caddesi No:77",
+            "city": "Bursa",
+            "state": "Nilufer",
+            "postalCode": "16110",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3007000000000001",
+              "accountName": "Birincil Hesap",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 67000,
+              "iban": "TR220000103007000000000001"
+            },
+            {
+              "accountNumber": "3007000000000002",
+              "accountName": "Vadeli Mevduat",
+              "type": "deposit",
+              "currency": "TRY",
+              "balance": 200000,
+              "iban": "TR230000103007000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik",
+              "companyName": "ULUDAG Elektrik",
+              "subscriberNo": "UE77889900",
+              "category": "electricity",
+              "amount": 480,
+              "dueDate": "2025-01-18",
+              "isRecurring": true,
+              "recurringDay": 18
+            },
+            {
+              "title": "Su",
+              "companyName": "BUSKI",
+              "subscriberNo": "BU99001122",
+              "category": "water",
+              "amount": 130,
+              "dueDate": "2025-01-22",
+              "isRecurring": true,
+              "recurringDay": 22
+            },
+            {
+              "title": "Fiber Internet",
+              "companyName": "Turkcell Superonline",
+              "subscriberNo": "TS11223344",
+              "category": "internet",
+              "amount": 420,
+              "dueDate": "2025-01-10",
+              "isRecurring": true,
+              "recurringDay": 10
+            },
+            {
+              "title": "Dogalgaz",
+              "companyName": "Bursagaz",
+              "subscriberNo": "BG22334455",
+              "category": "gas",
+              "amount": 550,
+              "dueDate": "2025-01-28",
+              "isRecurring": true,
+              "recurringDay": 28
+            },
+            {
+              "title": "HBO Max",
+              "companyName": "HBO",
+              "subscriberNo": "HBO889900",
+              "category": "streaming",
+              "amount": 70,
+              "dueDate": "2025-01-08",
+              "isRecurring": true,
+              "recurringDay": 8
+            },
+            {
+              "title": "Kredi Karti",
+              "companyName": "Garanti BBVA",
+              "subscriberNo": "GB33445566",
+              "category": "credit-card",
+              "amount": 5500,
+              "dueDate": "2025-01-15",
+              "isRecurring": true,
+              "recurringDay": 15
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Dugun Fonu",
+              "targetAmount": 150000,
+              "currentAmount": 80000,
+              "targetDate": "2025-09-01"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Emirhan Ali Zafer",
+              "iban": "TR240000103008000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Emirhan Ali Zafer",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:5000/api/auth/register-quick",
+        "body": {
+          "tc": "30890123456",
+          "name": "Emirhan Ali Zafer",
+          "fullName": "Emirhan Ali Zafer",
+          "email": "emirhan.zafer@gmail.com",
+          "password": "123456",
+          "phone": "5308901234",
+          "dateOfBirth": "1999-06-18",
+          "address": {
+            "street": "Kultur Mahallesi No:44",
+            "city": "Eskisehir",
+            "state": "Odunpazari",
+            "postalCode": "26010",
+            "country": "Turkey"
+          },
+          "accounts": [
+            {
+              "accountNumber": "3008000000000001",
+              "accountName": "Gunluk Hesap",
+              "type": "checking",
+              "currency": "TRY",
+              "balance": 15000,
+              "iban": "TR240000103008000000000001"
+            },
+            {
+              "accountNumber": "3008000000000002",
+              "accountName": "Euro Birikim",
+              "type": "savings",
+              "currency": "EUR",
+              "balance": 600,
+              "iban": "TR250000103008000000000002"
+            }
+          ],
+          "bills": [
+            {
+              "title": "Elektrik Faturasi",
+              "companyName": "MEPDAS",
+              "subscriberNo": "MP88990011",
+              "category": "electricity",
+              "amount": 290,
+              "dueDate": "2025-01-16",
+              "isRecurring": true,
+              "recurringDay": 16
+            },
+            {
+              "title": "Su Faturasi",
+              "companyName": "ESKI",
+              "subscriberNo": "ES11223344",
+              "category": "water",
+              "amount": 100,
+              "dueDate": "2025-01-21",
+              "isRecurring": true,
+              "recurringDay": 21
+            },
+            {
+              "title": "Internet",
+              "companyName": "Millenicom",
+              "subscriberNo": "ML22334455",
+              "category": "internet",
+              "amount": 250,
+              "dueDate": "2025-01-09",
+              "isRecurring": true,
+              "recurringDay": 9
+            },
+            {
+              "title": "Dogalgaz",
+              "companyName": "Eskisehir Dogalgaz",
+              "subscriberNo": "ED33445566",
+              "category": "gas",
+              "amount": 300,
+              "dueDate": "2025-01-26",
+              "isRecurring": true,
+              "recurringDay": 26
+            },
+            {
+              "title": "Twitch Sub",
+              "companyName": "Twitch",
+              "subscriberNo": "TW990011",
+              "category": "streaming",
+              "amount": 30,
+              "dueDate": "2025-01-05",
+              "isRecurring": true,
+              "recurringDay": 5
+            },
+            {
+              "title": "Cep Telefonu",
+              "companyName": "Turk Telekom",
+              "subscriberNo": "TT44556677",
+              "category": "mobile",
+              "amount": 180,
+              "dueDate": "2025-01-12",
+              "isRecurring": true,
+              "recurringDay": 12
+            }
+          ],
+          "savingsGoals": [
+            {
+              "name": "Gaming PC",
+              "targetAmount": 60000,
+              "currentAmount": 18000,
+              "targetDate": "2025-07-01"
+            }
+          ],
+          "savedRecipients": [
+            {
+              "name": "Mert Kaan Yildiz",
+              "iban": "TR220000103007000000000001",
+              "bankName": "Atom Bank",
+              "currency": "TRY"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "usage": {
+    "description": "Postman'da kullanmak icin:",
+    "steps": [
+      "1. Postman'i ac",
+      "2. POST request olustur: {{baseUrl}}/api/auth/register-quick",
+      "3. Body > raw > JSON sec",
+      "4. Yukaridaki user'lardan birinin 'body' kismini kopyala yapistir",
+      "5. Send'e bas",
+      "6. Token'i al ve diger isteklerde kullan"
+    ],
+    "notes": [
+      "Tum kullanicilarin sifresi: 123456",
+      "TC numaralari 30 ile basliyor",
+      "Her kullanicinin 2 hesabi, 6 faturasi, 1 birikim hedefi var",
+      "Saved recipients ciftler halinde: Ali<->Omer, Ozan<->Sami, Sude<->Derin, Mert<->Emirhan"
+    ]
+  }
+}
