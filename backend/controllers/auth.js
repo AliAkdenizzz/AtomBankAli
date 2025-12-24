@@ -399,6 +399,7 @@ const forgotPassword = asyncErrorWrapper(async (req, res, next) => {
 
   // 3) DB'ye kaydet (validate'lerle uğraşmamak için)
   await user.save({ validateBeforeSave: false }); //direkt bakıyor
+
   const resetPasswordUrl = `https://atombankali.onrender.com/api/auth/resetpassword?token=${resetPasswordToken}`;
   // 4) Frontend'in açacağı reset link
 
