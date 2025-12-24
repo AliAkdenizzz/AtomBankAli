@@ -187,19 +187,53 @@ function getArray(key, lang) {
 
 ### 2. `frontend/main.js`
 
-#### Added User Preferences Loaded Event (Lines 80-83)
+#### A. Fixed Language Persistence on Page Refresh (Lines 72-81)
+
+**Problem:** Every page refresh was overwriting the user's localStorage language preference with the API value, causing unexpected language changes.
+
+**Solution:** Only set language from API if localStorage doesn't already have a value:
 
 ```diff
-    }
-
-+   // Dispatch event to signal user preferences are loaded
-+   window.dispatchEvent(new CustomEvent('userPreferencesLoaded', {
-+     detail: { language: data.data.preferences?.language || 'en' }
-+   }));
-  } catch (err) {
+      // Language - only set from API if not already in localStorage
+      // User's localStorage preference takes priority (changed via profile settings)
++     var existingLanguage = localStorage.getItem("atomBankLanguage");
++     if (!existingLanguage && data.data.preferences.language) {
+-     if (data.data.preferences.language) {
+        var userLanguage = data.data.preferences.language;
+        applyLanguage(userLanguage);
+        localStorage.setItem("atomBankLanguage", userLanguage);
++     } else if (existingLanguage) {
++       applyLanguage(existingLanguage);
+      }
 ```
 
-This event allows other scripts (like smartassistant.html) to wait for user preferences to be loaded before using them.
+**Behavior:**
+- If localStorage has a language value → Use that (don't overwrite with API)
+- If localStorage is empty → Use API value (first login scenario)
+- User changes language in profile settings → localStorage is updated
+
+This fix applies to ALL pages since `main.js` is loaded on:
+- dashboard.html
+- smartassistant.html
+- accounthistory.html
+- fundtransfer.html
+- billpayments.html
+- currencyexchange.html
+- Adminpage.html
+
+#### B. Added User Preferences Loaded Event (Lines 84-89)
+
+```diff
+    // Dispatch event to signal user preferences are loaded
+    // Use localStorage value if exists, otherwise API value
++   var currentLang = localStorage.getItem("atomBankLanguage") || data.data.preferences?.language || 'en';
+    window.dispatchEvent(new CustomEvent('userPreferencesLoaded', {
+-     detail: { language: data.data.preferences?.language || 'en' }
++     detail: { language: currentLang }
+    }));
+```
+
+This event allows other scripts (like smartassistant.html) to wait for user preferences to be loaded before using them. The event now uses the localStorage value if it exists.
 
 ---
 
@@ -536,7 +570,7 @@ recipientFound: "Alıcı Bulundu:",
 | File | Changes | Lines Modified |
 |------|---------|----------------|
 | `backend/controllers/chatbot.js` | Added translations, updated all handlers | ~400 lines |
-| `frontend/main.js` | Added userPreferencesLoaded event dispatch | 4 lines |
+| `frontend/main.js` | Fixed language persistence, added userPreferencesLoaded event | ~15 lines |
 | `frontend/smartassistant.html` | Added language parameter, fixed timing issue | ~30 lines |
 | `frontend/dashboard.html` | Added data-i18n attributes, locale-aware dates | ~25 lines |
 | `frontend/dataFetcher.js` | Updated formatTransactionDate with locale support | 10 lines |
@@ -558,6 +592,8 @@ recipientFound: "Alıcı Bulundu:",
 - [ ] Dashboard "Overview" shows "Genel Bakış" for Turkish users
 - [ ] Dashboard "Your Balance" shows "Bakiyeniz" for Turkish users
 - [ ] Dashboard "Account No" shows "Hesap No" for Turkish users
+- [ ] **Page refresh does NOT change user's language preference**
+- [ ] Language only changes when user updates it in profile settings
 - [ ] Quick Transfer panel texts are in correct language
 - [ ] Transaction dates show "Bugün/Dün" for Turkish users
 - [ ] Spend Analysis modal texts are in correct language

@@ -336,18 +336,6 @@ function createProfileOverlay() {
             </div>
           </div>
 
-          <!-- Name Fields -->
-          <div class="form-row">
-            <div class="form-group">
-              <label data-i18n="firstName">First Name</label>
-              <input type="text" id="editFirstName" data-i18n-placeholder="firstName" placeholder="First Name">
-            </div>
-            <div class="form-group">
-              <label data-i18n="lastName">Last Name</label>
-              <input type="text" id="editLastName" data-i18n-placeholder="lastName" placeholder="Last Name">
-            </div>
-          </div>
-
           <!-- Contact Info -->
           <div class="form-group">
             <label data-i18n="phoneNumber">Phone Number</label>
@@ -567,8 +555,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var profileImagePreview = document.getElementById("profileImagePreview");
 
   // Form inputs
-  var editFirstName = document.getElementById("editFirstName");
-  var editLastName = document.getElementById("editLastName");
   var editPhone = document.getElementById("editPhone");
   var editStreet = document.getElementById("editStreet");
   var editCity = document.getElementById("editCity");
@@ -631,16 +617,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       var data = await res.json();
       var user = data.data;
-
-      // Split fullName or name into first/last
-      var fullName = user.fullName || user.name || "";
-      var nameParts = fullName.trim().split(" ");
-      if (editFirstName) {
-        editFirstName.value = nameParts[0] || "";
-      }
-      if (editLastName) {
-        editLastName.value = nameParts.slice(1).join(" ") || "";
-      }
 
       // Fill other fields
       if (editPhone) editPhone.value = user.phone || "";
@@ -844,14 +820,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Build update object with ALL form data (even if empty)
         var updateData = {};
-
-        // Name - always send if fields exist
-        var firstName = editFirstName ? editFirstName.value.trim() : "";
-        var lastName = editLastName ? editLastName.value.trim() : "";
-        if (firstName || lastName) {
-          updateData.fullName = (firstName + " " + lastName).trim();
-          updateData.name = firstName || updateData.fullName; // Use fullName if firstName is empty
-        }
 
         // Contact - always send if fields exist
         if (editPhone) updateData.phone = editPhone.value.trim();
