@@ -69,17 +69,23 @@ async function checkAuthAndLoadUser() {
         );
       }
 
-      // Language
-      if (data.data.preferences.language) {
+      // Language - only set from API if not already in localStorage
+      // User's localStorage preference takes priority (changed via profile settings)
+      var existingLanguage = localStorage.getItem("atomBankLanguage");
+      if (!existingLanguage && data.data.preferences.language) {
         var userLanguage = data.data.preferences.language;
         applyLanguage(userLanguage);
         localStorage.setItem("atomBankLanguage", userLanguage);
+      } else if (existingLanguage) {
+        applyLanguage(existingLanguage);
       }
     }
 
     // Dispatch event to signal user preferences are loaded
+    // Use localStorage value if exists, otherwise API value
+    var currentLang = localStorage.getItem("atomBankLanguage") || data.data.preferences?.language || 'en';
     window.dispatchEvent(new CustomEvent('userPreferencesLoaded', {
-      detail: { language: data.data.preferences?.language || 'en' }
+      detail: { language: currentLang }
     }));
   } catch (err) {
     console.error("Auth check failed:", err);
