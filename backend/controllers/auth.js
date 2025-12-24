@@ -401,7 +401,7 @@ const forgotPassword = asyncErrorWrapper(async (req, res, next) => {
   await user.save({ validateBeforeSave: false }); //direkt bakıyor
 
   // 4) Frontend'in açacağı reset link
-  const resetPasswordUrl = `http://localhost:5000/api/auth/resetpassword?token=${resetPasswordToken}`;
+  const resetPasswordUrl = `https://atombankali.onrender.com/api/auth/resetpassword?token=${resetPasswordToken}`;
   // prod'da bunu .env'den kurarsın
 
   const emailTemplate = `
