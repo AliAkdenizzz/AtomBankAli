@@ -930,13 +930,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load quick actions
     loadQuickActions();
 
-    // Initial greeting based on language
-    setTimeout(() => {
-        const lang = getLang();
-        const greeting = lang === 'tr' ? 'Merhaba' : 'Hello';
-        sendMessage(greeting);
-    }, 500);
-
     // Update initial suggestions based on language
     const lang = getLang();
     const defaultSuggestions = lang === 'tr'
@@ -944,6 +937,34 @@ document.addEventListener('DOMContentLoaded', function() {
         : ['My balance', 'My bills', 'My goals', 'Open account'];
     updateSuggestions(defaultSuggestions);
 });
+
+// Wait for user preferences to load before sending initial greeting
+let greetingSent = false;
+window.addEventListener('userPreferencesLoaded', function(e) {
+    if (greetingSent) return;
+    greetingSent = true;
+
+    const lang = e.detail?.language || getLang();
+    const greeting = lang === 'tr' ? 'Merhaba' : 'Hello';
+    sendMessage(greeting);
+
+    // Update suggestions and date with correct language
+    updateChatDate();
+    const defaultSuggestions = lang === 'tr'
+        ? ['Bakiyem', 'Faturalarim', 'Hedeflerim', 'Yeni hesap ac']
+        : ['My balance', 'My bills', 'My goals', 'Open account'];
+    updateSuggestions(defaultSuggestions);
+});
+
+// Fallback: if preferences event doesn't fire within 2 seconds, send greeting anyway
+setTimeout(() => {
+    if (!greetingSent) {
+        greetingSent = true;
+        const lang = getLang();
+        const greeting = lang === 'tr' ? 'Merhaba' : 'Hello';
+        sendMessage(greeting);
+    }
+}, 2000);
 
 // Event listeners
 sendBtn.addEventListener('click', () => sendMessage(chatInput.value.trim()));

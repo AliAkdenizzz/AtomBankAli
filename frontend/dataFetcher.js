@@ -224,16 +224,24 @@ function formatTransactionDate(date) {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
+  // Get language from localStorage or default to 'en'
+  const lang = localStorage.getItem('atomBankLanguage') || 'en';
+  const locale = lang === 'tr' ? 'tr-TR' : 'en-US';
+
+  // Translations for Today/Yesterday
+  const todayText = lang === 'tr' ? 'Bugün' : 'Today';
+  const yesterdayText = lang === 'tr' ? 'Dün' : 'Yesterday';
+
   const dateOnly = new Date(d.getFullYear(), d.getMonth(), d.getDate());
   const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
   const yesterdayOnly = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
 
   if (dateOnly.getTime() === todayOnly.getTime()) {
-    return "Today | " + d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+    return todayText + " | " + d.toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric" });
   } else if (dateOnly.getTime() === yesterdayOnly.getTime()) {
-    return "Yesterday | " + d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+    return yesterdayText + " | " + d.toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric" });
   } else {
-    return d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+    return d.toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric" });
   }
 }
 

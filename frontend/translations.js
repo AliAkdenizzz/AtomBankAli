@@ -304,6 +304,8 @@ const translations = {
     period: "Period",
     percentage: "Percentage",
     visual: "Visual",
+    noSpendingData: "No spending data for this period",
+    recipientFound: "Recipient Found:",
 
     // Spending Categories
     utilities: "Utilities",
@@ -714,6 +716,8 @@ const translations = {
     period: "Dönem",
     percentage: "Yüzde",
     visual: "Görsel",
+    noSpendingData: "Bu dönem için harcama verisi bulunamadı",
+    recipientFound: "Alıcı Bulundu:",
 
     // Harcama Kategorileri
     utilities: "Faturalar",

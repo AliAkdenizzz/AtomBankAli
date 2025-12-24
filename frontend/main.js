@@ -76,6 +76,11 @@ async function checkAuthAndLoadUser() {
         localStorage.setItem("atomBankLanguage", userLanguage);
       }
     }
+
+    // Dispatch event to signal user preferences are loaded
+    window.dispatchEvent(new CustomEvent('userPreferencesLoaded', {
+      detail: { language: data.data.preferences?.language || 'en' }
+    }));
   } catch (err) {
     console.error("Auth check failed:", err);
     localStorage.removeItem("atomBankToken");

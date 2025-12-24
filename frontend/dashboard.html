@@ -135,8 +135,8 @@
           </svg>
         </button>
         <div class="overview_text">
-          <p class="title">Overview</p>
-          <p class="desc">Hi User, welcome back!</p>
+          <p class="title" data-i18n="overview">Overview</p>
+          <p class="desc" data-i18n="welcome" data-i18n-options='{"name": "User"}'>Hi User, welcome back!</p>
         </div>
         <div class="topbar_icons">
           <a href="#" aria-label="search" class="topbar_icon">
@@ -161,16 +161,16 @@
         <!-- ========== MAIN (balance + transactions) ========== -->
         <main>
           <div class="overview_text">
-            <p class="title">Overview</p>
-            <p class="desc">Hi <span id="welcomeUserName">User</span>, welcome back!</p>
+            <p class="title" data-i18n="overview">Overview</p>
+            <p class="desc"><span data-i18n="welcome" data-i18n-options='{"name": "User"}'>Hi <span id="welcomeUserName">User</span>, welcome back!</span></p>
           </div>
 
           <!-- Main Balance Card -->
           <div class="bank_balance_card">
-            <p>your balance</p>
+            <p data-i18n="yourBalance">your balance</p>
             <p class="balance">₺120,845.90</p>
             <div class="account_no">
-              <span>Account No : <span class="no">4567&nbsp;8910&nbsp;1121&nbsp;3141</span></span>
+              <span><span data-i18n="accountNo">Account No</span> : <span class="no">4567&nbsp;8910&nbsp;1121&nbsp;3141</span></span>
               <button class="view_account_no" aria-label="show_ac">
                 <span class="material-symbols-outlined" style="font-size: 18px; color:#4b5563;">visibility</span>
               </button>
@@ -184,7 +184,7 @@
                 <path fill="none" d="M0 0h24v24H0z" />
                 <path d="M16 16v-4l5 5-5 5v-4H4v-2h12zM8 2v3.999L20 6v2H8v4L3 7l5-5z" fill="rgba(255,255,255,1)" />
               </svg>
-              <span>recent transactions</span>
+              <span data-i18n="recentTransactions">recent transactions</span>
             </button>
             <button class="s_analysis" aria-label="show_analysis">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -192,7 +192,7 @@
                 <path class="icon"
                   d="M11 .543c.33-.029.663-.043 1-.043C18.351.5 23.5 5.649 23.5 12c0 .337-.014.67-.043 1h-1.506c-.502 5.053-4.766 9-9.951 9-5.523 0-10-4.477-10-10 0-5.185 3.947-9.449 9-9.95V.542zM11 13V4.062A8.001 8.001 0 0 0 12 20a8.001 8.001 0 0 0 7.938-7H11zm10.448-2A9.503 9.503 0 0 0 13 2.552V11h8.448z" />
               </svg>
-              <span>spend analysis</span>
+              <span data-i18n="spendAnalysis">spend analysis</span>
             </button>
           </div>
 
@@ -283,10 +283,10 @@
         <aside>
           <!-- Quick Transfer -->
           <div class="transfer_money_section">
-            <p class="title">quick transfer</p>
+            <p class="title" data-i18n="quickTransfer">quick transfer</p>
             <div class="button_group">
-              <button class="via_no active" id="viaMobileBtn" aria-label="via_no">via mobile no.</button>
-              <button class="via_ac" id="viaAccountBtn" aria-label="via_ac">via account no.</button>
+              <button class="via_no active" id="viaMobileBtn" aria-label="via_no" data-i18n="viaMobileNo">via mobile no.</button>
+              <button class="via_ac" id="viaAccountBtn" aria-label="via_ac" data-i18n="viaAccountNo">via account no.</button>
             </div>
             <form id="quickTransferForm">
               <!-- Phone Number Mode (default) -->
@@ -309,7 +309,7 @@
               </div>
               <!-- Found Recipient Display (for phone mode) -->
               <div class="found_recipient" id="foundRecipientSection" style="display: none; margin-top: 10px; padding: 10px; background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%); border-radius: 8px;">
-                <p style="font-size: 12px; color: #666; margin: 0;">Recipient Found:</p>
+                <p style="font-size: 12px; color: #666; margin: 0;" data-i18n="recipientFound">Recipient Found:</p>
                 <p id="foundRecipientName" style="font-size: 16px; font-weight: 600; color: #333; margin: 5px 0 0 0;"></p>
               </div>
               <div class="amount">
@@ -322,14 +322,14 @@
               <!-- Hidden fields for phone mode transfer -->
               <input type="hidden" id="quick_found_iban" value="">
               <input type="hidden" id="quick_found_name" value="">
-              <input type="submit" value="send now" />
+              <input type="submit" value="send now" data-i18n-value="sendNow" />
             </form>
           </div>
 
           <!-- Your Accounts -->
           <div class="cards">
             <div class="title_with_button">
-              <p class="title">your accounts</p>
+              <p class="title" data-i18n="yourAccounts">your accounts</p>
               <div class="sliber_controller">
                 <div class="swipe_previous">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -371,39 +371,39 @@
   <div class="spend-analysis-modal-overlay" id="spendAnalysisModal" style="display: none;">
     <div class="spend-analysis-modal">
       <div class="spend-analysis-header">
-        <h2>Spend Analysis</h2>
+        <h2 data-i18n="spendAnalysis">Spend Analysis</h2>
         <button class="spend-analysis-close" id="closeSpendAnalysis">&times;</button>
       </div>
       <div class="spend-analysis-period-selector">
-        <button class="period-btn active" data-period="daily">Daily</button>
-        <button class="period-btn" data-period="weekly">Weekly</button>
-        <button class="period-btn" data-period="monthly">Monthly</button>
-        <button class="period-btn" data-period="yearly">Yearly</button>
+        <button class="period-btn active" data-period="daily" data-i18n="daily">Daily</button>
+        <button class="period-btn" data-period="weekly" data-i18n="weekly">Weekly</button>
+        <button class="period-btn" data-period="monthly" data-i18n="monthly">Monthly</button>
+        <button class="period-btn" data-period="yearly" data-i18n="yearly">Yearly</button>
       </div>
       <div class="spend-analysis-summary" id="spendAnalysisSummary">
         <div class="summary-card income">
-          <span class="summary-label">Total Income</span>
+          <span class="summary-label" data-i18n="totalIncome">Total Income</span>
           <span class="summary-value" id="summaryIncome">₺0.00</span>
         </div>
         <div class="summary-card spending">
-          <span class="summary-label">Total Spending</span>
+          <span class="summary-label" data-i18n="totalSpending">Total Spending</span>
           <span class="summary-value" id="summarySpending">₺0.00</span>
         </div>
         <div class="summary-card net">
-          <span class="summary-label">Net Amount</span>
+          <span class="summary-label" data-i18n="netAmount">Net Amount</span>
           <span class="summary-value" id="summaryNet">₺0.00</span>
         </div>
       </div>
       <div class="spend-analysis-content">
-        <h3>Spending by Category</h3>
+        <h3 data-i18n="spendingByCategory">Spending by Category</h3>
         <div class="category-table-container">
           <table class="category-table" id="categoryTable">
             <thead>
               <tr>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Percentage</th>
-                <th>Visual</th>
+                <th data-i18n="category">Category</th>
+                <th data-i18n="amount">Amount</th>
+                <th data-i18n="percentage">Percentage</th>
+                <th data-i18n="visual">Visual</th>
               </tr>
             </thead>
             <tbody id="categoryTableBody">
@@ -413,11 +413,11 @@
         </div>
         <div class="no-data-message" id="noDataMessage" style="display: none;">
           <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">analytics</span>
-          <p>No spending data for this period</p>
+          <p data-i18n="noSpendingData">No spending data for this period</p>
         </div>
       </div>
       <div class="spend-analysis-footer">
-        <p id="periodRange">Period: --</p>
+        <p id="periodRange"><span data-i18n="period">Period</span>: --</p>
       </div>
     </div>
   </div>
@@ -795,11 +795,14 @@
         netEl.textContent = formatCurrency(analysis.netAmount, 'TRY');
         netEl.style.color = analysis.netAmount >= 0 ? '#22c55e' : '#ef4444';
 
-        // Update period range
+        // Update period range with localized date format
         const startDate = new Date(analysis.periodStart);
         const endDate = new Date(analysis.periodEnd);
+        const lang = localStorage.getItem('atomBankLanguage') || 'en';
+        const locale = lang === 'tr' ? 'tr-TR' : 'en-US';
+        const periodText = lang === 'tr' ? 'Dönem' : 'Period';
         document.getElementById('periodRange').textContent =
-          `Period: ${startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+          `${periodText}: ${startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })} - ${endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })}`;
 
         // Update category table
         const tbody = document.getElementById('categoryTableBody');
@@ -824,7 +827,11 @@
             const percentage = ((amount / totalSpending) * 100).toFixed(1);
             const icon = categoryIcons[category] || '📋';
             const color = categoryColors[category] || '#6b7280';
-            const displayName = category.charAt(0).toUpperCase() + category.slice(1);
+            // Translate category name using the t() function if available
+            let displayName = category.charAt(0).toUpperCase() + category.slice(1);
+            if (typeof window.t === 'function') {
+              displayName = window.t(category) || displayName;
+            }
 
             const row = document.createElement('tr');
             row.innerHTML = `
