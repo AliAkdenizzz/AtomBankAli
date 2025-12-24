@@ -724,17 +724,35 @@ a.nav_link svg .icon {
 }
 
 /* hover & active */
-.nav_links a.nav_link:hover .nav_link_text,
-.nav_links a.active .nav_link_text {
-  color: var(--text-blue);
+/* Light mode hover - blue color for better visibility */
+.nav_links a.nav_link:hover .nav_link_text {
+  color: var(--btn-primary);
 }
 
 .nav_links a.nav_link:hover svg .icon {
-  fill: var(--text-blue);
+  fill: var(--btn-primary);
 }
 
 .nav_links a.nav_link:hover .material-symbols-outlined {
-  color: var(--text-blue);
+  color: var(--btn-primary);
+}
+
+/* Dark mode hover - purple color for better visibility */
+.dark .nav_links a.nav_link:hover .nav_link_text {
+  color: var(--gradient-primary) !important;
+}
+
+.dark .nav_links a.nav_link:hover svg .icon {
+  fill: var(--gradient-primary) !important;
+}
+
+.dark .nav_links a.nav_link:hover .material-symbols-outlined {
+  color: var(--gradient-primary) !important;
+}
+
+/* Active link text - white on colored background */
+.nav_links a.active .nav_link_text {
+  color: var(--text-white);
 }
 
 /* Specific hover for Logout to be red */
