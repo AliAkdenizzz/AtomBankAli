@@ -460,7 +460,13 @@
             btn.disabled = false;
             btn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
             btn.classList.add('text-white', 'shadow-glow');
-            btn.style.background = 'linear-gradient(135deg, #22c55e, #38bdf8, #6366f1)';
+            // Dark mode: purple, Light mode: blue
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            if (isDarkMode) {
+                btn.style.setProperty('background', '#7c3aed', 'important');
+            } else {
+                btn.style.setProperty('background', '#3b82f6', 'important');
+            }
             btn.style.cursor = 'pointer';
             btn.innerText = "Exchange Now";
         }

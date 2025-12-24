@@ -143,17 +143,13 @@ function renderUserTable(users) {
     if (users.length > 3) {
       viewAllContainer.style.display = "flex";
       // Update button text based on current state
-      const viewAllBtn = document.getElementById("view-all-users-btn");
-      if (viewAllBtn) {
-        const span = viewAllBtn.querySelector("span");
-        if (span) {
-          span.textContent = showAllUsers ? "Show Less" : "View All Users";
-        }
-        // Update icon direction
-        const icon = viewAllBtn.querySelector(".material-symbols-outlined");
-        if (icon) {
-          icon.textContent = showAllUsers ? "arrow_back" : "arrow_forward";
-        }
+      const textSpan = document.getElementById("view-all-users-text");
+      const iconSpan = document.getElementById("view-all-users-icon");
+      if (textSpan) {
+        textSpan.textContent = showAllUsers ? "Show Less" : "View All Users";
+      }
+      if (iconSpan) {
+        iconSpan.textContent = showAllUsers ? "arrow_back" : "arrow_forward";
       }
     } else {
       viewAllContainer.style.display = "none";
@@ -531,17 +527,13 @@ function toggleAllUsers() {
   renderUserTable(usersToRender);
 
   // Button text and icon are updated in renderUserTable, but we can also update here for immediate feedback
-  const viewAllBtn = document.getElementById("view-all-users-btn");
-  if (viewAllBtn) {
-    const span = viewAllBtn.querySelector("span");
-    if (span) {
-      span.textContent = showAllUsers ? "Show Less" : "View All Users";
-    }
-    // Update icon direction
-    const icon = viewAllBtn.querySelector(".material-symbols-outlined");
-    if (icon) {
-      icon.textContent = showAllUsers ? "arrow_back" : "arrow_forward";
-    }
+  const textSpan = document.getElementById("view-all-users-text");
+  const iconSpan = document.getElementById("view-all-users-icon");
+  if (textSpan) {
+    textSpan.textContent = showAllUsers ? "Show Less" : "View All Users";
+  }
+  if (iconSpan) {
+    iconSpan.textContent = showAllUsers ? "arrow_back" : "arrow_forward";
   }
 }
 

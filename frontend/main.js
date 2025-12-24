@@ -311,6 +311,11 @@ if (toggleTransactionsBtn && transactionsContainer) {
 // ================== PROFILE MODAL ==================
 // Create Profile Overlay dynamically
 function createProfileOverlay() {
+  // Skip overlay creation on Admin pages (CSS not loaded there)
+  if (window.location.pathname.includes("Adminpage")) {
+    return;
+  }
+
   // Check if overlay already exists
   if (document.getElementById("profileOverlay")) {
     return;
@@ -409,6 +414,11 @@ function createProfileOverlay() {
 
 // Create Password Overlay dynamically
 function createPasswordOverlay() {
+  // Skip overlay creation on Admin pages (CSS not loaded there)
+  if (window.location.pathname.includes("Adminpage")) {
+    return;
+  }
+
   // Check if overlay already exists
   if (document.getElementById("passwordOverlay")) {
     return;
@@ -446,6 +456,11 @@ function createPasswordOverlay() {
 
 // Create Account Overlay dynamically
 function createAccountOverlay() {
+  // Skip overlay creation on Admin pages (CSS not loaded there)
+  if (window.location.pathname.includes("Adminpage")) {
+    return;
+  }
+
   // Check if overlay already exists
   if (document.getElementById("createAccountOverlay")) {
     return;
@@ -493,6 +508,11 @@ function createAccountOverlay() {
 
 // Create Account Selection Overlay (for bill payments)
 function createAccountSelectionOverlay() {
+  // Skip overlay creation on Admin pages (CSS not loaded there)
+  if (window.location.pathname.includes("Adminpage")) {
+    return;
+  }
+
   // Check if overlay already exists
   if (document.getElementById("accountSelectionOverlay")) {
     return;
