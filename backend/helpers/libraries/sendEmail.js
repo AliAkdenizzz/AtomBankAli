@@ -11,13 +11,6 @@ const sendEmail = async (mailOptions) => {
     GMAIL_REFRESH_TOKEN,
   } = process.env;
 
-  // Debug: Check if env variables exist
-  console.log("=== EMAIL DEBUG ===");
-  console.log("CLIENT_ID exists:", !!GMAIL_CLIENT_ID);
-  console.log("CLIENT_SECRET exists:", !!GMAIL_CLIENT_SECRET);
-  console.log("REDIRECT_URI:", GMAIL_REDIRECT_URI);
-  console.log("REFRESH_TOKEN exists:", !!GMAIL_REFRESH_TOKEN);
-
   if (!GMAIL_CLIENT_ID || !GMAIL_CLIENT_SECRET || !GMAIL_REFRESH_TOKEN) {
     throw new Error(
       "Missing Gmail OAuth2 credentials in environment variables"
@@ -38,7 +31,6 @@ const sendEmail = async (mailOptions) => {
   let accessToken;
   try {
     accessToken = await oauth2Client.getAccessToken();
-    console.log("Access token retrieved successfully");
   } catch (tokenError) {
     console.error("Failed to get access token:", tokenError.message);
     throw new Error(`OAuth2 token error: ${tokenError.message}`);
@@ -65,7 +57,6 @@ const sendEmail = async (mailOptions) => {
       html: mailOptions.html,
     });
 
-    console.log("Email sent successfully:", info.messageId);
     return info;
   } catch (sendError) {
     console.error("Failed to send email:", sendError.message);
