@@ -533,7 +533,7 @@
       if (!email) return;
 
       try {
-        const res = await fetch((window.API_BASE_URL || "") + "/api/auth/forgotpassword", {
+        const res = await fetch((window.API_BASE_URL || "") + "/api/auth/forgot-password", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
