@@ -19,7 +19,9 @@ const sendEmail = async (mailOptions) => {
   console.log("REFRESH_TOKEN exists:", !!GMAIL_REFRESH_TOKEN);
 
   if (!GMAIL_CLIENT_ID || !GMAIL_CLIENT_SECRET || !GMAIL_REFRESH_TOKEN) {
-    throw new Error("Missing Gmail OAuth2 credentials in environment variables");
+    throw new Error(
+      "Missing Gmail OAuth2 credentials in environment variables"
+    );
   }
 
   const oauth2Client = new OAuth2(
@@ -46,7 +48,7 @@ const sendEmail = async (mailOptions) => {
     service: "gmail",
     auth: {
       type: "OAuth2",
-      user: "atombank.noreply@gmail.com",
+      user: "atombankblg411@gmail.com",
       clientId: GMAIL_CLIENT_ID,
       clientSecret: GMAIL_CLIENT_SECRET,
       refreshToken: GMAIL_REFRESH_TOKEN,
@@ -56,7 +58,7 @@ const sendEmail = async (mailOptions) => {
 
   try {
     const info = await transporter.sendMail({
-      from: '"Atom Bank" <atombank.noreply@gmail.com>',
+      from: '"Atom Bank" <atombankblg411@gmail.com>',
       to: mailOptions.to,
       subject: mailOptions.subject,
       text: mailOptions.text,
