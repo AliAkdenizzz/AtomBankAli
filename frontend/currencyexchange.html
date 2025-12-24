@@ -461,7 +461,7 @@
             btn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
             btn.classList.add('text-white', 'shadow-glow');
             // Dark mode: purple, Light mode: blue
-            const isDarkMode = document.documentElement.classList.contains('dark');
+            const isDarkMode = localStorage.getItem('atomBankDarkMode') === 'true';
             if (isDarkMode) {
                 btn.style.setProperty('background', '#7c3aed', 'important');
             } else {
