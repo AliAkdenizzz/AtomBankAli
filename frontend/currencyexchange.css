@@ -134,11 +134,16 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #6366f1; 
 }
 
-/* Nav Active Gradient */
+/* Nav Active - Single color instead of gradient */
 .nav-active {
-    background: linear-gradient(135deg, #22c55e, #38bdf8, #6366f1);
-    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
+    background: #3b82f6; /* Blue for light mode */
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
     color: white !important;
+}
+
+.dark .nav-active {
+    background: #a855f7; /* Purple for dark mode */
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.5);
 }
 .nav-active .material-symbols-outlined {
     color: white !important;

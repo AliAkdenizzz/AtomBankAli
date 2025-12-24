@@ -734,25 +734,7 @@ a.nav_link svg .icon {
 }
 
 .nav_links a.nav_link:hover .material-symbols-outlined {
-  color: var(--btn-primary);
-}
-
-/* Dark mode hover - purple color for better visibility */
-.dark .nav_links a.nav_link:hover .nav_link_text {
-  color: var(--gradient-primary) !important;
-}
-
-.dark .nav_links a.nav_link:hover svg .icon {
-  fill: var(--gradient-primary) !important;
-}
-
-.dark .nav_links a.nav_link:hover .material-symbols-outlined {
-  color: var(--gradient-primary) !important;
-}
-
-/* Active link text - white on colored background */
-.nav_links a.active .nav_link_text {
-  color: var(--text-white);
+  color: var(--text-blue);
 }
 
 /* Specific hover for Logout to be red */
