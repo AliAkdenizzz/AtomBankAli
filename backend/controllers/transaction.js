@@ -353,7 +353,6 @@ const transferExternal = errorWrapper(async (req, res, next) => {
     }
   }
 
-
   if (account.status !== "active") {
     return next(new CustomError("Account is not active", 400));
   }
@@ -381,23 +380,68 @@ const transferExternal = errorWrapper(async (req, res, next) => {
     // In production, you might want to flag this for admin review
   }
 
-  // Create transaction
-  const transaction = {
+  // Check if recipient is an Atom Bank user
+  const recipientUser = await User.findOne({
+    "accounts.iban": { $regex: new RegExp(`^${normalizedIBAN}$`, "i") },
+  });
+
+  let recipientAccount = null;
+  if (recipientUser) {
+    recipientAccount = recipientUser.accounts.find(
+      (acc) => normalizeIBAN(acc.iban) === normalizedIBAN
+    );
+
+    // Validate currency match for Atom Bank recipients
+    if (recipientAccount && recipientAccount.currency !== account.currency) {
+      return next(
+        new CustomError(
+          `Currency mismatch! Your account is ${account.currency} but recipient's account is ${recipientAccount.currency}. Transfers can only be made between accounts with the same currency.`,
+          400
+        )
+      );
+    }
+  }
+
+  const transactionDate = new Date();
+
+  // Create sender's transaction
+  const senderTransaction = {
     type: "transfer-ext",
     amount: amount,
     currency: account.currency,
     toIBAN: normalizedIBAN, // Store normalized IBAN
     recipientName: recipientName,
-    description: description || `External transfer to ${recipientName}`,
+    description: description || `Transfer to ${recipientName}`,
     status: "completed",
     category: "transfer",
-    createdAt: new Date(),
+    createdAt: transactionDate,
   };
 
-  // Update balance
+  // Update sender's balance and add transaction
   account.balance -= amount;
-  account.transactions.push(transaction);
+  account.transactions.push(senderTransaction);
   await user.save();
+
+  // If recipient is an Atom Bank user, credit their account
+  if (recipientUser && recipientAccount) {
+    const senderFullName = user.fullName || user.name || "Unknown";
+
+    const recipientTransaction = {
+      type: "transfer-in",
+      amount: amount,
+      currency: recipientAccount.currency,
+      fromIBAN: account.iban,
+      senderName: senderFullName,
+      description: description || `Transfer from ${senderFullName}`,
+      status: "completed",
+      category: "income",
+      createdAt: transactionDate,
+    };
+
+    recipientAccount.balance += amount;
+    recipientAccount.transactions.push(recipientTransaction);
+    await recipientUser.save();
+  }
 
   return res.status(201).json({
     success: true,
@@ -448,18 +492,55 @@ const verifyIban = errorWrapper(async (req, res, next) => {
   // For demo, we generate a simulated Turkish name based on IBAN hash
 
   const turkishFirstNames = [
-    "Ahmet", "Mehmet", "Ali", "Mustafa", "Hasan", "Hüseyin", "İbrahim", "Osman",
-    "Ayşe", "Fatma", "Emine", "Hatice", "Zeynep", "Elif", "Merve", "Esra",
-    "Murat", "Emre", "Burak", "Can", "Deniz", "Ege", "Selin", "Ceren"
+    "Ahmet",
+    "Mehmet",
+    "Ali",
+    "Mustafa",
+    "Hasan",
+    "Hüseyin",
+    "İbrahim",
+    "Osman",
+    "Ayşe",
+    "Fatma",
+    "Emine",
+    "Hatice",
+    "Zeynep",
+    "Elif",
+    "Merve",
+    "Esra",
+    "Murat",
+    "Emre",
+    "Burak",
+    "Can",
+    "Deniz",
+    "Ege",
+    "Selin",
+    "Ceren",
   ];
 
   const turkishLastNames = [
-    "Yılmaz", "Kaya", "Demir", "Şahin", "Çelik", "Öztürk", "Arslan", "Doğan",
-    "Koç", "Aydın", "Yıldız", "Özdemir", "Erdoğan", "Aksoy", "Polat", "Kılıç"
+    "Yılmaz",
+    "Kaya",
+    "Demir",
+    "Şahin",
+    "Çelik",
+    "Öztürk",
+    "Arslan",
+    "Doğan",
+    "Koç",
+    "Aydın",
+    "Yıldız",
+    "Özdemir",
+    "Erdoğan",
+    "Aksoy",
+    "Polat",
+    "Kılıç",
   ];
 
   // Generate deterministic but random-looking name from IBAN
-  const ibanHash = normalizedIBAN.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const ibanHash = normalizedIBAN
+    .split("")
+    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const firstName = turkishFirstNames[ibanHash % turkishFirstNames.length];
   const lastName = turkishLastNames[(ibanHash * 7) % turkishLastNames.length];
   const simulatedName = `${firstName} ${lastName}`;
